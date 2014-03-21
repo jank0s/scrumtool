@@ -26,11 +26,14 @@
 				<ul class="nav navbar-nav">
 					<li><a href="#">Home</a></li>
 				</ul>
-				<% if signed_in? %>
-						<%= current_user.name %> <%= current_user.surname %> | <%= link_to "Odjava", signout_path, method: "delete" %>
-				<% else %>
-						Null
-				<% end %>
+				<div class="nav navbar-text navbar-right">
+					<% if signed_in? %>
+						<%= current_user.name %> <%= current_user.surname %> | <%= link_to "Sign out", signout_path, method: "delete" %>
+					<% else %>
+						Please sign in
+					<% end %>
+				</div>
+				
 			</div><!--/.nav-collapse -->
 		</div>
 	</div>

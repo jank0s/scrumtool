@@ -24,8 +24,13 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li><a href="#">Home</a></li>
+					<li><a href="#">Home</a></li>
 				</ul>
+				<% if signed_in? %>
+						<%= current_user.name %> <%= current_user.surname %> | <%= link_to "Odjava", signout_path, method: "delete" %>
+				<% else %>
+						Null
+				<% end %>
 			</div><!--/.nav-collapse -->
 		</div>
 	</div>

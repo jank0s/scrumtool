@@ -1,0 +1,28 @@
+<h2>Users</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">User list</div>
+
+    <!-- Table -->
+    <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>E-Mail</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %> <%= user.surname %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.role.name %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

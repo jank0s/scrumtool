@@ -2,10 +2,15 @@ class User < ActiveRecord::Base
   belongs_to :role
 	before_create :create_remember_token
 
+  has_secure_password
+
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :username, presence:   true, length: { minimum: 3 }, uniqueness: true
+  validates :name, presence:   true
+  validates :surname, presence:   true
 	validates :email, presence:   true, format: { with: VALID_EMAIL_REGEX }
-	has_secure_password
-	#validates :password, length: { minimum: 8 }
+  validates :role_id, presence:   true
+	validates :password, length: { minimum: 3 }
 
 	def User.new_remember_token
     	SecureRandom.urlsafe_base64

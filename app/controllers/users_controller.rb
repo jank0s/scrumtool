@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 		if @user.save
 			redirect_to users_url
 		else
-			render new_user_url
+			render "new"
 		end
 	end
 

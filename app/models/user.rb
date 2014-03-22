@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  belongs_to :role
 	before_create :create_remember_token
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

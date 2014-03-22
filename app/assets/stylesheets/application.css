@@ -13,19 +13,20 @@
  *= require bootstrap.min
  */
 
-@font-face {
+ @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../assets/glyphicons-halflings-regular.eot');
   src: url('../assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-       url('../assets/glyphicons-halflings-regular.woff') format('woff'), 
-       url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
-       url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  url('../assets/glyphicons-halflings-regular.woff') format('woff'), 
+  url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
+  url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
 .clear {
   clear: both;
 }
 
+/*form sign in*/
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -42,8 +43,8 @@
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 10px;
   font-size: 16px;
 }
@@ -59,4 +60,16 @@
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/*form add user*/
+#form-add-user{
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.input-group-addon {
+    min-width: 200px;
+    text-align: right !important;
 }

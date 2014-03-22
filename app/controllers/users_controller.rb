@@ -1,13 +1,16 @@
 class UsersController < ApplicationController
-	before_action :signed_in_user, only: [:index]
+	before_action :signed_in_user, only: [:index, :new]
 	#before_action :correct_user, only: []
-	before_action :admin_user, only: [:index]
+	before_action :admin_user, only: [:index, :new]
 
 	def index
 		@users=User.all
 	end
 
 	def show
+	end
+
+	def new
 	end
 
 	private

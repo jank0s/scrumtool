@@ -7,6 +7,6 @@ class ProjectsController < ApplicationController
 
 	private
 		def signed_in_user
-	        redirect_to signin_url unless signed_in?
+			redirect_to signin_url unless signed_in?
 	end
 end

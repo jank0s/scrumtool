@@ -8,5 +8,5 @@
 
 Role.create(name: "User")
 Role.create(name: "Admin")
-User.create(username: "admin", password: "adminadmin", password_confirmation: "adminadmin", name: "Administrator", surname: "", email: "admin@tpo11.tk", role_id:"2")
-User.create(username: "user", password: "useruser", password_confirmation: "useruser", name: "User", surname: "", email: "user@tpo11.tk", role_id:"1")
+User.create(username: "admin", password: "admin", password_confirmation: "admin", name: "Administrator", surname: "", email: "admin@tpo11.tk", role_id:"2")
+User.create(username: "user", password: "user", password_confirmation: "user", name: "User", surname: "", email: "user@tpo11.tk", role_id:"1")

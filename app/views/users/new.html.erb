@@ -4,17 +4,17 @@
     </div>
 <% end %>
 <div id="form-add-user">
-    <% if @user.errors.any? %>
-      <div id="error_explanation">
-        <ul>
-          <% @user.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
     <%= form_for @user do |f| %>
         <h2>Add new user</h2>
+          <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
         <p>
             <div class="input-group">
                 <%= f.label :username, "Username", :class => "input-group-addon" %>

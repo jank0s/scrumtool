@@ -1,4 +1,18 @@
+<% if @user.errors.any? %>
+    <div class="alert alert-danger">
+        The form contains <%= pluralize(@user.errors.count, "error") %>.
+    </div>
+<% end %>
 <div id="form-add-user">
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <%= form_for @user do |f| %>
         <h2>Add new user</h2>
         <p>
@@ -47,16 +61,5 @@
             <%= f.submit "Add user", :class => "btn btn-primary pull-right" %>
         </p>
     <% end %>
-      <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <div class="alert alert-error">
-              The form contains <%= pluralize(@user.errors.count, "error") %>.
-            </div>
-            <ul>
-              <% @user.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-      <% end %>
+
 </div>

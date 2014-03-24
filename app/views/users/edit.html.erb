@@ -41,12 +41,6 @@
         </p>
         <p>
             <div class="input-group">
-                <%= f.label :role_id, "Role", :class => "input-group-addon" %>
-                <%= f.collection_select :role_id, Role.all, :id, :name, {}, {:class => "form-control"} %>
-            </div> 
-        </p>
-        <p>
-            <div class="input-group">
                 <%= f.label :password, "Password", :class => "input-group-addon" %>
                 <%= f.password_field :password, :class => "form-control" %>
             </div> 

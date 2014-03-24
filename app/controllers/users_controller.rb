@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update_attributes(user_params_user)
       redirect_to users_url
     else
       render 'edit'
@@ -40,7 +40,11 @@ class UsersController < ApplicationController
 	private
 		def user_params
 			params.require(:user).permit(:username, :password, :password_confirmation, :email, :name, :surname, :role_id)
-		end
+    end
+
+    def user_params_user
+      params.require(:user).permit(:username, :password, :password_confirmation, :email, :name, :surname)
+    end
 
 		def signed_in_user
 			redirect_to signin_url unless signed_in?

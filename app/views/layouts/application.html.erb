@@ -76,7 +76,7 @@
 				<% end %>
 				<div class="nav navbar-text navbar-right">
 					<% if signed_in? %>
-						<%= current_user.name %> <%= current_user.surname %> | <%= link_to "Sign out", signout_path, method: "delete" %>
+                      <%= link_to current_user.name + " " + current_user.surname, edit_user_path(current_user) %> | <%= link_to "Sign out", signout_path, method: "delete" %>
 					<% else %>
 						Please sign in
 					<% end %>

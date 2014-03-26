@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-	before_action :signed_in_user, only: [:index, :destroy]
+    before_action :signed_in_user, only: [:index, :destroy]
+    before_action :admin_user, only: [:index, :destroy]
 
 	def index
 		@users = User.all
@@ -34,8 +35,11 @@ class ProjectsController < ApplicationController
 
     end
 
-
 	def signed_in_user
 		redirect_to signin_url unless signed_in?
-	end
+    end
+
+    def admin_user
+        redirect_to root_url unless admin?
+    end
 end

@@ -1,5 +1,5 @@
 Tpo11::Application.routes.draw do
-	resources :projects, only: [:index]
+	resources :projects, only: [:index, :new, :create, :destroy]
 	root 'projects#index'
 	resources :sessions, only: [:new, :create, :destroy]
 	match '/signout', to: 'sessions#destroy', via: 'delete'

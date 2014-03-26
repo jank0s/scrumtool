@@ -1,2 +1,42 @@
-<h1>Projects#index</h1>
-<p>Find me in app/views/projects/index.html.erb</p>
+<h1>Projects</h1>
+<div class="panel panel-default panel-list-user">
+    <div class="panel-heading">
+        <%= form_tag projects_path, :method => 'get' do %>
+            <div class="input-group input-group-search pull-left">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                <%= text_field_tag :search, params[:search], :class => 'form-control' %>
+            </div>
+            <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
+        <% end %>
+        <%= button_to "Add project", new_project_path, :class => "btn btn-primary pull-right", :method => :get %>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Scrum Master</th>
+            <th>Product Owner</th>
+            <th>Team Members</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @projects.each do |project| %>
+            <tr>
+                <td><%= project.id %></td>
+                <td><%= project.name %></td>
+                <td><%= project.description %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td></td>
+                <td><%= button_to "Remove", project_path(project.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+</div>

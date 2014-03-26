@@ -10,18 +10,24 @@ class User < ActiveRecord::Base
   validates :surname, presence:   true
 	validates :email, presence:   true, format: { with: VALID_EMAIL_REGEX }
   validates :role_id, presence:   true
-	validates :password, length: { minimum: 3 }
+	validates :password, length: { minimum: 3 }, :if => :validate_password?
+  validates :password_confirmation, presence: true, :if => :validate_password?
 
 	def User.new_remember_token
     	SecureRandom.urlsafe_base64
-  	end
+  end
 
-  	def User.encrypt(token)
+  def User.encrypt(token)
     	Digest::SHA1.hexdigest(token.to_s)
-  	end
+  end
 
-  	private
+  def validate_password?
+    password.present? || password_confirmation.present?
+  end
+
+  private
     	def create_remember_token
         	self.remember_token = User.encrypt(User.new_remember_token)
-      	end
+      end
+
 end

@@ -25,6 +25,14 @@ class User < ActiveRecord::Base
         password.present? || password_confirmation.present?
     end
 
+    def self.search(search)
+        if search
+            find(:all, :conditions => ['username LIKE ? OR name LIKE ? OR surname LIKE ? OR email LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"])
+        else
+            find(:all)
+        end
+    end
+
     private
     def create_remember_token
         self.remember_token = User.encrypt(User.new_remember_token)

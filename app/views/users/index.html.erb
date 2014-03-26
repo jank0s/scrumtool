@@ -1,15 +1,21 @@
 <h2>Users</h2>
 <div class="panel panel-default panel-list-user">
     <div class="panel-heading">
-        <h5 class="pull-left">User list</h5>
-        <%= button_to "Add user", new_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
+        <%= form_tag users_path, :method => 'get' do %>
+            <div class="input-group input-group-search pull-left">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                <%= text_field_tag :search, params[:search], :class => 'form-control' %>
+            </div>
+            <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
+        <% end %>
+        <%= button_to "Add user", new_user_path, :class => "btn btn-primary pull-right", :method => :get %>
         <div class="clear"></div>
     </div>
 
     <!-- Table -->
     <table class="table">
         <thead>
-          <tr>
+        <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Username</th>
@@ -19,16 +25,16 @@
         </tr>
         </thead>
         <tbody>
-            <% @users.each do |user| %>
-                <tr>
-                    <td><%= user.id %></td>
-                    <td><%= user.name %> <%= user.surname %></td>
-                    <td><%= user.username %></td>
-                    <td><%= user.email %></td>
-                    <td><%= user.role.name %></td>
-                    <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get  %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get  %></td>
-                </tr>
-            <% end %>
+        <% @users.each do |user| %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %> <%= user.surname %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role.name %></td>
+                <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get %></td>
+            </tr>
+        <% end %>
         </tbody>
     </table>
 </div>

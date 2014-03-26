@@ -68,12 +68,16 @@
   padding: 15px;
   margin: 0 auto;
 }
-.input-group-addon {
+#form-add-user .input-group-addon {
     min-width: 200px;
     text-align: right !important;
 }
 
 /*user list panel*/
 .panel-list-user form input{
+    margin-right: 10px;
+}
+.input-group-search {
+    width: 300px;
     margin-right: 10px;
 }

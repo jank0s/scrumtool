@@ -1,5 +1,5 @@
 <h2>Users</h2>
-<div class="panel panel-default">
+<div class="panel panel-default panel-list-user">
     <div class="panel-heading">
         <h5 class="pull-left">User list</h5>
         <%= button_to "Add user", new_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
@@ -26,7 +26,7 @@
                     <td><%= user.username %></td>
                     <td><%= user.email %></td>
                     <td><%= user.role.name %></td>
-                    <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get  %></td>
+                    <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get  %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get  %></td>
                 </tr>
             <% end %>
         </tbody>

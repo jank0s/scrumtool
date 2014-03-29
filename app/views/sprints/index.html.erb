@@ -1,2 +1,10 @@
 <h1>Sprints#index</h1>
 <p>Find me in app/views/sprints/index.html.erb</p>
+
+<% @sprints.each do |sprint| %>
+    <b>Sprint <%= sprint.number %> <%= sprint.start %> - <%= sprint.end %> Velocity <%= sprint.velocity %> </b>
+    <br />
+<% end %>
+<% if @sprints.size == 0 %>
+    <em>No sprints yet.</em>
+<% end %>

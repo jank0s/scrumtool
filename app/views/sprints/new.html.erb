@@ -1,0 +1,51 @@
+<% if @sprint.errors.any? %>
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@sprint.errors.count, "error") %>.
+    </div>
+<% end %>
+<div id="form-add-user">
+  <%= form_for @sprint do |f| %>
+      <h2>Add new sprint</h2>
+      <% if @sprint.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @sprint.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <p>
+      <div class="input-group">
+        <%= f.label :number, "Sprint number", :class => "input-group-addon" %>
+        <%= f.text_field :number, :class => "form-control" %>
+      </div>
+      </p>
+
+      <p>
+      <div class="input-group">
+        <%= f.label :start, "Sprint start", :class => "input-group-addon" %>
+        <%= f.text_field :start, :class => "form-control" %>
+      </div>
+      </p>
+
+      <p>
+      <div class="input-group">
+        <%= f.label :end, "Sprint end", :class => "input-group-addon" %>
+        <%= f.text_field :end, :class => "form-control" %>
+      </div>
+      </p>
+
+      <p>
+      <div class="input-group">
+        <%= f.label :velocity, "Sprint velocity", :class => "input-group-addon" %>
+        <%= f.text_field :velocity, :class => "form-control" %>
+      </div>
+      </p>
+
+      <p class="buttons">
+        <%= f.submit "Add sprint", :class => "btn btn-primary pull-right" %>
+      </p>
+  <% end %>
+
+</div>

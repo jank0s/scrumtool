@@ -31,8 +31,8 @@
                 <td><%= project.id %></td>
                 <td><%= project.name %></td>
                 <td><%= project.description %></td>
-                <td><%=  %></td>
-                <td><%=  %></td>
+                <td><%= project.scrummaster.name %></td>
+                <td><%= project.productowner.name %></td>
                 <td></td>
                 <td><%= button_to "Remove", project_path(project.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
             </tr>

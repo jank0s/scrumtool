@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
 
 	def index
 		@users = User.all
-		@projects = Project.all
+        @projects=Project.search(params[:search])
 	end
 
 	def new
@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
 	private
 	def project_params
         if admin?
-            params.require(:project).permit(:name, :description)
+            params.require(:project).permit(:name, :description, :scrummaster_id, :productowner_id)
         end
 
     end

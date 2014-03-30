@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
 	belongs_to :scrummaster, :class_name => "User"
 	belongs_to :productowner, :class_name => "User"
-    validates :name, presence: true, length: {minimum: 3}, uniqueness: true
+    validates :name, presence: true, length: {minimum: 3, maximum: 6}, uniqueness: true
     validates :description, presence: true, length: {minimum: 3}
     validates :scrummaster_id, presence: true
 

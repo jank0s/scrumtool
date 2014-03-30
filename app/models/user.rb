@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
     belongs_to :role
+    has_many :teammembers
+    has_many :projects, through: :teammembers
     has_many :scrummaster_projects, :class_name => "Project", :foreign_key => "scrummaster_id"
     has_many :productowner_projects, :class_name => "Project", :foreign_key => "productowner_id"
     before_create :create_remember_token

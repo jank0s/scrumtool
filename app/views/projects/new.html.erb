@@ -41,13 +41,15 @@
 
             </div> 
         </p>
-       <!--
+
+       
         <p>
             <div class="input-group">
-                <%= f.label :description, "Project Team Members", :class => "input-group-addon" %>
-                <%= f.text_field :description, :class => "form-control" %>
+                <!-- popravi v novo vrstico, da se prov zbira -->
+                <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
+                <%= f.collection_check_boxes :user_ids, User.all, :id, :name, :item_wrapper_class => 'block' %>
             </div> 
-        </p>-->
+        </p>
 
         <p class="buttons">
             <%= f.submit "Add project", :class => "btn btn-primary pull-right" %>

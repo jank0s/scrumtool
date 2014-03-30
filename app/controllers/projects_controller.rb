@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
 
 	def index
 		@users = User.all
-		@projects = Project.all
+        @projects=Project.search(params[:search])
 	end
 
 	def new
@@ -20,7 +20,18 @@ class ProjectsController < ApplicationController
         end
 	end
 
-	
+    def edit
+        @project = Project.find(params[:id])
+    end	
+
+    def update
+        @project = Project.find(params[:id])
+        if @project.update_attributes(project_params)
+            redirect_to projects_url
+        else
+            render 'edit'
+        end
+    end
 
     def destroy
     	Project.find(params[:id]).destroy
@@ -30,7 +41,7 @@ class ProjectsController < ApplicationController
 	private
 	def project_params
         if admin?
-            params.require(:project).permit(:name, :description)
+            params.require(:project).permit(:name, :description, :scrummaster_id, :productowner_id)
         end
 
     end

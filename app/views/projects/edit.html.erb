@@ -3,9 +3,13 @@
         The form contains <%= pluralize(@project.errors.count, "error") %>.
     </div>
 <% end %>
+
+    <%= button_to "Add Sprint", new_sprint_path, :class => "btn btn-primary pull-right", :method => :get %>
+
 <div id="form-add-user">
     <%= form_for @project do |f| %>
-        <h2>Add new project</h2>
+        <h2>Edit Project - <%= @project.name %> </h2>
+        
           <% if @project.errors.any? %>
             <div id="error_explanation">
               <ul>
@@ -15,6 +19,7 @@
               </ul>
             </div>
         <% end %>
+        
         <p>
             <div class="input-group">
                 <%= f.label :name, "Project name", :class => "input-group-addon" %>
@@ -27,32 +32,23 @@
                 <%= f.text_field :description, :class => "form-control" %>
             </div> 
         </p>
-        <p>
+         <p>
             <div class="input-group">
                 <%= f.label :scrummaster_id, "Project Scrum Master", :class => "input-group-addon" %>
                 <%= f.collection_select :scrummaster_id, User.all, :id, :name, {}, {:class => "form-control"} %>
 
             </div> 
         </p>
-         <p>
+        <p>
             <div class="input-group">
                 <%= f.label :productowner_id, "Project Product Owner", :class => "input-group-addon" %>
                 <%= f.collection_select :productowner_id, User.all, :id, :name, {}, {:class => "form-control"} %>
 
             </div> 
         </p>
-
-       
-        <p>
-            <div class="input-group">
-                <!-- popravi v novo vrstico, da se prov zbira -->
-                <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
-                <%= f.collection_check_boxes :user_ids, User.all, :id, :name, :item_wrapper_class => 'block' %>
-            </div> 
-        </p>
-
+        
         <p class="buttons">
-            <%= f.submit "Add project", :class => "btn btn-primary pull-right" %>
+            <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
         </p>
     <% end %>
 

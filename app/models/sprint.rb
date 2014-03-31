@@ -1,5 +1,7 @@
 class Sprint < ActiveRecord::Base
 
+  belongs_to :project
+
   validates :start, presence: true
   validates :end, presence: true
   validates :velocity, presence: true, numericality: {only_integer: true}

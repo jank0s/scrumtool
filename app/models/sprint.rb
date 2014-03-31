@@ -4,7 +4,7 @@ class Sprint < ActiveRecord::Base
   validates :end, presence: true
   validates :velocity, presence: true, numericality: {only_integer: true}
 
-  validate :check_start_not_in_past, :check_start_before_end
+  validate :check_start_not_in_past, :check_start_before_end, :check_overlapping
 
   private
   def check_start_before_end
@@ -21,6 +21,28 @@ class Sprint < ActiveRecord::Base
     else
       errors.add(:start, "cannot be in past")
     end
+  end
+
+  def check_overlapping
+
+    sprint = Sprint.last
+
+    if sprint == nil
+      return true
+    else
+      if sprint.end > self[:start]
+        errors.add(:start, "new sprint should be after all existing sprints")
+      else
+        return true
+      end
+    end
+=begin
+    sprints = Sprint.all
+
+    sprints.each do |sprint|
+      if self[:start]
+    end
+=end
   end
 
 end

@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
 	belongs_to :productowner, :class_name => 'User'
 	has_many :teammembers
 	has_many :users, through: :teammembers
+  has_many :sprints
     validates :name, presence: true, length: {minimum: 3, maximum: 6}, uniqueness: true
     validates :description, presence: true, length: {minimum: 3}
     validates :scrummaster_id, presence: true

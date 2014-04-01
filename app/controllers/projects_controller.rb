@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def create
+        puts params
 		@project = Project.new(project_params)
         if @project.save
             redirect_to projects_url

@@ -48,10 +48,10 @@
         </p>
 
         <p>
-            <div class="input-group">
+            <div class="input-group btn-group">
                 <!-- popravi v novo vrstico, da se prov zbira -->
                 <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
-                <%= f.collection_check_boxes :user_ids, User.all, :id, :username, :item_wrapper_class => 'block' %>
+                <%= f.select :user_ids, User.all.collect {|x| [x.username, x.id]}, {}, :multiple => true, :class => "form-control multiselect" %>
             </div>
         </p>
 

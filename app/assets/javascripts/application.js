@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap.min
+//= require bootstrap-multiselect
+
+$(document).ready(function() {
+    $('.multiselect').multiselect();
+});

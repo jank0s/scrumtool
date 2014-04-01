@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
 	private
 	def project_params
         if admin?
-            params.require(:project).permit(:name, :description, :scrummaster_id, :productowner_id)
+            params.require(:project).permit(:name, :description, :scrummaster_id, :productowner_id, :user_ids => [])
         end
 
     end

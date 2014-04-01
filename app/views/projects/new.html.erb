@@ -38,7 +38,6 @@
             <div class="input-group">
                 <%= f.label :productowner_id, "Project Product Owner", :class => "input-group-addon" %>
                 <%= f.collection_select :productowner_id, User.all, :id, :name, {}, {:class => "form-control"} %>
-
             </div> 
         </p>
 

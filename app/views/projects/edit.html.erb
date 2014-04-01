@@ -46,7 +46,15 @@
 
             </div> 
         </p>
-        
+
+        <p>
+            <div class="input-group">
+                <!-- popravi v novo vrstico, da se prov zbira -->
+                <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
+                <%= f.collection_check_boxes :user_ids, User.all, :id, :name, :item_wrapper_class => 'block' %>
+            </div>
+        </p>
+
         <p class="buttons">
             <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
         </p>

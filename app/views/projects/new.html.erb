@@ -30,23 +30,21 @@
         <p>
             <div class="input-group">
                 <%= f.label :scrummaster_id, "Project Scrum Master", :class => "input-group-addon" %>
-                <%= f.collection_select :scrummaster_id, User.all, :id, :name, {}, {:class => "form-control"} %>
+                <%= f.collection_select :scrummaster_id, User.all, :id, :user, {}, {:class => "form-control"} %>
 
             </div> 
         </p>
          <p>
             <div class="input-group">
                 <%= f.label :productowner_id, "Project Product Owner", :class => "input-group-addon" %>
-                <%= f.collection_select :productowner_id, User.all, :id, :name, {}, {:class => "form-control"} %>
+                <%= f.collection_select :productowner_id, User.all, :id, :user, {}, {:class => "form-control"} %>
             </div> 
         </p>
-
-       
         <p>
-            <div class="input-group btn-group">
+            <div class="input-group">
                 <!-- popravi v novo vrstico, da se prov zbira -->
                 <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
-                <%= f.select :user_ids, User.all.collect {|x| [x.username, x.id]}, {}, :multiple => true, :class => "form-control multiselect" %>
+                <%= f.select :user_ids, User.all.collect {|x| [x.user, x.id]}, {}, :multiple => true, :size => "7", :class => "form-control" %>
             </div> 
         </p>
 

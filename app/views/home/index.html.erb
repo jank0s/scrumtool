@@ -1,2 +1,13 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div id="form-add-user">
+    <%= form_for @user do |f| %>
+        <p>
+            <div class="input-group">
+                <%= f.label :activeproject_id, "Active project", :class => "input-group-addon" %>
+                <%= f.collection_select :activeproject_id, @user.projects, :id, :name, {}, {:class => "form-control"} %>
+            </div>
+        </p>
+        <p class="buttons">
+            <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
+        </p>
+    <% end %>
+</div>

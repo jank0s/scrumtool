@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401073106) do
+ActiveRecord::Schema.define(version: 20140401082015) do
 
   create_table "productowners", force: true do |t|
     t.datetime "created_at"
@@ -29,11 +29,6 @@ ActiveRecord::Schema.define(version: 20140401073106) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "scrummasters", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -65,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140401073106) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.integer  "role_id"
+    t.integer  "activeproject_id"
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"

@@ -2,7 +2,7 @@ class HomeController < ApplicationController
     before_action :signed_in_user, only: [:index]
 
     def index
-        @projects=Project.all
+        @user=current_user
     end
 
     private

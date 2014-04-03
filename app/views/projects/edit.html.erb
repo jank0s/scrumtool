@@ -4,8 +4,6 @@
     </div>
 <% end %>
 
-    <%= button_to "Add Sprint", new_sprint_path, :class => "btn btn-primary pull-right", :method => :get %>
-
 <div id="form-add-user">
     <%= form_for @project do |f| %>
         <h2>Edit Project - <%= @project.name %> </h2>

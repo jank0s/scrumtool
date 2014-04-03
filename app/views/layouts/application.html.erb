@@ -39,7 +39,9 @@
 					            <li><a href="#">Unfinished stories</a></li>
 					            <li><a href="#">Finished stories</a></li>
 					            <li><a href="#">Future releases</a></li>
+                                <% if scrummaster? %>
                                 <li><%= link_to "Manage sprints", sprints_path %></li>
+                                <% end %>
 				          	</ul>
 				        </li>
 				        <li class="dropdown">

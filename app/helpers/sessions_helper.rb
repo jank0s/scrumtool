@@ -31,5 +31,14 @@ module SessionsHelper
     current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
     cookies.delete(:remember_token)
     self.current_user = nil
-	end
+  end
+
+  def scrummaster?
+    ap = current_user.activeproject_id
+    if ap != nil
+      return current_user.id == Project.find(ap).scrummaster_id
+    end
+      false
+  end
+
 end

@@ -5,6 +5,7 @@ class Sprint < ActiveRecord::Base
   validates :start, presence: true
   validates :end, presence: true
   validates :velocity, presence: true, numericality: {only_integer: true}
+  validates :project_id, presence: true
 
   validate :check_start_not_in_past, :check_start_before_end, :check_overlapping
 

@@ -1,7 +1,7 @@
 class SprintsController < ApplicationController
 
   def index
-    @sprints = Sprint.all
+    @sprints = Sprint.where(project_id: current_user.activeproject_id)
   end
 
   def new
@@ -20,6 +20,8 @@ class SprintsController < ApplicationController
 
     @sprint = Sprint.new(sprint_params)
     @sprint.number = num
+
+    @sprint.project_id = current_user.activeproject_id
 
     if @sprint.save
       redirect_to sprints_url

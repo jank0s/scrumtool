@@ -34,7 +34,18 @@
           <td><%= sprint.velocity %></td>
           <td><%=  %></td>
           <td></td>
-          <td><%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
+
+          <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+
+          <% if !sprint_running?(sprint) %>
+            <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+          <% else %>
+            <b>RUNNING</b>
+          <% end %>
+
+          </td>
+
+
         </tr>
     <% end %>
     </tbody>

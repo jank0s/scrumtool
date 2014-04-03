@@ -1,0 +1,34 @@
+<% if @sprint.errors.any? %>
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@sprint.errors.count, "error") %>.
+    </div>
+<% end %>
+
+
+<div id="form-add-user">
+  <%= form_for @sprint do |f| %>
+      <h2>Edit Sprint - <%= @sprint.number %>: <%= @sprint.start %> - <%= @sprint.end %> </h2>
+
+      <% if @sprint.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @sprint.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <p>
+      <div class="input-group">
+        <%= f.label :velocity, "Sprint velocity", :class => "input-group-addon" %>
+        <%= f.text_field :velocity, :class => "form-control" %>
+      </div>
+
+      </p>
+      <p class="buttons">
+        <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
+      </p>
+  <% end %>
+
+</div>

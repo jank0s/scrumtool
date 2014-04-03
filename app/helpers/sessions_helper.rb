@@ -41,4 +41,9 @@ module SessionsHelper
       false
   end
 
+  def sprint_running?(sprint)
+    now = Date.today
+
+    sprint.start <= now && sprint.end >= now
+  end
 end

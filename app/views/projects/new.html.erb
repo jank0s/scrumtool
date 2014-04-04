@@ -17,37 +17,39 @@
         <% end %>
         <p>
             <div class="input-group">
-                <%= f.label :name, "Project name", :class => "input-group-addon" %>
+                <%= f.label :name, "Project name *", :class => "input-group-addon" %>
                 <%= f.text_field :name, :class => "form-control" %>
             </div> 
         </p>
         <p>
             <div class="input-group">
-                <%= f.label :description, "Project description", :class => "input-group-addon" %>
+                <%= f.label :description, "Project description *", :class => "input-group-addon" %>
                 <%= f.text_field :description, :class => "form-control" %>
+            </div> 
+        </p>
+            <p>
+            <div class="input-group">
+                <!-- popravi v novo vrstico, da se prov zbira -->
+                <%= f.label :productowner_id, "Team Members *", :class => "input-group-addon" %>
+                <%= f.select :user_ids, User.all.collect {|x| [x.user, x.id]}, {}, :multiple => true, :size => "7", :class => "form-control" %>
             </div> 
         </p>
         <p>
             <div class="input-group">
                 <%= f.label :scrummaster_id, "Project Scrum Master", :class => "input-group-addon" %>
-                <%= f.collection_select :scrummaster_id, User.all, :id, :user, {}, {:class => "form-control"} %>
+                <%= f.collection_select :scrummaster_id, User.all, :id, :user, {:include_blank => true, :class => "form-control"} %>
 
             </div> 
         </p>
          <p>
             <div class="input-group">
                 <%= f.label :productowner_id, "Project Product Owner", :class => "input-group-addon" %>
-                <%= f.collection_select :productowner_id, User.all, :id, :user, {}, {:class => "form-control"} %>
+                <%= f.collection_select :productowner_id, User.all, :id, :user, {:include_blank => true, :class => "form-control"} %>
             </div> 
         </p>
         <p>
-            <div class="input-group">
-                <!-- popravi v novo vrstico, da se prov zbira -->
-                <%= f.label :productowner_id, "Team Members", :class => "input-group-addon" %>
-                <%= f.select :user_ids, User.all.collect {|x| [x.user, x.id]}, {}, :multiple => true, :size => "7", :class => "form-control" %>
-            </div> 
+            Fields marked with a * are required.
         </p>
-
         <p class="buttons">
             <%= f.submit "Add project", :class => "btn btn-primary pull-right" %>
         </p>

@@ -5,10 +5,9 @@ class Project < ActiveRecord::Base
     has_many :activeproject_users, :class_name => "User", :foreign_key => "activeproject_id"
 	has_many :users, through: :teammembers
   has_many :sprints
-    validates :name, presence: true, length: {minimum: 3, maximum: 6}, uniqueness: true
-    validates :description, presence: true, length: {minimum: 3}
-    validates :scrummaster_id, presence: true
-
+    validates :name, presence: true, length: {minimum: 2, maximum: 255}, uniqueness: true
+    validates :description, presence: true, length: {minimum: 2}
+    validates :teammembers, presence: true
 
 
     def self.search(search)

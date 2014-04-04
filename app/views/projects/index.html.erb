@@ -21,7 +21,6 @@
             <th>Description</th>
             <th>Scrum Master</th>
             <th>Product Owner</th>
-            <th>Team Members</th>
             <th></th>
         </tr>
         </thead>
@@ -31,14 +30,13 @@
                 <td><%= project.id %></td>
                 <td><%= project.name %></td>
                 <td><%= project.description %></td>
-                <td><%= project.scrummaster.name %></td>
-                <td><%= project.productowner.name %></td>
-                <td>
+                <td><%= project.try(:scrummaster).try(:name) %></td>
+                <td><%= project.try(:productowner).try(:name) %></td>
+                
                     <!-- tole je verjetno prov, sam ne znam dodat 
                 <%# project.teammembers.each do |teamember| %>
                     <%#= teammember.name %><br />
                 <%# end %>-->
-                </td>
                 <td><%= button_to "Edit", edit_project_path(project.id), :class => "btn btn-xs btn-success pull-right", :method => :get %><%= button_to "Remove", project_path(project.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
 
                

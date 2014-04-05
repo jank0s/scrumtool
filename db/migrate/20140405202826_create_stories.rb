@@ -4,7 +4,7 @@ class CreateStories < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.text :test
-      t.integer :priority
+      t.integer :priority_id
       t.integer :value
 
       t.timestamps

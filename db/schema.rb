@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140405202858) do
     t.string   "name"
     t.text     "description"
     t.text     "test"
-    t.integer  "priority"
+    t.integer  "priority_id"
     t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"

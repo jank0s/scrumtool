@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401082015) do
+ActiveRecord::Schema.define(version: 20140405202858) do
+
+  create_table "priorities", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "productowners", force: true do |t|
     t.datetime "created_at"
@@ -33,17 +39,22 @@ ActiveRecord::Schema.define(version: 20140401082015) do
     t.datetime "updated_at"
   end
 
-  create_table "scrummasters", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "sprints", force: true do |t|
     t.integer  "number"
     t.date     "start"
     t.date     "end"
     t.integer  "velocity"
     t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stories", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "test"
+    t.integer  "priority"
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -81,3 +81,8 @@
     width: 300px;
     margin-right: 10px;
 }
+
+/* product backlog */
+.backlog-buttons form input{
+    margin: 10px;
+}

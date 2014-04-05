@@ -1,8 +1,10 @@
 <h1>Product backlog</h1>
-<% if scrummaster? %>
-    <%= button_to "Manage sprints", sprints_path, :class => "btn btn-primary pull-right", :method => :get %>
-<% end %>git push
-<%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
+<div class="backlog-buttons">
+    <% if scrummaster? %>
+        <%= button_to "Manage sprints", sprints_path, :class => "btn btn-primary pull-right", :method => :get %>
+    <% end %>
+    <%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
+</div>
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">

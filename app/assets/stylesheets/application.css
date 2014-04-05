@@ -83,6 +83,9 @@
     min-width: 200px;
     text-align: right !important;
 }
+#form-add .input-group {
+    margin-bottom: 10px;
+}
 
 /*user list panel*/
 .panel-list-user form input{

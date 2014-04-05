@@ -4,52 +4,40 @@
     </div>
 <% end %>
 
-<div id="form-add-user">
+<div id="form-add">
     <%= form_for @project do |f| %>
         <h2>Edit Project - <%= @project.name %> </h2>
 
-          <% if @project.errors.any? %>
+        <% if @project.errors.any? %>
             <div id="error_explanation">
-              <ul>
-                <% @project.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
-                <% end %>
-              </ul>
+                <ul>
+                    <% @project.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                    <% end %>
+                </ul>
             </div>
         <% end %>
-
-        <p>
-            <div class="input-group">
-                <%= f.label :name, "Project name", :class => "input-group-addon" %>
-                <%= f.text_field :name, :class => "form-control" %>
-            </div>
-        </p>
-        <p>
-            <div class="input-group">
-                <%= f.label :description, "Project description", :class => "input-group-addon" %>
-                <%= f.text_field :description, :class => "form-control" %>
-            </div>
-        </p>
-        <p>
+        <div class="input-group">
+            <%= f.label :name, "Project name", :class => "input-group-addon" %>
+            <%= f.text_field :name, :class => "form-control" %>
+        </div>
+        <div class="input-group">
+            <%= f.label :description, "Project description", :class => "input-group-addon" %>
+            <%= f.text_field :description, :class => "form-control" %>
+        </div>
         <div class="input-group">
             <%= f.label :teammember_id, "Team Members", :class => "input-group-addon" %>
-            <%= f.select :user_ids, User.all.collect {|x| [x.user, x.id]}, {}, :multiple => true, :size => "7", :class => "form-control" %>
+            <%= f.select :user_ids, User.all.collect { |x| [x.user, x.id] }, {}, :multiple => true, :size => "7", :class => "form-control" %>
         </div>
-        </p>
-        <p>
         <div class="input-group">
             <%= f.label :scrummaster_id, "Project Scrum Master", :class => "input-group-addon" %>
             <%= f.collection_select :scrummaster_id, User.all, :id, :user, {:include_blank => true}, {:class => "form-control"} %>
 
         </div>
-        </p>
-        <p>
         <div class="input-group">
             <%= f.label :productowner_id, "Project Product Owner", :class => "input-group-addon" %>
             <%= f.collection_select :productowner_id, User.all, :id, :user, {:include_blank => true}, {:class => "form-control"} %>
         </div>
-        </p>
-        
         <p class="buttons">
             <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
         </p>

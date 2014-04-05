@@ -50,11 +50,13 @@ ActiveRecord::Schema.define(version: 20140405202858) do
   end
 
   create_table "stories", force: true do |t|
+    t.integer  "project_id"
     t.string   "name"
     t.text     "description"
     t.text     "test"
     t.integer  "priority_id"
     t.integer  "value"
+    t.boolean  "finished"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -8,8 +8,8 @@ class Project < ActiveRecord::Base
     validates :name, presence: true, length: {minimum: 2, maximum: 255}, uniqueness: true
     validates :description, presence: true, length: {minimum: 2}
     validates :teammembers, presence: true
-
-
+    validate :productowner_cannot_be_scrummaster
+    
     def self.search(search)
         if search
             find(:all, :conditions => ['name LIKE ? OR description LIKE ?', "%#{search}%", "%#{search}%"])
@@ -18,4 +18,10 @@ class Project < ActiveRecord::Base
         end
     end
 
+    def productowner_cannot_be_scrummaster
+        errors.add(:productowner, "cannot be same as scrummaster") unless 
+            productowner != scrummaster or productowner.nil? or scrummaster.nil?
+    end
+    
+  
 end

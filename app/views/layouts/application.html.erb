@@ -24,8 +24,8 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<% if signed_in? %>
-                    <% if activeproject? %>
-                        <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav">
+                        <% if activeproject? %>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project wall <b class="caret"></b></a>
                                 <ul class="dropdown-menu">

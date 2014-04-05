@@ -24,38 +24,40 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<% if signed_in? %>
-					<ul class="nav navbar-nav">
-						<li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Project wall <b class="caret"></b></a>
-				          	<ul class="dropdown-menu">
-					            <li><a href="#">Daily scrum</a></li>
-					            <li><a href="#">Discussion</a></li>
-					            <li><a href="#">Documentation</a></li>
-				          	</ul>
-				        </li>
-                        <li><%= link_to "Product backlog", stories_path %></li>
-				        <li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sprint backlog <b class="caret"></b></a>
-				          	<ul class="dropdown-menu">
-					            <li><a href="#">All stories</a></li>
-					            <li><a href="#">My stories</a></li>
-				          	</ul>
-				        </li>
-				        <li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">My tasks <b class="caret"></b></a>
-				          	<ul class="dropdown-menu">
-					            <li><a href="#">My tasks</a></li>
-					            <li><a href="#">Today's work</a></li>
-				          	</ul>
-				        </li><li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Progress reports <b class="caret"></b></a>
-				          	<ul class="dropdown-menu">
-					            <li><a href="#">Burn down chart</a></li>
-					            <li><a href="#">Team involvement</a></li>
-					            <li><a href="#">Realisation</a></li>
-					            <li><a href="#">Decomposition</a></li>
-				          	</ul>
-				        </li>
+                    <% if activeproject? %>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project wall <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Daily scrum</a></li>
+                                    <li><a href="#">Discussion</a></li>
+                                    <li><a href="#">Documentation</a></li>
+                                </ul>
+                            </li>
+                            <li><%= link_to "Product backlog", stories_path %></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sprint backlog <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">All stories</a></li>
+                                    <li><a href="#">My stories</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My tasks <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">My tasks</a></li>
+                                    <li><a href="#">Today's work</a></li>
+                                </ul>
+                            </li><li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Progress reports <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Burn down chart</a></li>
+                                    <li><a href="#">Team involvement</a></li>
+                                    <li><a href="#">Realisation</a></li>
+                                    <li><a href="#">Decomposition</a></li>
+                                </ul>
+                            </li>
+                        <% end %>
 				        <% if admin? %>
 							<li class="dropdown">
 					        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>

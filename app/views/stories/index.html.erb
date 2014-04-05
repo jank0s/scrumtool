@@ -2,3 +2,23 @@
 <% if scrummaster? %>
     <%= button_to "Manage sprints", sprints_path, :class => "btn btn-primary pull-right", :method => :get %>
 <% end %>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#unfinished-stories" data-toggle="tab">Unfinished stories</a></li>
+    <li><a href="#finished-stories" data-toggle="tab">Finished stories</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="unfinished-stories">
+        <h2>User stories for current sprint</h2>
+        ...
+        <h2>Remaining stories</h2>
+        ...
+    </div>
+    <div class="tab-pane" id="finished-stories">
+        <h2>Finished stories</h2>
+        ...
+    </div>
+</div>

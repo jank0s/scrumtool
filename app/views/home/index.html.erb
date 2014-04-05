@@ -1,13 +1,35 @@
-<div id="form-add-user">
+<div id="form-active-project">
     <%= form_for @user do |f| %>
-        <p>
-            <div class="input-group">
-                <%= f.label :activeproject_id, "Active project", :class => "input-group-addon" %>
-                <%= f.collection_select :activeproject_id, @user.projects, :id, :name, {:include_blank => true}, {:class => "form-control"} %>
-            </div>
-        </p>
-        <p class="buttons">
-            <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
-        </p>
+        <h1>Project wall</h1>
+        <div class="input-group pull-right">
+            <%= f.label :activeproject_id, "Active project", :class => "input-group-addon" %>
+            <%= f.collection_select :activeproject_id, @user.projects, :id, :name, {:include_blank => true}, {:class => "form-control"} %>
+        </div>
+        <div class="clear"></div>
     <% end %>
 </div>
+
+<% if activeproject? %>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
+        <li><a href="#discussion" data-toggle="tab">Discussion</a></li>
+        <li><a href="#documentation" data-toggle="tab">Documentation</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="scrum">
+            <h2>Daily scrum</h2>
+            ...
+        </div>
+        <div class="tab-pane" id="discussion">
+            <h2>Discussion</h2>
+            ...
+        </div>
+        <div class="tab-pane" id="documentation">
+            <h2>Documentation</h2>
+            ...
+        </div>
+    </div>
+<% end %>

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     validates :username, presence: true, length: {minimum: 3}, uniqueness: true
     validates :name, presence: true
     validates :surname, presence: true
-    validates :email, presence: true, format: {with: VALID_EMAIL_REGEX}
+    validates :email, format: {with: VALID_EMAIL_REGEX}, :allow_blank => true
     validates :role_id, presence: true
     validates :password, length: {minimum: 3}, :if => :validate_password?
     validates :password_confirmation, presence: true, :if => :validate_password?

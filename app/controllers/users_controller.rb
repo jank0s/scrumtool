@@ -44,7 +44,6 @@ class UsersController < ApplicationController
         else
             params.require(:user).permit(:username, :password, :password_confirmation, :email, :name, :surname, :activeproject_id)
         end
-
     end
 
     def signed_in_user

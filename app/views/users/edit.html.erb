@@ -3,7 +3,7 @@
         The form contains <%= pluralize(@user.errors.count, "error") %>.
     </div>
 <% end %>
-<div id="form-add-user">
+<div id="form-add">
     <%= form_for @user do |f| %>
         <h2>Edit user - <%= @user.name %> <%= @user.surname %></h2>
         <% if @user.errors.any? %>

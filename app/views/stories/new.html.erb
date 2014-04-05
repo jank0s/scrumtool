@@ -1,0 +1,32 @@
+<% if @story.errors.any? %>
+    <div class="alert alert-danger">
+        The form contains <%= pluralize(@story.errors.count, "error") %>.
+    </div>
+<% end %>
+<div id="form-add">
+    <%= form_for @story do |f| %>
+        <h2>Add new story</h2>
+          <% if @story.errors.any? %>
+            <div id="error_explanation">
+              <ul>
+                <% @story.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <p>
+            <div class="input-group">
+                <%= f.label :name, "Name *", :class => "input-group-addon" %>
+                <%= f.text_field :name, :class => "form-control" %>
+            </div> 
+        </p>
+        <p>
+            Fields marked with * are required.
+        </p>
+        <p class="buttons">
+            <%= f.submit "Add story", :class => "btn btn-primary pull-right" %>
+        </p>
+    <% end %>
+
+</div>

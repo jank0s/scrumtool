@@ -73,6 +73,17 @@
     text-align: right !important;
 }
 
+/*form add*/
+#form-add{
+    max-width: 600px;
+    padding: 15px;
+    margin: 0 auto;
+}
+#form-add .input-group-addon {
+    min-width: 200px;
+    text-align: right !important;
+}
+
 /*user list panel*/
 .panel-list-user form input{
     margin-right: 10px;

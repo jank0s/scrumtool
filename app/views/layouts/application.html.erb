@@ -33,17 +33,7 @@
 					            <li><a href="#">Documentation</a></li>
 				          	</ul>
 				        </li>
-				        <li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Product backlog <b class="caret"></b></a>
-				          	<ul class="dropdown-menu">
-					            <li><a href="#">Unfinished stories</a></li>
-					            <li><a href="#">Finished stories</a></li>
-					            <li><a href="#">Future releases</a></li>
-                                <% if scrummaster? %>
-                                <li><%= link_to "Manage sprints", sprints_path %></li>
-                                <% end %>
-				          	</ul>
-				        </li>
+                        <li><%= link_to "Product backlog", stories_path %></li>
 				        <li class="dropdown">
 				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sprint backlog <b class="caret"></b></a>
 				          	<ul class="dropdown-menu">

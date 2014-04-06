@@ -1,6 +1,7 @@
 class Story < ActiveRecord::Base
     belongs_to :project
     belongs_to :priority
+    has_many :tasks
 
     validates :project_id, :presence => true
     validates :name, :presence => true, length: {minimum: 3}, uniqueness: true

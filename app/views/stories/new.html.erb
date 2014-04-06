@@ -29,7 +29,7 @@
         </div>
         <div class="input-group">
             <%= f.label :role_id, "Priority *", :class => "input-group-addon" %>
-            <%= f.collection_select :priority_id, Priority.all, :id, :name, {}, {:class => "form-control"} %>
+            <%= f.collection_select :priority_id, Priority.all, :id, :name, {:include_blank => true}, {:class => "form-control"} %>
         </div>
         <div class="input-group">
             <%= f.label :name, "Business value (estimate)", :class => "input-group-addon" %>
@@ -37,6 +37,9 @@
         </div>
         <p class="buttons">
             <%= f.submit "Add story", :class => "btn btn-primary pull-right" %>
+        </p>
+        <p>
+            Fields marked with a * are required.
         </p>
     <% end %>
 

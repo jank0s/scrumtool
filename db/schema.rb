@@ -39,6 +39,11 @@ ActiveRecord::Schema.define(version: 20140405202858) do
     t.datetime "updated_at"
   end
 
+  create_table "scrummasters", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sprints", force: true do |t|
     t.integer  "number"
     t.date     "start"

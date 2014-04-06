@@ -52,11 +52,17 @@
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
-                            <%= button_to("Tasks", {:controller => "tasks", :action => "new", :id =>story.id}, :class => "btn btn-xs btn-success pull-right")%>
+                            <%= button_to("Tasks", {:controller => "tasks", :action => "new", :id =>story.id}, :class => "btn btn-xs btn-primary pull-right")%>
                             <div class="clear"></div>
                         </div>
                         <div class="panel-body">
                             <%= story.description %>
+
+                            <% @tasks = Task.where(story_id: story.id) %>
+                            <% @tasks.each do |task| %>
+                            <%= task.name %>
+                            <br />
+                            <% end %>
                         </div>
                     </div>
                 <% end %>

@@ -86,6 +86,9 @@
 #form-add .input-group {
     margin-bottom: 10px;
 }
+#form-add textarea{
+    height: 200px;
+}
 
 /*user list panel*/
 .panel-list-user form input{

@@ -1,7 +1,9 @@
 <h1>Product backlog</h1>
 <div class="backlog-buttons">
-    <%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
-    <% if scrummaster? %>
+    <% if productowner? || scrummaster? || admin? %>
+        <%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
+    <% end %>
+    <% if scrummaster? || admin? %>
         <%= button_to "Manage sprints", sprints_path, :class => "btn btn-primary pull-right", :method => :get %>
     <% end %>
 </div>

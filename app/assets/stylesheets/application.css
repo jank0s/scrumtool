@@ -62,15 +62,32 @@
   border-top-right-radius: 0;
 }
 
-/*form add user*/
-#form-add-user{
+/*form active project*/
+#form-active-project{
   max-width: 600px;
-  padding: 15px;
-  margin: 0 auto;
 }
-#form-add-user .input-group-addon {
+#form-active-project .input-group-addon {
+    text-align: right !important;
+}
+#form-active-project .input-group {
+    margin-bottom: 20px;
+}
+
+/*form add*/
+#form-add{
+    max-width: 600px;
+    padding: 15px;
+    margin: 0 auto;
+}
+#form-add .input-group-addon {
     min-width: 200px;
     text-align: right !important;
+}
+#form-add .input-group {
+    margin-bottom: 10px;
+}
+#form-add textarea{
+    height: 150px;
 }
 
 /*user list panel*/
@@ -85,4 +102,11 @@
 /* product backlog */
 .backlog-buttons form input{
     margin-right: 10px;
+}
+.part-story{
+    width: 90%;
+    margin-left: 15px;
+}
+.part-story form input{
+    margin-left: 10px;
 }

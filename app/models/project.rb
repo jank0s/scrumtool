@@ -4,7 +4,8 @@ class Project < ActiveRecord::Base
 	has_many :teammembers, :dependent => :destroy
     has_many :activeproject_users, :class_name => "User", :foreign_key => "activeproject_id"
 	has_many :users, through: :teammembers
-  has_many :sprints
+    has_many :sprints
+    has_many :stories
     validates :name, presence: true, length: {minimum: 2, maximum: 255}, uniqueness: true
     validates :description, presence: true, length: {minimum: 2}
     validates :teammembers, presence: true

@@ -1,9 +1,11 @@
 <h1>Product backlog</h1>
 <div class="backlog-buttons">
-    <% if scrummaster? %>
+    <% if productowner? || scrummaster? || admin? %>
+        <%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
+    <% end %>
+    <% if scrummaster? || admin? %>
         <%= button_to "Manage sprints", sprints_path, :class => "btn btn-primary pull-right", :method => :get %>
     <% end %>
-    <%= button_to "Add story", new_story_path, :class => "btn btn-primary pull-right", :method => :get %>
 </div>
 
 <!-- Nav tabs -->
@@ -16,12 +18,73 @@
 <div class="tab-content">
     <div class="tab-pane active" id="unfinished-stories">
         <h2>User stories for current sprint</h2>
-        ...
-        <h2>Remaining stories</h2>
-        ...
+        <div class="part-story">
+            <% if !@sprintStories.empty? %>
+                <% @sprintStories.each do |story| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
+                                value: <%= story.value %>)
+                            </div>
+                            <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="panel-body">
+                            <%= story.description %>
+                        </div>
+                    </div>
+                <% end %>
+            <% else %>
+                No stories for current sprint
+            <% end %>
+        </div>
+        <h2>Remaining user stories</h2>
+        <div class="part-story">
+            <% if !@remainingStories.empty? %>
+                <% @remainingStories.each do |story| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
+                                value: <%= story.value %>)
+                            </div>
+                            <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="panel-body">
+                            <%= story.description %>
+                        </div>
+                    </div>
+                <% end %>
+            <% else %>
+                No remaining user stories
+            <% end %>
+        </div>
     </div>
     <div class="tab-pane" id="finished-stories">
-        <h2>Finished stories</h2>
-        ...
+        <h2>Finished user stories</h2>
+        <div class="part-story">
+            <% if !@finishedStories.empty? %>
+                <% @finishedStories.each do |story| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
+                                value: <%= story.value %>)
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="panel-body">
+                            <%= story.description %>
+                        </div>
+                    </div>
+                <% end %>
+            <% else %>
+                No finished user stories
+            <% end %>
+        </div>
     </div>
 </div>

@@ -16,3 +16,8 @@
 //= require_tree .
 //= require bootstrap.min
 
+$(document).on('ready page:load', function (){
+    $("#form-active-project select").change(function() {
+        $(this).parents("form").submit();
+    });
+});

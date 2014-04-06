@@ -36,9 +36,13 @@ module SessionsHelper
     def scrummaster?
         ap = current_user.activeproject_id
         if  ap != nil
-            return admin? || current_user.id == Project.find(ap).scrummaster_id
+            return current_user.id == Project.find(ap).scrummaster_id
         end
         false
+    end
+
+    def productowner?
+        current_user.activeproject.scrummaster==current_user
     end
 
     def sprint_running?(sprint)

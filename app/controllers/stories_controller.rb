@@ -1,9 +1,10 @@
 class StoriesController < ApplicationController
     before_action :signed_in_user
     before_action :correct_user
-    before_action :po_or_sm, only: [:new, :create]
+    before_action :po_or_sm, only: [:new, :create, :destroy]
 
     def index
+        @stories=current_user.activeproject.stories
     end
 
     def new
@@ -19,6 +20,11 @@ class StoriesController < ApplicationController
         else
             render "new"
         end
+    end
+
+    def destroy
+        Story.find(params[:id]).destroy
+        redirect_to stories_url
     end
 
     private

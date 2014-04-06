@@ -20,7 +20,23 @@
         <h2>User stories for current sprint</h2>
         ...
         <h2>Remaining stories</h2>
-        ...
+        <div class="part-story">
+            <% @stories.each do |story| %>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <%= story.name %> (Priority: <%= story.priority.name %> | Business value: <%= story.value %>)
+                        </div>
+                        <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+                        <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="panel-body">
+                        <%= story.description %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
     </div>
     <div class="tab-pane" id="finished-stories">
         <h2>Finished stories</h2>

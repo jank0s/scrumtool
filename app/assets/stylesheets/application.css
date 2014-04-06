@@ -103,3 +103,10 @@
 .backlog-buttons form input{
     margin-right: 10px;
 }
+.part-story{
+    width: 90%;
+    margin-left: 15px;
+}
+.part-story form input{
+    margin-right: 10px;
+}

@@ -27,6 +27,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def accept
+    redirect_to stories_url
+  end
+
 private
     def signed_in_user
         redirect_to signin_url unless signed_in?

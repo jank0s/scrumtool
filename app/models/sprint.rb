@@ -28,7 +28,7 @@ class Sprint < ActiveRecord::Base
 
   def check_overlapping
 
-    sprint = Sprint.last
+    sprint = Sprint.where(project_id: self[:project_id]).order(:number).last
 
     if sprint == nil
       return true

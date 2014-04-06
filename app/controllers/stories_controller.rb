@@ -5,6 +5,9 @@ class StoriesController < ApplicationController
 
     def index
         @stories=current_user.activeproject.stories
+        @sprintStories=[]
+        @remainingStories=@stories.where(finished: false)
+        @finishedStories=@stories.where(finished: true)
     end
 
     def new

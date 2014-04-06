@@ -22,6 +22,21 @@ class StoriesController < ApplicationController
         end
     end
 
+    def edit
+        @story = Story.find(params[:id])
+    end
+
+    def update
+        @story = Story.find(params[:id])
+        @story.project=current_user.activeproject
+        @story.finished=false
+        if @story.update_attributes(story_params)
+            redirect_to stories_url
+        else
+            render 'edit'
+        end
+    end
+
     def destroy
         Story.find(params[:id]).destroy
         redirect_to stories_url

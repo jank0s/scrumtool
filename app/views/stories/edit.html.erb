@@ -1,0 +1,43 @@
+<% if @story.errors.any? %>
+    <div class="alert alert-danger">
+        The form contains <%= pluralize(@story.errors.count, "error") %>.
+    </div>
+<% end %>
+<div id="form-add">
+    <%= form_for @story do |f| %>
+        <h2>Edit story - <%= @story.name %></h2>
+          <% if @story.errors.any? %>
+            <div id="error_explanation">
+              <ul>
+                <% @story.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <div class="input-group">
+            <%= f.label :name, "Name *", :class => "input-group-addon" %>
+            <%= f.text_field :name, :class => "form-control" %>
+        </div>
+        <div class="input-group">
+            <%= f.label :description, "Description *", :class => "input-group-addon" %>
+            <%= f.text_area :description, :class => "form-control" %>
+        </div>
+        <div class="input-group">
+            <%= f.label :test, "Acceptance tests", :class => "input-group-addon" %>
+            <%= f.text_area :test, :class => "form-control" %>
+        </div>
+        <div class="input-group">
+            <%= f.label :role_id, "Priority *", :class => "input-group-addon" %>
+            <%= f.collection_select :priority_id, Priority.all, :id, :name, {}, {:class => "form-control"} %>
+        </div>
+        <div class="input-group">
+            <%= f.label :name, "Business value (estimate)", :class => "input-group-addon" %>
+            <%= f.text_field :value, :class => "form-control" %>
+        </div>
+        <p class="buttons">
+            <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
+        </p>
+    <% end %>
+
+</div>

@@ -16,16 +16,25 @@
             </div>
         <% end %>
         <div class="input-group">
-            <%= f.label :name, "Name", :class => "input-group-addon" %>
+            <%= f.label :name, "Name *", :class => "input-group-addon" %>
             <%= f.text_field :name, :class => "form-control" %>
         </div>
         <div class="input-group">
-            <%= f.label :description, "Description", :class => "input-group-addon" %>
+            <%= f.label :description, "Description *", :class => "input-group-addon" %>
             <%= f.text_area :description, :class => "form-control" %>
         </div>
-        <p>
-            Fields marked with * are required.
-        </p>
+        <div class="input-group">
+            <%= f.label :test, "Acceptance tests", :class => "input-group-addon" %>
+            <%= f.text_area :test, :class => "form-control" %>
+        </div>
+        <div class="input-group">
+            <%= f.label :role_id, "Priority *", :class => "input-group-addon" %>
+            <%= f.collection_select :priority_id, Priority.all, :id, :name, {}, {:class => "form-control"} %>
+        </div>
+        <div class="input-group">
+            <%= f.label :name, "Business value (estimate)", :class => "input-group-addon" %>
+            <%= f.text_field :value, :class => "form-control" %>
+        </div>
         <p class="buttons">
             <%= f.submit "Add story", :class => "btn btn-primary pull-right" %>
         </p>

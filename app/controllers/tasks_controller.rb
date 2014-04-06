@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    @tasks = Task.where(story_id: 1)
   	@story = Story.find(params[:id])
   	@task = Task.new
   end

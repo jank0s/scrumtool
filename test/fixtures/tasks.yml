@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  string: MyString
+  story_id: MyString
+  integer: MyString
+  assigned_to: MyString
+  integer: MyString
+
+two:
+  name: MyString
+  string: MyString
+  story_id: MyString
+  integer: MyString
+  assigned_to: MyString
+  integer: MyString

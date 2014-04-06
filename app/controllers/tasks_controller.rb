@@ -14,6 +14,16 @@ class TasksController < ApplicationController
   	@task = Task.new
   end
 
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      redirect_to stories_url
+    else
+      render "new"
+    end
+  end
+
 private
     def signed_in_user
         redirect_to signin_url unless signed_in?
@@ -25,6 +35,10 @@ private
 
     def sm #ti mors bit sm na temu projektu?
         redirect_to root_url unless (scrummaster? || admin?)
+    end
+
+    def task_params
+      params.require(:task).permit(:name, :story_id)
     end
   
 

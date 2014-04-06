@@ -28,6 +28,7 @@ class TasksController < ApplicationController
   end
 
   def accept
+
     redirect_to stories_url
   end
 

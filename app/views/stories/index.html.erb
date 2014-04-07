@@ -50,8 +50,7 @@
                                 <% if @sm == 1 %>
                                     <%= check_box("story_checked", story.id) %>
                                 <% end %>
-                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
-                                value: <%= story.value %>)
+                                <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>

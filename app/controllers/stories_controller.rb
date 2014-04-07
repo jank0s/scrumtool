@@ -8,11 +8,6 @@ class StoriesController < ApplicationController
         @sprintStories=[]
         @remainingStories=@stories.where(finished: false)
         @finishedStories=@stories.where(finished: true)
-        if scrummaster?
-            @sm = 1
-        else
-            @sm = 0
-        end
     end
 
     def new

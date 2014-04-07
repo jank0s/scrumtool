@@ -28,24 +28,27 @@ class Sprint < ActiveRecord::Base
 
   def check_overlapping
 
-    sprint = Sprint.where(project_id: self[:project_id]).order(:number).last
+    sprint = Sprint.where(project_id: self[:project_id])
 
     if sprint == nil
       return true
     else
-      if sprint.end > self[:start]
-        errors.add(:start, "new sprint should be after all existing sprints")
-      else
-        return true
-      end
-    end
-=begin
-    sprints = Sprint.all
+      sprint.each do |s|
+        if s.start > self[:start] && s.start < self[:end]
+          errors.add(:start, "Error 1")
+          return
+        elsif s.end > self[:start] && s.end < self[:end]
+          errors.add(:start, "Error 2")
+          return
+        elsif s.start < self[:start] && s.end > self[:end]
+          errors.add(:start, "Error 3")
+          return
+        end
 
-    sprints.each do |sprint|
-      if self[:start]
+      end
+
     end
-=end
+
   end
 
 end

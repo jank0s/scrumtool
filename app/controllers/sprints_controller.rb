@@ -1,7 +1,7 @@
 class SprintsController < ApplicationController
 
   def index
-    @sprints = Sprint.where(project_id: current_user.activeproject_id)
+    @sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
   end
 
   def new
@@ -9,17 +9,7 @@ class SprintsController < ApplicationController
   end
 
   def create
-    lastSprint = Sprint.last
-
-    if lastSprint == nil
-      num = 1
-    else
-      num = lastSprint.number
-      num += 1
-    end
-
     @sprint = Sprint.new(sprint_params)
-    @sprint.number = num
 
     @sprint.project_id = current_user.activeproject_id
 

@@ -24,9 +24,10 @@
     </tr>
     </thead>
     <tbody>
+    <% i = 1 %>
     <% @sprints.each do |sprint| %>
         <tr>
-          <td><%= sprint.number %></td>
+          <td><%= i %></td>
           <td><%= sprint.start %></td>
           <td><%= sprint.end %></td>
           <td><%= sprint.velocity %></td>
@@ -45,6 +46,7 @@
 
 
         </tr>
+      <% i+=1 %>
     <% end %>
     </tbody>
   </table>

@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
 	has_many :users, through: :teammembers
     has_many :sprints
     has_many :stories
-    validates :name, presence: true, length: {minimum: 2, maximum: 255}, uniqueness: true
+    validates :name, presence: true, length: {minimum: 2, maximum: 255}, :uniqueness => {:case_sensitive => false}
     validates :description, presence: true, length: {minimum: 2}
     validates :teammembers, presence: true
     validate :productowner_cannot_be_scrummaster

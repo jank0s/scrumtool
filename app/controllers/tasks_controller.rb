@@ -5,8 +5,8 @@ class TasksController < ApplicationController
 
 
   def index # "index bos itak meu u index-u od storiesov?"
-  	puts params
-    @tasks = Task.where(story_id: 1)  # 1 for testing
+      @stories=current_user.activeproject.stories
+      @sprintStories=@stories.where(finished: false)
   end
 
   def new
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      redirect_to stories_url
+      redirect_to tasks_url
     else
       render "new"
     end
@@ -31,9 +31,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.assigned_to = current_user.id
     if @task.save
-      redirect_to stories_url
+      redirect_to tasks_url
     else
-      redirect_to sprints_url
+      redirect_to tasks_url
     end
   end
 

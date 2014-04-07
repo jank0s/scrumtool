@@ -1,47 +1,101 @@
-<h1>Tasks</h1>
-<div class="panel panel-default panel-list-user">
-  <div class="panel-heading">
-    <%= form_tag tasks_path, :method => 'get' do %>
-        <div class="input-group input-group-search pull-left">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-          <%= text_field_tag :search, params[:search], :class => 'form-control' %>
-        </div>
-        <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
-    <% end %>
-    <%= button_to "Add task", new_task_path, :class => "btn btn-primary pull-right", :method => :get %>
-    <div class="clear"></div>
-  </div>
+<h1>Sprint backlog</h1>
 
-  <!-- Table -->
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Assigned to</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.name %></td>
-          <td><%= task.assigned_to %></td>
-          <td><%=  %></td>
-          <td></td>
 
-<!--          <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#all-stories" data-toggle="tab">All stories</a></li>
+    <li><a href="#my-stories" data-toggle="tab">My stories</a></li>
+</ul>
 
-            <% if !sprint_running?(sprint) %>
-                <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="all-stories">
+        <h2>List of user stories</h2>
+        <div class="part-story">
+            <% if !@sprintStories.empty? %>
+                <% @sprintStories.each do |story| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <% if @sm == 1 %>
+                                    <%= check_box("story_checked", story.id) %>
+                                <% end %>
+                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
+                                value: <%= story.value %>)
+                            </div>
+                            <%= button_to("Edit tasks", {:controller => "tasks", :action => "new", :id =>story.id}, :class => "btn btn-xs btn-primary pull-right")%>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="panel-body">
+                            <%= story.description %>
+                            <ul class="acceptance-tests text-primary">
+                                <% story.test.split(/\n/).each do |test| %>
+                                    <li># <%= test %></li>
+                                <% end %>
+                            </ul>
+                            <% @tasks = Task.where(story_id: story.id) %>
+                            <!--<% @tasks.each do |task| %>-->
+                                <!--<%= task.name %>-->
+                                <!--<br />-->
+                                <!--<% end %>-->
+
+                            <% if @tasks.count != 0 %>
+                                <div class="panel panel-default panel-list-user">
+                                    <div class="panel-heading">
+                                        <%= form_tag tasks_path, :method => 'get' do %>
+
+                                            <div><b>Tasks</b></div>
+                                        <% end %>
+                                        <!--<%= button_to "Add task", new_task_path, :class => "btn btn-primary pull-right", :method => :get %>-->
+                                        <div class="clear"></div>
+                                    </div>
+
+                                    <!-- Table -->
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Assigned to</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% @tasks.each do |task| %>
+                                            <tr>
+                                                <td><%= task.name %></td>
+                                                <% if task.assigned_to == nil %>
+
+
+
+                                                    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ADD ASSIGNED TO (USER ID (CURRENT_USER)) TO TASK, GET FROM PARAMS-->
+
+                                                    <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
+                                                <% else %>
+                                                    <td><%= User.find(task.assigned_to).name %></td>
+                                                <% end %>
+                                                <!--<td><%= task.assigned_to %></td>-->
+                                                <td><%=  %></td>
+                                                <td></td>
+                                            </tr>
+                                        <% end %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <% else %>
+                            <% end %>
+                        </div>
+
+                    </div>
+                <% end %>
+                <% if @sm == 1 %>
+                    <%= button_to "Add to current sprint1",{}, :class => "btn btn-primary pull-right", :method => :get %>
+                <% end %>
             <% else %>
-                <b>RUNNING</b>
+                No remaining user stories
             <% end %>
-
-          </td>-->
-
-
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="my-stories">
+        List of user stories
+    </div>
 </div>

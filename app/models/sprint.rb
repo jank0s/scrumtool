@@ -11,17 +11,13 @@ class Sprint < ActiveRecord::Base
 
   private
   def check_start_before_end
-    if self[:start] < self[:end]
-      return true
-    else
+    if self[:start] >= self[:end]
       errors.add(:start, "must be before end")
     end
   end
 
   def check_start_not_in_past
-    if self[:start] >= Date.today
-      return true
-    else
+    if self[:start] < Date.today
       errors.add(:start, "cannot be in past")
     end
   end
@@ -35,14 +31,11 @@ class Sprint < ActiveRecord::Base
     else
       sprint.each do |s|
         if s.start > self[:start] && s.start < self[:end]
-          errors.add(:start, "Error 1")
-          return
+          errors[:base] << "Overlapping with another sprint"
         elsif s.end > self[:start] && s.end < self[:end]
-          errors.add(:start, "Error 2")
-          return
+          errors[:base] << "Overlapping with another sprint"
         elsif s.start < self[:start] && s.end > self[:end]
-          errors.add(:start, "Error 3")
-          return
+          errors[:base] << "Overlapping with another sprint"
         end
 
       end

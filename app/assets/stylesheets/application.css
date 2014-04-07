@@ -110,3 +110,8 @@
 .part-story form input{
     margin-left: 10px;
 }
+.acceptance-tests{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}

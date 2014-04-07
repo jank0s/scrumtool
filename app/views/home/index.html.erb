@@ -3,7 +3,7 @@
         <h1>Project wall</h1>
         <div class="input-group pull-right">
             <%= f.label :activeproject_id, "Active project", :class => "input-group-addon" %>
-            <%= f.collection_select :activeproject_id, @user.projects, :id, :name, {:include_blank => true}, {:class => "form-control"} %>
+            <%= f.collection_select :activeproject_id, @user.projects+@user.productowner_projects, :id, :name, {:include_blank => true}, {:class => "form-control"} %>
         </div>
         <div class="clear"></div>
     <% end %>

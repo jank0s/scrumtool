@@ -82,8 +82,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
-                                value: <%= story.value %>)
+                                <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
                             </div>
                             <div class="clear"></div>
                         </div>

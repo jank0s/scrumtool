@@ -96,7 +96,8 @@
 
 
                                         <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ADD ASSIGNED TO (USER ID (CURRENT_USER)) TO TASK, GET FROM PARAMS-->
-                                      <td><%= link_to "Accept task", accept_path(task.id), :method => :get %></td>
+
+                                        <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
                                     <% else %>
                                       <td><%= User.find(task.assigned_to).name %></td>
                                     <% end %>

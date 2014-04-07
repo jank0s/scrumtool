@@ -28,8 +28,13 @@ class TasksController < ApplicationController
   end
 
   def accept
-
-    redirect_to stories_url
+    @task = Task.find(params[:id])
+    @task.assigned_to = current_user.id
+    if @task.save
+      redirect_to stories_url
+    else
+      redirect_to sprints_url
+    end
   end
 
 private

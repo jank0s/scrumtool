@@ -89,6 +89,11 @@
                         </div>
                         <div class="panel-body">
                             <%= story.description %>
+                            <ul class="acceptance-tests text-primary">
+                                <% story.test.split(/\n/).each do |test| %>
+                                    <li># <%= test %></li>
+                                <% end %>
+                            </ul>
                         </div>
                     </div>
                 <% end %>

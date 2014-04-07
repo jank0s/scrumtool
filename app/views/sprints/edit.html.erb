@@ -7,7 +7,7 @@
 
 <div id="form-add-user">
     <%= form_for @sprint do |f| %>
-        <h2>Edit Sprint - <%= @sprint.number %>: <%= @sprint.start %> - <%= @sprint.end %> </h2>
+        <h2>Edit Sprint: <%= @sprint.start %> - <%= @sprint.end %> </h2>
 
         <% if @sprint.errors.any? %>
             <div id="error_explanation">

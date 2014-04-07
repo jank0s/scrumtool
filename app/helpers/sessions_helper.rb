@@ -42,7 +42,7 @@ module SessionsHelper
     end
 
     def productowner?
-        current_user.activeproject.scrummaster==current_user
+        current_user.activeproject.productowner==current_user
     end
 
     def sprint_running?(sprint)

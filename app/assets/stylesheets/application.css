@@ -115,3 +115,15 @@
     padding: 0px;
     margin: 0px;
 }
+
+.font-red{
+    color: red;
+}
+
+.font-green{
+    color: green;
+}
+
+.font-bold{
+    font-weight: bold;
+}

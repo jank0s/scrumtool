@@ -66,8 +66,8 @@
                                                         <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
                                                         <td>none</td>
                                                     <% else %>
-                                                        <td class="font-grey font-bold">Pending</td>
-                                                        <td>none</td>
+                                                        <td class="font-grey font-bold">Pending </td>
+                                                        <td>(<%= User.find(task.proposed_id).username %>)</td>
                                                     <% end %>
                                                 <% else %>
                                                     <% if task.completed == false %>
@@ -75,7 +75,7 @@
                                                     <% else %>
                                                         <td class="font-green font-bold">Completed</td>
                                                     <% end %>
-                                                    <td><%= User.find(task.assigned_to).name %></td>
+                                                    <td><%= User.find(task.assigned_to).username %></td>
                                                 <% end %>
 
                                                 <td><%=  %></td>

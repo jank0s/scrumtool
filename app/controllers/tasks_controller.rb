@@ -35,6 +35,7 @@ class TasksController < ApplicationController
   def accept
     @task = Task.find(params[:id])
     @task.assigned_to = current_user.id
+    @task.proposed_id = nil
     if @task.save
       redirect_to tasks_url
     else
@@ -45,6 +46,16 @@ class TasksController < ApplicationController
   def release
     @task = Task.find(params[:id])
     @task.assigned_to = nil
+    if @task.save
+      redirect_to tasks_url
+    else
+      redirect_to tasks_url
+    end
+  end
+
+  def reject
+    @task = Task.find(params[:id])
+    @task.proposed_id = nil
     if @task.save
       redirect_to tasks_url
     else

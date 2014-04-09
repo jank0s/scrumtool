@@ -59,8 +59,16 @@
 
                                                 <td><%= task.name %></td>
                                                 <% if task.assigned_to == nil %>
-                                                    <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
-                                                    <td>none</td>
+                                                    <% if task.proposed_id == nil %>
+                                                        <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
+                                                        <td>none</td>
+                                                    <% elsif task.proposed_id == current_user.id %>
+                                                        <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
+                                                        <td>none</td>
+                                                    <% else %>
+                                                        <td class="font-grey font-bold">Pending</td>
+                                                        <td>none</td>
+                                                    <% end %>
                                                 <% else %>
                                                     <% if task.completed == false %>
                                                         <td class="font-red font-bold">Assigned</td>

@@ -61,6 +61,11 @@
             <%= f.text_field :name, :class => "form-control" %>
         </div>
 
+        <div class="input-group">
+            <%= f.label :time_estimation, "Time", :class => "input-group-addon" %>
+            <%= f.text_field :time_estimation, :class => "form-control" %>
+        </div>
+
 
         <!--da se ohranja story_id ne vem ce je vredu tko-->
         <%= f.hidden_field :story_id, value:  @story.id %>

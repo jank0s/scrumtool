@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     ap_id = current_user.activeproject_id
 
     #@users = Project.find(ap_id).teammembers
-    @users = User.all
+    @users = Project.find(ap_id).users
   end
 
   def create
@@ -56,7 +56,7 @@ private
     end
 
     def task_params
-      params.require(:task).permit(:name, :story_id, :proposed_id)
+      params.require(:task).permit(:name, :story_id, :proposed_id, :time_estimation)
     end
   
 

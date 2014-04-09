@@ -75,7 +75,13 @@
                                                     <% else %>
                                                         <td class="font-green font-bold">Completed</td>
                                                     <% end %>
-                                                    <td><%= User.find(task.assigned_to).username %></td>
+                                                    <% user = User.find(task.assigned_to) %>
+                                                    <td>
+                                                        <%= user.username %>
+                                                        <% if user.id == current_user.id %>
+                                                            <%= link_to "Release", release_path(:id => task.id), :method => :post %>
+                                                        <% end %>
+                                                    </td>
                                                 <% end %>
 
                                                 <td><%=  %></td>

@@ -42,6 +42,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def release
+    @task = Task.find(params[:id])
+    @task.assigned_to = nil
+    if @task.save
+      redirect_to tasks_url
+    else
+      redirect_to tasks_url
+    end
+  end
+
 private
     def signed_in_user
         redirect_to signin_url unless signed_in?

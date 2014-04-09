@@ -12,8 +12,9 @@ Tpo11::Application.routes.draw do
     match '/sprints', to: 'sprints#index', via: 'get'
     resources :stories, only: [:index, :new, :create, :edit, :update, :destroy]    
     resources :tasks
-    #match '/accept', to: 'tasks#accept', via: 'get'
+
     match '/accept', to: 'tasks#accept', via: 'post'
+    match '/release', to: 'tasks#release', via: 'post'
     match '/addtime', to: 'stories#addtime', via: 'get'
     resources :tasks do
         member do

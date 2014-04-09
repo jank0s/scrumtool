@@ -14,10 +14,12 @@ Tpo11::Application.routes.draw do
     resources :tasks
     #match '/accept', to: 'tasks#accept', via: 'get'
     match '/accept', to: 'tasks#accept', via: 'post'
+    match '/addtime', to: 'stories#addtime', via: 'get'
     resources :tasks do
         member do
             post 'new'
         end
     end
+
 end
 

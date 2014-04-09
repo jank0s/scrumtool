@@ -43,7 +43,7 @@
         <h2>Remaining user stories</h2>
         <div class="part-story">
             <% if !@remainingStories.empty? %>
-
+            <%= form_tag do %>
                 <% @remainingStories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -52,6 +52,7 @@
                                     <%= check_box("story_checked", story.id) %>
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
+                                Estimates: <%= text_field :timeestimates, :class => "form-control" %>
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -69,8 +70,9 @@
                 <% end %>
                 <% if scrummaster? || admin? %>
                     <%= button_to "Add to current sprint",{}, :class => "btn btn-primary pull-right", :method => :get %>
-                    <%= button_to "Save time estimates",{}, :class => "btn btn-primary pull-right", :method => :get %>
+                    <%= button_to "Save time estimates",addtime_path, :class => "btn btn-primary pull-right", :method => :get %>
                     <% end %>
+                <% end %>
             <% else %>
                 No remaining user stories
             <% end %>

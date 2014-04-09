@@ -45,6 +45,12 @@ class StoriesController < ApplicationController
         redirect_to stories_url
     end
 
+    def addtime
+        puts params
+
+        redirect_to stories_url
+    end
+
     private
     def story_params
         params.require(:story).permit(:name, :description, :test, :priority_id, :value)

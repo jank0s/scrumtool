@@ -59,18 +59,19 @@
         <div class="input-group">
             <%= f.label :name, "Task name", :class => "input-group-addon" %>
             <%= f.text_field :name, :class => "form-control" %>
-
         </div>
 
 
         <!--da se ohranja story_id ne vem ce je vredu tko-->
         <%= f.hidden_field :story_id, value:  @story.id %>
 
-<!--        <div class="input-group">
-            <%= f.label :assigned_to, "Task is assigned to", :class => "input-group-addon" %>
-            <%= f.select :assigned_to, User.all.collect { |x| [x.user, x.id] }, {}, :multiple => true, :size => "3", :class => "form-control" %>
-            &lt;!&ndash; tle poprav da bojo sam uni k so na projektu... &ndash;&gt;
-        </div>-->
+
+        <div class="input-group">
+        <%= f.label :proposed_id, "Suggest:", :class => "input-group-addon" %>
+        <%= f.collection_select :proposed_id, @users, :id, :user, {:include_blank => true}, {:class => "form-control"} %>
+        </div>
+
+
 
 
        

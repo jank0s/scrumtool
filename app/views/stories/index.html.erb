@@ -43,6 +43,7 @@
         <h2>Remaining user stories</h2>
         <div class="part-story">
             <% if !@remainingStories.empty? %>
+
                 <% @remainingStories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -67,7 +68,8 @@
                     </div>
                 <% end %>
                 <% if scrummaster? || admin? %>
-                    <%= button_to "Add to current sprint1",{}, :class => "btn btn-primary pull-right", :method => :get %>
+                    <%= button_to "Add to current sprint",{}, :class => "btn btn-primary pull-right", :method => :get %>
+                    <%= button_to "Save time estimates",{}, :class => "btn btn-primary pull-right", :method => :get %>
                     <% end %>
             <% else %>
                 No remaining user stories

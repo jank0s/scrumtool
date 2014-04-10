@@ -25,7 +25,13 @@
     <% @tasks.each do |task| %>
         <tr>
           <td><%= task.name %></td>
-          <td><%= task.assigned_to %></td>
+          <td>
+            <% if task.assigned_to == nil %>
+                none
+            <% else %>
+                <%= User.find(task.assigned_to).username %>
+            <% end %>
+          </td>
           <td><%=  %></td>
           <td></td>
         </tr>

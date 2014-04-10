@@ -17,18 +17,17 @@ class TasksController < ApplicationController
   	@task = Task.new
 
     ap_id = current_user.activeproject_id
-
-    #@users = Project.find(ap_id).teammembers
     @users = Project.find(ap_id).users
   end
 
   def create
     @task = Task.new(task_params)
+    puts @task
 
     if @task.save
       redirect_to tasks_url
     else
-      render "new"
+      redirect_to indextask_url(:id => @task.story_id)
     end
   end
 

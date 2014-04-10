@@ -17,15 +17,15 @@
         <% end %>
 
         <div class="input-group">
-            <%= f.label :start, "Sprint start", :class => "input-group-addon" %>
+            <%= f.label :start, "Sprint start*", :class => "input-group-addon" %>
             <%= f.date_select :start, order: [:day, :month, :year], date_separator: "-", :class => "form-control" %>
         </div>
         <div class="input-group">
-            <%= f.label :end, "Sprint end", :class => "input-group-addon" %>
+            <%= f.label :end, "Sprint end*", :class => "input-group-addon" %>
             <%= f.date_select :end, order: [:day, :month, :year], date_separator: "-", :class => "form-control" %>
         </div>
         <div class="input-group">
-            <%= f.label :velocity, "Sprint velocity", :class => "input-group-addon" %>
+            <%= f.label :velocity, "Sprint velocity*", :class => "input-group-addon" %>
             <%= f.text_field :velocity, :class => "form-control" %>
         </div>
         <p class="buttons">

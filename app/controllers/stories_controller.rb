@@ -57,7 +57,8 @@ class StoriesController < ApplicationController
         @stories=current_user.activeproject.stories
         @remainingStories=@stories.where(finished: false)
 
-        if params[:timeestimates] 
+        if params[:timeestimates]
+
             @timeestimate = params[:timeestimate]
             i=0
             assigned=0
@@ -71,10 +72,9 @@ class StoriesController < ApplicationController
                 if (assigned ==1)
                     break
                 end
-                if (@timeestimate[i].size > 0)
-                    puts s.timeestimates
+                #if (@timeestimate[i].size > 0)
                     s.update_attributes(timeestimates: @timeestimate[i])
-                end
+                #end
                 i=i+1
             end
         elsif params[:addtosprint] 
@@ -95,6 +95,11 @@ class StoriesController < ApplicationController
     end
 
     private
+    def nan
+        self !~ /^\s*[+-]?((\d+_?)*\d+(\.(\d+_?)*\d+)?|\.(\d+_?)*\d+)(\s*|([eE][+-]?(\d+_?)*\d+)\s*)$/
+    end
+
+
     def story_params
         params.require(:story).permit(:name, :description, :test, :priority_id, :value)
     end

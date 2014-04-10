@@ -62,7 +62,7 @@ class StoriesController < ApplicationController
 
     private
     def story_params
-        params.require(:story).permit(:name, :description, :test, :priority_id, :value, :timeestimates) if params[:post]
+        params.require(:story).permit(:name, :description, :test, :priority_id, :value)
     end
 
     def signed_in_user

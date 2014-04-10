@@ -72,9 +72,9 @@ class StoriesController < ApplicationController
                 if (assigned ==1)
                     break
                 end
-                #if (@timeestimate[i].size > 0)
+                if (@timeestimate[i].to_f > 0.0 && @timeestimate[i].to_f < 100.0)
                     s.update_attributes(timeestimates: @timeestimate[i])
-                #end
+                end
                 i=i+1
             end
         elsif params[:addtosprint] 

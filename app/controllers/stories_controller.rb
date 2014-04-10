@@ -46,10 +46,10 @@ class StoriesController < ApplicationController
     end
 
     def addtosprint
-        if params[:timeestimates] 
-            @stories=current_user.activeproject.stories
+        @stories=current_user.activeproject.stories
+        @remainingStories=@stories.where(finished: false)
 
-            @remainingStories=@stories.where(finished: false)
+        if params[:timeestimates] 
             @timeestimate = params[:timeestimate]
             i=0
             assigned=0
@@ -69,11 +69,16 @@ class StoriesController < ApplicationController
                 end
                 i=i+1
             end
-        else 
-            @add = params[:story_id]
-
-            @add.each do |a|
-
+        elsif params[:addtosprint] 
+            @addto = params[:story_id].map(&:to_i)
+            i=0
+            @remainingStories.each do |s|
+                if (s.timeestimates != nil && s.finished==false && @addto.include?(s.id))
+                    #sprint_running?(sprint)
+                    #s.sprint_id = 
+                    # set sprint_id = id od current sprinta
+                    
+                end
             end
         end
       redirect_to stories_url

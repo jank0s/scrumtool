@@ -19,7 +19,6 @@ Tpo11::Application.routes.draw do
     match '/accept', to: 'tasks#accept', via: 'post'
     match '/release', to: 'tasks#release', via: 'post'
     match '/reject', to: 'tasks#reject', via: 'post'
-    match '/addtime', to: 'stories#addtime', via: 'get'
     resources :tasks do
         member do
             post 'new'

@@ -1,6 +1,9 @@
 class Story < ActiveRecord::Base
     belongs_to :project
     belongs_to :priority
+
+    belongs_to :sprint #new
+
     has_many :tasks
 
     validates :project_id, :presence => true

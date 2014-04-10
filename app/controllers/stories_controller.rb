@@ -51,6 +51,15 @@ class StoriesController < ApplicationController
         redirect_to stories_url
     end
 
+    def addtosprint
+      @add = params[:story_id]
+
+      @add.each do |a|
+
+      end
+      redirect_to stories_url
+    end
+
     private
     def story_params
         params.require(:story).permit(:name, :description, :test, :priority_id, :value, :timeestimates) if params[:post]

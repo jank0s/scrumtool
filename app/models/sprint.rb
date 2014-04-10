@@ -2,6 +2,8 @@ class Sprint < ActiveRecord::Base
 
   belongs_to :project
 
+  has_many :stories #new
+
   validates :start, presence: true
   validates :end, presence: true
   validates :velocity, presence: true, :numericality => {:greater_than_or_equal_to => 1, :less_than_or_equal_to => 1000}

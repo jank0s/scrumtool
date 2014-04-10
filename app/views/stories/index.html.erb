@@ -24,8 +24,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
-                                value: <%= story.value %>)
+                                <%= story.name %> (Priority: <%= story.priority.name %><% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>) | Estimates: <%= story.timeestimates %>
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -54,7 +53,7 @@
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
                                 <% if scrummaster? || admin? %>
-                                    Estimates: <%= text_field_tag 'timeestimate[]', story.timeestimates%>
+                                    | Estimates: <%= text_field_tag 'timeestimate[]', story.timeestimates%>
                                 <% end %>
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>

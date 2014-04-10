@@ -40,6 +40,10 @@ class SprintsController < ApplicationController
     redirect_to sprints_url
   end
 
+  def addtosprint
+    redirect_to stories_url
+  end
+
   private
   def sprint_params
     params.require(:sprint).permit(:number, :start, :end, :velocity)

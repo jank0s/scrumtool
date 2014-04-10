@@ -10,6 +10,8 @@ Tpo11::Application.routes.draw do
 
     resources :sprints
     match '/sprints', to: 'sprints#index', via: 'get'
+    match '/addtosprint', to: 'sprints#addtosprint', via: 'post'
+
     resources :stories, only: [:index, :new, :create, :edit, :update, :destroy]    
     resources :tasks
 

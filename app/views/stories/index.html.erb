@@ -43,13 +43,14 @@
         <h2>Remaining user stories</h2>
         <div class="part-story">
             <% if !@remainingStories.empty? %>
-            <%= form_tag do %>
+            <%= form_tag addtosprint_path do %>
+
                 <% @remainingStories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="pull-left">
                                 <% if scrummaster? || admin? %>
-                                    <%= check_box("story_checked", story.id) %>
+                                    <%= check_box_tag "story_id[]", story.id %>
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
                                 Estimates: <%= text_field :timeestimates, :class => "form-control" %>
@@ -58,6 +59,7 @@
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
                             <div class="clear"></div>
                         </div>
+
                         <div class="panel-body">
                             <%= story.description %>
                             <ul class="acceptance-tests text-primary">
@@ -66,13 +68,16 @@
                                 <% end %>
                             </ul>
                         </div>
-                    </div>
+                      <!-- tudi </div> namest unga spodi, da normalno zgleda -->
                 <% end %>
                 <% if scrummaster? || admin? %>
-                    <%= button_to "Add to current sprint",{}, :class => "btn btn-primary pull-right", :method => :get %>
-                    <%= button_to "Save time estimates",addtime_path, :class => "btn btn-primary pull-right", :method => :get %>
-                    <% end %>
+                    <%= submit_tag ("Add to current sprint") %>
+                    <%= button_to "Add to current sprint",addtosprint_path, :class => "btn btn-primary pull-right", :method => :post %>
+                    <%= button_to "Save time estimates", addtime_path, :class => "btn btn-primary pull-right", :method => :get %>
                 <% end %>
+                </div>   <!-- !!!!!!!!!!!!za tem divom ne dela submit_tag!!!!!!!!!!!!!!!!!!!!!!!! -->
+            <% end %>
+
             <% else %>
                 No remaining user stories
             <% end %>

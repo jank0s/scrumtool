@@ -52,7 +52,7 @@
                                     <%= check_box("story_checked", story.id) %>
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
-                                Estimates: <%= text_field :timeestimates, :class => "form-control" %>
+                                Estimates: <%= story.timeestimates %> <!--<%= text_field :timeestimates, :value => story.timeestimates, :class => "form-control"%> -->
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -70,7 +70,7 @@
                 <% end %>
                 <% if scrummaster? || admin? %>
                     <%= button_to "Add to current sprint",{}, :class => "btn btn-primary pull-right", :method => :get %>
-                    <%= button_to "Save time estimates",addtime_path, :class => "btn btn-primary pull-right", :method => :get %>
+                    <!-- <%= button_to "Save time estimates",addtime_path, :class => "btn btn-primary pull-right", :method => :get %> -->
                     <% end %>
                 <% end %>
             <% else %>

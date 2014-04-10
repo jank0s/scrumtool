@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409191148) do
+ActiveRecord::Schema.define(version: 20140410104935) do
 
   create_table "priorities", force: true do |t|
     t.string   "name"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20140409191148) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "timeestimates"
+    t.integer  "sprint_id"
   end
 
   create_table "tasks", force: true do |t|

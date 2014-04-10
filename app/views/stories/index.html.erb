@@ -53,7 +53,7 @@
                                     <%= check_box_tag "story_id[]", story.id %>
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
-                                Estimates: <%= text_field :timeestimates, :value => story.timeestimates, :class => "form-control"%>
+                                Estimates: <%= text_field_tag 'timeestimate[]', story.timeestimates%>
                             </div>
                             <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
                             <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -71,9 +71,8 @@
                       <!-- tudi </div> namest unga spodi, da normalno zgleda -->
                 <% end %>
                 <% if scrummaster? || admin? %>
-                    <%= submit_tag ("Add to current sprint") %>
-                    <%= button_to "Add to current sprint",addtosprint_path, :class => "btn btn-primary pull-right", :method => :post %>
-                    <%= button_to "Save time estimates", addtime_path, :class => "btn btn-primary pull-right", :method => :get %>
+                    <%= submit_tag ("Add to current sprint"), :name => 'addtosprint',:class => "btn btn-primary pull-right" %>
+                    <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
                 <% end %>
                 </div>   <!-- !!!!!!!!!!!!za tem divom ne dela submit_tag!!!!!!!!!!!!!!!!!!!!!!!! -->
             <% end %>

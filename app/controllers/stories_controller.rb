@@ -45,18 +45,27 @@ class StoriesController < ApplicationController
         redirect_to stories_url
     end
 
-    def addtime
-        puts params
-
-        redirect_to stories_url
-    end
-
     def addtosprint
-      @add = params[:story_id]
+        if params[:timeestimates] 
+            @stories=current_user.activeproject.stories
 
-      @add.each do |a|
+            @remainingStories=@stories.where(finished: false)
+            @timeestimate = params[:timeestimate]
+            i=0
+            @remainingStories.each do |s|
+                if (@timeestimate[i].size > 0)
+                    puts s.timeestimates
+                    s.update_attributes(timeestimates: @timeestimate[i])
+                end
+                i=i+1
+            end
+        else 
+            @add = params[:story_id]
 
-      end
+            @add.each do |a|
+
+            end
+        end
       redirect_to stories_url
     end
 

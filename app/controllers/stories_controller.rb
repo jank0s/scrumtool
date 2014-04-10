@@ -52,7 +52,17 @@ class StoriesController < ApplicationController
             @remainingStories=@stories.where(finished: false)
             @timeestimate = params[:timeestimate]
             i=0
+            assigned=0
             @remainingStories.each do |s|
+                @tasks = s.tasks
+                @tasks.each do |t|
+                    if (t.assigned_to != nil)
+                        assigned=1
+                    end
+                end
+                if (assigned ==1)
+                    break
+                end
                 if (@timeestimate[i].size > 0)
                     puts s.timeestimates
                     s.update_attributes(timeestimates: @timeestimate[i])

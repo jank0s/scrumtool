@@ -4,7 +4,7 @@ class TasksController < ApplicationController
     before_action :sm, only: [:new, :create]
 
 
-  def index # "index bos itak meu u index-u od storiesov?"
+  def index 
       @stories=current_user.activeproject.stories
       @sprintStories=@stories.where(finished: false)
   end

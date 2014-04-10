@@ -5,8 +5,16 @@ class StoriesController < ApplicationController
 
     def index
         @stories=current_user.activeproject.stories
-        @sprintStories=[]
-        @remainingStories=@stories.where(finished: false)
+        @sprints = Sprint.all
+        @current_sprint
+        @sprints.each do |sprint|
+            if (sprint.end >= Date.today && sprint.start <= Date.today)
+                @current_sprint = sprint.id
+            end
+        end
+
+        @sprintStories=@stories.where(sprint_id: @current_sprint)
+        @remainingStories=@stories.where(finished: false, sprint_id: nil)
         @finishedStories=@stories.where(finished: true)
     end
 
@@ -74,10 +82,12 @@ class StoriesController < ApplicationController
             i=0
             @remainingStories.each do |s|
                 if (s.timeestimates != nil && s.finished==false && @addto.include?(s.id))
-                    #sprint_running?(sprint)
-                    #s.sprint_id = 
-                    # set sprint_id = id od current sprinta
-                    
+                    @sprints = Sprint.all
+                    @sprints.each do |sprint|
+                        if (sprint.end >= Date.today && sprint.start <= Date.today)
+                            s.update_attributes(sprint_id: sprint.id)
+                        end
+                    end
                 end
             end
         end

@@ -7,13 +7,18 @@ class StoriesController < ApplicationController
         @stories=current_user.activeproject.stories
         @sprints = Sprint.all
         @current_sprint
+        @current_sprint_name
+        @sprintStories=[]
         @sprints.each do |sprint|
             if (sprint.end >= Date.today && sprint.start <= Date.today)
                 @current_sprint = sprint.id
             end
         end
-        @current_sprint_name = @sprints.where(id: @current_sprint).name
-        @sprintStories=@stories.where(sprint_id: @current_sprint)
+        puts @current_sprint
+        if (@current_sprint != nil)
+            @current_sprint_name = @sprints.where(id: @current_sprint).name
+            @sprintStories=@stories.where(sprint_id: @current_sprint)
+        end
         @remainingStories=@stories.where(finished: false, sprint_id: nil)
         @finishedStories=@stories.where(finished: true)
     end

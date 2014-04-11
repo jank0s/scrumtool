@@ -22,12 +22,16 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    puts @task
 
     if @task.save
       redirect_to tasks_url
     else
-      redirect_to indextask_url(:id => @task.story_id)
+      #redirect_to indextask_url(:id => @task.story_id)
+      ap_id = current_user.activeproject_id
+      @users = Project.find(ap_id).users
+      @story = Story.find(@task.story.id)
+      @tasks = Task.where(story_id: @story.id)
+      render "new"
     end
   end
 

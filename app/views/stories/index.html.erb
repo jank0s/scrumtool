@@ -26,8 +26,6 @@
                             <div class="pull-left">
                                 <%= story.name %> (Priority: <%= story.priority.name %><% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>) | Estimates: <%= story.timeestimates %>
                             </div>
-                            <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
-                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
                             <div class="clear"></div>
                         </div>
                         <div class="panel-body">
@@ -58,7 +56,10 @@
                                      <%= hidden_field_tag 'storyid[]', story.id %>
                                 <% end %>
                             </div>
+                            <% if scrummaster? || admin? || productowner? %>
                             <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
+                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                            <% end %>
                             <div class="clear"></div>
                         </div>
 

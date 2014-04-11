@@ -39,5 +39,6 @@
             <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
         </p>
     <% end %>
+    <%= button_to "Remove", story_path(@story.id), :class => "btn btn-danger pull-left", :method => :delete, :confirm => "Are you sure?" %>
 
 </div>

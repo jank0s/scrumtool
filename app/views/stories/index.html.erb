@@ -56,8 +56,7 @@
                                     | Estimates: <%= text_field_tag 'timeestimate[]', story.timeestimates%>
                                 <% end %>
                             </div>
-                            <%= button_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
-                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                            <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
                             <div class="clear"></div>
                         </div>
 
@@ -69,13 +68,14 @@
                                 <% end %>
                             </ul>
                         </div>
+                    </div>
                       <!-- tudi </div> namest unga spodi, da normalno zgleda -->
                 <% end %>
                 <% if scrummaster? || admin? %>
                     <%= submit_tag ("Add to current sprint"), :name => 'addtosprint',:class => "btn btn-primary pull-right" %>
                     <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
                 <% end %>
-                </div>   <!-- !!!!!!!!!!!!za tem divom ne dela submit_tag!!!!!!!!!!!!!!!!!!!!!!!! -->
+                   <!-- !!!!!!!!!!!!za tem divom ne dela submit_tag!!!!!!!!!!!!!!!!!!!!!!!! -->
             <% end %>
 
             <% else %>

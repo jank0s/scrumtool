@@ -50,6 +50,7 @@
                                             <th>Name</th>
                                             <th>Status / action</th>
                                             <th>Assigned to</th>
+                                            <th>Time remaining</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -87,7 +88,7 @@
                                                         <% end %>
                                                     </td>
                                                 <% end %>
-
+                                                <td><%= task.time_estimation %> h</td>
                                                 <td><%=  %></td>
                                                 <td></td>
                                             </tr>

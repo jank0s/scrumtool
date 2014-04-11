@@ -18,6 +18,7 @@
     <tr>
       <th>Name </th>
       <th>Assigned to </th>
+      <th>Time remaining</th>
       <th></th>
     </tr>
     </thead>
@@ -32,6 +33,7 @@
                 <%= User.find(task.assigned_to).username %>
             <% end %>
           </td>
+          <td><%= task.time_estimation %></td>
           <td><%=  %></td>
           <td></td>
         </tr>

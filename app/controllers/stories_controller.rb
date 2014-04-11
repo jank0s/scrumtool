@@ -14,7 +14,6 @@ class StoriesController < ApplicationController
                 @current_sprint = sprint.id
             end
         end
-        puts @current_sprint
         if (@current_sprint != nil)
             @current_sprint_name = @sprints.where(id: @current_sprint).name
             @sprintStories=@stories.where(sprint_id: @current_sprint)

@@ -12,7 +12,7 @@ class StoriesController < ApplicationController
                 @current_sprint = sprint.id
             end
         end
-
+        @current_sprint_name = @sprints.where(id: @current_sprint).name
         @sprintStories=@stories.where(sprint_id: @current_sprint)
         @remainingStories=@stories.where(finished: false, sprint_id: nil)
         @finishedStories=@stories.where(finished: true)
@@ -56,36 +56,36 @@ class StoriesController < ApplicationController
     def addtosprint
         @stories=current_user.activeproject.stories
         @remainingStories=@stories.where(finished: false)
-
         if params[:timeestimates]
+            @timeestimate = params[:timeestimate]            
+            @storyids = params[:storyid]
 
-            @timeestimate = params[:timeestimate]
             i=0
-            assigned=0
-            @remainingStories.each do |s|
-                @tasks = s.tasks
-                @tasks.each do |t|
-                    if (t.assigned_to != nil)
-                        assigned=1
-                    end
-                end
-                if (assigned ==1)
-                    break
-                end
+            @storyids.each do |s|
                 if (@timeestimate[i].to_f > 0.0 && @timeestimate[i].to_f < 100.0)
-                    s.update_attributes(timeestimates: @timeestimate[i])
+                    @storytoadd = Story.find_by(id: s)
+                    @storytoadd.update_attributes(timeestimates: @timeestimate[i].to_f)
+                    flash[:success] = "Time estimate is set."
+                elsif (@timeestimate[i].to_f > 100.0)
+                    flash[:warning] = "Cannot set time estime. Time estimate is bigger than 100.0"
+                else
+                    flash[:warning] = "Cannot set time estime."
                 end
-                i=i+1
+                i+=1
             end
         elsif params[:addtosprint] 
             @addto = params[:story_id].map(&:to_i)
             i=0
-            @remainingStories.each do |s|
-                if (s.timeestimates != nil && s.finished==false && @addto.include?(s.id))
-                    @sprints = Sprint.all
-                    @sprints.each do |sprint|
-                        if (sprint.end >= Date.today && sprint.start <= Date.today)
-                            s.update_attributes(sprint_id: sprint.id)
+            @addto.each do |add|
+                @storytoadd = Story.find_by(id: add)
+                @sprints = Sprint.all
+                @sprints.each do |sprint|
+                    if (sprint.end >= Date.today && sprint.start <= Date.today)
+                        if (@storytoadd.timeestimates != nil)
+                            @storytoadd.update_attributes(sprint_id: sprint.id)
+                            flash[:success] = "Story added to current sprint."
+                        else
+                            flash[:warning] = "Cannot add story. Time estimates is not set."
                         end
                     end
                 end
@@ -95,11 +95,6 @@ class StoriesController < ApplicationController
     end
 
     private
-    def nan
-        self !~ /^\s*[+-]?((\d+_?)*\d+(\.(\d+_?)*\d+)?|\.(\d+_?)*\d+)(\s*|([eE][+-]?(\d+_?)*\d+)\s*)$/
-    end
-
-
     def story_params
         params.require(:story).permit(:name, :description, :test, :priority_id, :value)
     end

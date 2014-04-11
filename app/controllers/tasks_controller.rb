@@ -24,6 +24,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      flash[:success] = "Task successfully saved."
       redirect_to tasks_url
     else
       #redirect_to indextask_url(:id => @task.story_id)
@@ -40,8 +41,10 @@ class TasksController < ApplicationController
     @task.assigned_to = current_user.id
     @task.proposed_id = nil
     if @task.save
+      flash[:success] = "Task successfully accepted."
       redirect_to tasks_url
     else
+      flash[:warning] = "Task is not successfully accepted."
       redirect_to tasks_url
     end
   end
@@ -50,8 +53,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.assigned_to = nil
     if @task.save
+      flash[:success] = "Task successfully released."
       redirect_to tasks_url
     else
+      flash[:warning] = "Task is not successfully released."
       redirect_to tasks_url
     end
   end
@@ -60,8 +65,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.proposed_id = nil
     if @task.save
+      flash[:success] = "Task successfully rejected."
       redirect_to tasks_url
     else
+      flash[:warning] = "Task is not successfully rejected."
       redirect_to tasks_url
     end
   end

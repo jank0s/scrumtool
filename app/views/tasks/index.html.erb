@@ -17,7 +17,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <%= story.name %> (Priority: <%= story.priority.name %> | Business
+                                <b><%= story.name %></b> (Priority: <%= story.priority.name %> | Business
                                 value: <%= story.value %>)
                             </div>
                             <%= button_to("Edit tasks", {:controller => "tasks", :action => "new", :id =>story.id}, :class => "btn btn-xs btn-primary pull-right")%>

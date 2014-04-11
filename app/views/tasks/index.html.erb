@@ -108,6 +108,100 @@
         </div>
     </div>
     <div class="tab-pane" id="my-stories">
-        List of user stories
+        <h2>List of user stories</h2>
+        <div class="part-story">
+            <% if !@userstories.empty? %>
+                <% @userstories.each do |story| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <b><%= story.name %></b> (Priority: <%= story.priority.name %> | Business
+                                value: <%= story.value %>)
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="panel-body">
+                            <%= story.description %>
+                            <ul class="acceptance-tests text-primary">
+                                <% story.test.split(/\n/).each do |test| %>
+                                    <li># <%= test %></li>
+                                <% end %>
+                            </ul>
+                            <% @tasks = Task.where(story_id: story.id) %>
+
+                            <% if @tasks.count != 0 %>
+                                <div class="panel panel-default panel-list-user">
+                                    <div class="panel-heading">
+                                        <%= form_tag tasks_path, :method => 'get' do %>
+
+                                            <div><b>Tasks</b></div>
+                                        <% end %>
+                                        <!--<%= button_to "Add task", new_task_path, :class => "btn btn-primary pull-right", :method => :get %>-->
+                                        <div class="clear"></div>
+                                    </div>
+
+                                    <!-- Table -->
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Status / action</th>
+                                            <th>Assigned to</th>
+                                            <th>Time remaining</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% @tasks.each do |task| %>
+                                            <tr>
+
+                                                <td><%= task.name %></td>
+                                                <% if task.assigned_to == nil %>
+                                                    <% if task.proposed_id == nil %>
+                                                        <td><%= link_to "Accept task", accept_path(:id => task.id), :method => :post %></td>
+                                                        <td>none</td>
+                                                    <% elsif task.proposed_id == current_user.id %>
+                                                        <td>
+                                                            <%= link_to "Accept task", accept_path(:id => task.id), :method => :post %>
+                                                            /
+                                                            <%= link_to "Reject", reject_path(:id => task.id), :method => :post %>
+                                                        </td>
+                                                        <td class="font-red">me</td>
+                                                    <% else %>
+                                                        <td class="font-grey font-bold">Pending </td>
+                                                        <td>(<%= User.find(task.proposed_id).username %>)</td>
+                                                    <% end %>
+                                                <% else %>
+                                                    <% if task.completed == false %>
+                                                        <td class="font-red font-bold">Assigned</td>
+                                                    <% else %>
+                                                        <td class="font-green font-bold">Completed</td>
+                                                    <% end %>
+                                                    <% user = User.find(task.assigned_to) %>
+                                                    <td>
+                                                        <%= user.username %>
+                                                        <% if user.id == current_user.id %>
+                                                            <%= link_to "Release", release_path(:id => task.id), :method => :post %>
+                                                        <% end %>
+                                                    </td>
+                                                <% end %>
+                                                <td><%= task.time_estimation %> h</td>
+                                                <td><%=  %></td>
+                                                <td></td>
+                                            </tr>
+                                        <% end %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <% else %>
+                            <% end %>
+                        </div>
+
+                    </div>
+                <% end %>
+            <% else %>
+                No remaining user stories
+            <% end %>
+        </div>
     </div>
 </div>

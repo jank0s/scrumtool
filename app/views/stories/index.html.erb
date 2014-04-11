@@ -57,8 +57,8 @@
                                 <% end %>
                             </div>
                             <% if scrummaster? || admin? || productowner? %>
-                            <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
-                            <%= button_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                                <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
+                                <%= link_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
                             <% end %>
                             <div class="clear"></div>
                         </div>

@@ -49,7 +49,7 @@
 					        </li>
 				        <% end %>
 				        <% if activeproject? %>
-				        	<li><a href="#">Current project: </a></li>
+				        	<li><a href="#">Current project: <%= current_user.activeproject.name %></a></li>
 				        <% end %>
 					</ul>
 				<% end %>

@@ -72,7 +72,7 @@ class StoriesController < ApplicationController
                     flash[:success] = "Time estimate is set."
                 elsif (@timeestimate[i].to_f > 100.0)
                     flash[:warning] = "Cannot set time estime. Time estimate is bigger than 100.0"
-                else
+                elsif (@timeestimate[i].size != 0)
                     flash[:warning] = "Cannot set time estime."
                 end
                 i+=1

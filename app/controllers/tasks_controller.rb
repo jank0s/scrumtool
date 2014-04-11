@@ -6,7 +6,17 @@ class TasksController < ApplicationController
 
   def index 
       @stories=current_user.activeproject.stories
-      @sprintStories=@stories.where(finished: false)
+      @sprintStories=[]
+      @sprints = Sprint.all
+      @current_sprint
+      @sprints.each do |sprint|
+        if (sprint.end >= Date.today && sprint.start <= Date.today)
+          @current_sprint = sprint.id
+        end
+      end
+      if (@current_sprint != nil)
+            @sprintStories=@stories.where(sprint_id: @current_sprint, finished: false)
+      end
   end
 
   def new

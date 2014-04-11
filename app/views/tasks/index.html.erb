@@ -69,7 +69,7 @@
                                                             /
                                                             <%= link_to "Reject", reject_path(:id => task.id), :method => :post %>
                                                         </td>
-                                                        <td>none</td>
+                                                        <td class="font-red">me</td>
                                                     <% else %>
                                                         <td class="font-grey font-bold">Pending </td>
                                                         <td>(<%= User.find(task.proposed_id).username %>)</td>

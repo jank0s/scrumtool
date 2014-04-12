@@ -99,6 +99,9 @@ class StoriesController < ApplicationController
     end
 
     def accept
+        @story=Story.find(params[:id])
+        @story.finished=true
+        @story.save
         redirect_to stories_url
     end
 

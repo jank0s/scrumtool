@@ -66,28 +66,30 @@
                     </div>
                 <% end %>
 
-                <% @sprintStories.each do |story| %>
-                    <div class="modals">
-                        <div class="modal" id="rejectModal<%= story.id %>" tabindex="-1" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Add your notes</h4>
+                <% if productowner? || admin? %>
+                    <% @sprintStories.each do |story| %>
+                        <div class="modals">
+                            <div class="modal" id="rejectModal<%= story.id %>" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Add your notes</h4>
+                                        </div>
+                                        <%= form_tag reject_story_path(story.id), method: 'patch' do %>
+                                            <div class="modal-body">
+                                                <%= text_area_tag 'value', story.note, class: 'form-control' %>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <%= submit_tag ("Reject story"), :class => "btn btn-danger pull-right" %>
+                                            </div>
+                                        <% end %>
                                     </div>
-                                    <%= form_tag reject_story_path(story.id), method: 'patch' do %>
-                                        <div class="modal-body">
-                                            <%= text_area_tag 'value', story.note, class: 'form-control' %>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <%= submit_tag ("Reject story"), :class => "btn btn-danger pull-right" %>
-                                        </div>
-                                    <% end %>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <% end %>
                 <% end %>
 
             <% else %>

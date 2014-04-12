@@ -2,6 +2,7 @@ class StoriesController < ApplicationController
     before_action :signed_in_user
     before_action :correct_user
     before_action :po_or_sm, only: [:new, :create, :destroy]
+    before_action :po, only: [:accept, :reject]
 
     def index
         @stories=current_user.activeproject.stories
@@ -135,5 +136,9 @@ class StoriesController < ApplicationController
 
     def po_or_sm
         redirect_to root_url unless (productowner? || scrummaster? || admin?)
+    end
+
+    def po
+        redirect_to root_url unless (productowner? || admin?)
     end
 end

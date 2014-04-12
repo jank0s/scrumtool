@@ -16,9 +16,9 @@
                 <% @sprintStories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <b><%= story.name %></b> (Priority: <%= story.priority.name %> | Business
-                                value: <%= story.value %>)
+                            <div class="story-head">
+                                <h4><%= story.name %></h4>
+                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> <% if !story.timeestimates.nil? %> | Estimates: <%= story.timeestimates %> <% end %></small>
                             </div>
                             <%= button_to("Edit tasks", {:controller => "tasks", :action => "new", :id =>story.id}, :class => "btn btn-xs btn-primary pull-right")%>
                             <div class="clear"></div>
@@ -30,6 +30,14 @@
                                     <li># <%= test %></li>
                                 <% end %>
                             </ul>
+                            <% if !story.note.nil? %>
+                                <ul class="notes text-warning">
+                                    <% story.note.split(/\n/).each do |note| %>
+                                        <li>-- <%= note %></li>
+                                    <% end %>
+                                </ul>
+                            <% end %>
+
                             <% @tasks = Task.where(story_id: story.id) %>
 
                             <% if @tasks.count != 0 %>

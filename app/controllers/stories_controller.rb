@@ -107,6 +107,7 @@ class StoriesController < ApplicationController
 
     def reject
         @story=Story.find(params[:id])
+        @story.note=params[:value]
         @story.sprint=nil
         @story.save
         redirect_to stories_url

@@ -43,8 +43,8 @@
                                     <% end %>
                                 </ul>
                             <% end %>
-                            <hr class="divider">
                             <% if productowner? || admin? %>
+                                <hr class="divider">
                                 <div class="accept pull-right">
                                     <b>Acceptance test: </b><%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-sm btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
                                 </div>

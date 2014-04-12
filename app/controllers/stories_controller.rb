@@ -16,7 +16,7 @@ class StoriesController < ApplicationController
         end
         if (@current_sprint != nil)
             @current_sprint_name = @sprints.where(id: @current_sprint).name
-            @sprintStories=@stories.where(sprint_id: @current_sprint)
+            @sprintStories=@stories.where(finished: false, sprint_id: @current_sprint)
         end
         @remainingStories=@stories.where(finished: false, sprint_id: nil)
         @finishedStories=@stories.where(finished: true)

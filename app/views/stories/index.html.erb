@@ -17,7 +17,7 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane active" id="unfinished-stories">
-        <h2>User stories for current sprint<% if @current_sprint_name.present? %>: <%= @current_sprint_name %><% end %></h2>
+        <h2>User stories for current sprint<% if @current_sprint_name.present? %><% end %></h2>
         <div class="part-story">
             <% if !@sprintStories.empty? %>
                 <% @sprintStories.each do |story| %>

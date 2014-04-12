@@ -109,6 +109,7 @@
 }
 .part-story .btn{
     margin-left: 10px;
+    margin-top: 3px;
 }
 .acceptance-tests, .notes{
     list-style-type: none;

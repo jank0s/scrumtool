@@ -65,7 +65,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <% if (scrummaster? || admin?) && @current_sprint != nil %>
-                                <div class="pull-left">
+                                <div class="story-check">
                                     <%= check_box_tag "story_id[]", story.id %>
                                 </div>
                             <% end %>

@@ -120,9 +120,12 @@
     width: 200px;
     float: right;
 }
+.story-check{
+    float: left;
+    margin-right: 10px;
+}
 .story-head{
     float: left;
-    margin-left: 10px;
 }
 .story-head h4{
     margin: 0;

@@ -18,9 +18,6 @@ class TasksController < ApplicationController
             @sprintStories=@stories.where(sprint_id: @current_sprint, finished: false)
       end
       @userstories=@stories.joins(:tasks).where(:tasks => {:assigned_to => current_user})
-      #@userstories = @stories.where(Task.assigned_to: current_user)
-     # stories + tasks, where assigned_to = current_user 
-
   end
 
   def new

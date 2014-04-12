@@ -65,7 +65,7 @@ class TasksController < ApplicationController
     @task.assigned_to = nil
     if @task.save
       flash[:success] = "Task successfully released."
-      redirect_to tasks_url
+      redirect_to :back
     else
       flash[:warning] = "Task is not successfully released."
       redirect_to tasks_url

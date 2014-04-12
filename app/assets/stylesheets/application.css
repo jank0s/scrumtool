@@ -130,6 +130,9 @@
 .story-head h4{
     margin: 0;
 }
+.modals textarea{
+    height: 150px;
+}
 
 
 .font-grey{

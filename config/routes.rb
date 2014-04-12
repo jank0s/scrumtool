@@ -15,6 +15,7 @@ Tpo11::Application.routes.draw do
     resources :stories, only: [:index, :new, :create, :edit, :update, :destroy]
     match '/stories/:id/accept', to: 'stories#accept', via: 'patch', as: 'accept_story'
     match '/stories/:id/reject', to: 'stories#reject', via: 'patch', as: 'reject_story'
+    match '/stories/:id/notes', to: 'stories#notes', via: 'patch', as: 'notes_story'
 
     match '/addtosprint', to: 'stories#addtosprint', via: 'post'
     resources :tasks

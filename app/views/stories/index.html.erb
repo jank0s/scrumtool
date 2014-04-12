@@ -17,7 +17,10 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane active" id="unfinished-stories">
-        <h2>User stories for current sprint<% if @current_sprint_name.present? %><% end %></h2>
+        <h2>User stories for current sprint
+            <% if @current_sprint_name.present? %>
+            <% end %></h2>
+
         <div class="part-story">
             <% if !@sprintStories.empty? %>
                 <% @sprintStories.each do |story| %>
@@ -25,7 +28,9 @@
                         <div class="panel-heading">
                             <div class="story-head">
                                 <h4><%= story.name %></h4>
-                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> | Estimates: <%= story.timeestimates %></small>
+                                <small>Priority: <%= story.priority.name %>
+                                    <% if !story.value.nil? %> | Business value: <%= story.value %>
+                                    <% end %> | Estimates: <%= story.timeestimates %></small>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -46,7 +51,8 @@
                             <% if productowner? || admin? %>
                                 <hr class="divider">
                                 <div class="accept pull-right">
-                                    <b>Acceptance test: </b><%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-sm btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
+                                    <b>Acceptance
+                                        test: </b><%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-sm btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
                                 </div>
                             <% end %>
                         </div>
@@ -57,63 +63,96 @@
             <% end %>
         </div>
         <h2>Remaining user stories</h2>
+
         <div class="part-story">
 
             <% if !@remainingStories.empty? %>
-            <%= form_tag addtosprint_path do %>
+                <%= form_tag addtosprint_path do %>
 
-                <% @remainingStories.each do |story| %>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <% if (scrummaster? || admin?) && @current_sprint != nil %>
-                                <div class="story-check">
-                                    <%= check_box_tag "story_id[]", story.id %>
+                    <% @remainingStories.each do |story| %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <% if (scrummaster? || admin?) && @current_sprint != nil %>
+                                    <div class="story-check">
+                                        <%= check_box_tag "story_id[]", story.id %>
+                                    </div>
+                                <% end %>
+                                <div class="story-head">
+                                    <h4><%= story.name %></h4>
+                                    <small>Priority: <%= story.priority.name %>
+                                        <% if !story.value.nil? %> | Business value: <%= story.value %>
+                                        <% end %>
+                                        <% if !story.timeestimates.nil? %> | Estimates: <%= story.timeestimates %>
+                                        <% end %></small>
                                 </div>
-                            <% end %>
-                            <div class="story-head">
-                                <h4><%= story.name %></h4>
-                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> <% if !story.timeestimates.nil? %> | Estimates: <%= story.timeestimates %> <% end %></small>
+
+                                <% if scrummaster? || admin? || productowner? %>
+                                    <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
+                                    <%= link_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                                <% end %>
+
+                                <button class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#notesModal<%= story.id %>">
+                                    Edit notes
+                                </button>
+
+                                <% if scrummaster? || admin? %>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Estimates</span>
+                                        <%= hidden_field_tag 'storyid[]', story.id %>
+                                        <%= text_field_tag 'timeestimate[]', story.timeestimates, class: 'form-control' %>
+                                    </div>
+                                <% end %>
+                                <div class="clear"></div>
                             </div>
 
-                            <% if scrummaster? || admin? || productowner? %>
-                                <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
-                                <%= link_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
-                            <% end %>
-                            <% if scrummaster? || admin? %>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-addon">Estimates</span>
-                                    <%= hidden_field_tag 'storyid[]', story.id %>
-                                    <%= text_field_tag 'timeestimate[]', story.timeestimates, class: 'form-control' %>
-                                </div>
-                            <% end %>
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="panel-body">
-                            <%= story.description %>
-                            <ul class="acceptance-tests text-primary">
-                                <% story.test.split(/\n/).each do |test| %>
-                                    <li># <%= test %></li>
-                                <% end %>
-                            </ul>
-                            <% if !story.note.nil? %>
-                                <ul class="notes text-warning">
-                                    <% story.note.split(/\n/).each do |note| %>
-                                        <li>-- <%= note %></li>
+                            <div class="panel-body">
+                                <%= story.description %>
+                                <ul class="acceptance-tests text-primary">
+                                    <% story.test.split(/\n/).each do |test| %>
+                                        <li># <%= test %></li>
                                     <% end %>
                                 </ul>
-                            <% end %>
+                                <% if !story.note.nil? %>
+                                    <ul class="notes text-warning">
+                                        <% story.note.split(/\n/).each do |note| %>
+                                            <li>-- <%= note %></li>
+                                        <% end %>
+                                    </ul>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+                    <% if scrummaster? || admin? %>
+                        <% if @current_sprint != nil %>
+                            <%= submit_tag ("Add to current sprint"), :name => 'addtosprint', :class => "btn btn-primary pull-right" %>
+                        <% end %>
+                        <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
+                    <% end %>
+                <% end %>
+
+                <% @remainingStories.each do |story| %>
+                    <div class="modals">
+                        <div class="modal" id="notesModal<%= story.id %>" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Notes</h4>
+                                    </div>
+                                    <%= form_tag notes_story_path(story.id), method: 'patch' do %>
+                                        <div class="modal-body">
+                                            <%= text_area_tag 'value', story.note, class: 'form-control' %>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <%= submit_tag ("Save notes"), :class => "btn btn-primary pull-right" %>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <% end %>
-                <% if scrummaster? || admin? %>
-                    <% if @current_sprint != nil %>
-                    <%= submit_tag ("Add to current sprint"), :name => 'addtosprint',:class => "btn btn-primary pull-right" %>
-                    <% end %>
-                    <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
-                <% end %>
-            <% end %>
-
             <% else %>
                 No remaining user stories
             <% end %>
@@ -121,6 +160,7 @@
     </div>
     <div class="tab-pane" id="finished-stories">
         <h2>Finished user stories</h2>
+
         <div class="part-story">
             <% if !@finishedStories.empty? %>
                 <% @finishedStories.each do |story| %>
@@ -128,7 +168,9 @@
                         <div class="panel-heading">
                             <div class="story-head">
                                 <h4><%= story.name %></h4>
-                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> | Estimates: <%= story.timeestimates %></small>
+                                <small>Priority: <%= story.priority.name %>
+                                    <% if !story.value.nil? %> | Business value: <%= story.value %>
+                                    <% end %> | Estimates: <%= story.timeestimates %></small>
                             </div>
                             <div class="clear"></div>
                         </div>

@@ -112,6 +112,13 @@ class StoriesController < ApplicationController
         redirect_to stories_url
     end
 
+    def notes
+        @story=Story.find(params[:id])
+        @story.note=params[:value]
+        @story.save
+        redirect_to stories_url
+    end
+
     private
     def story_params
         params.require(:story).permit(:name, :description, :test, :priority_id, :value)

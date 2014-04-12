@@ -72,7 +72,7 @@
                             <% end %>
                             <div class="story-head">
                                 <h4><%= story.name %></h4>
-                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> | Estimates: <%= story.timeestimates %></small>
+                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> <% if !story.timeestimates.nil? %> | Estimates: <%= story.timeestimates %> <% end %></small>
                             </div>
 
                             <% if scrummaster? || admin? || productowner? %>

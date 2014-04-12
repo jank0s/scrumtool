@@ -118,7 +118,13 @@
 .part-story .input-group{
     width: 200px;
     float: right;
-
+}
+.story-head{
+    float: left;
+    margin-left: 10px;
+}
+.story-head h4{
+    margin: 0;
 }
 
 

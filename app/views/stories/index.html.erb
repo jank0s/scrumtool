@@ -70,9 +70,15 @@
                                     <li># <%= test %></li>
                                 <% end %>
                             </ul>
+                            <% if !story.note.nil? %>
+                                <ul class="notes text-warning">
+                                    <% story.note.split(/\n/).each do |note| %>
+                                        <li>-- <%= note %></li>
+                                    <% end %>
+                                </ul>
+                            <% end %>
                         </div>
                     </div>
-                      <!-- tudi </div> namest unga spodi, da normalno zgleda -->
                 <% end %>
                 <% if scrummaster? || admin? %>
                     <% if @current_sprint != nil %>
@@ -80,7 +86,6 @@
                     <% end %>
                     <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
                 <% end %>
-                   <!-- !!!!!!!!!!!!za tem divom ne dela submit_tag!!!!!!!!!!!!!!!!!!!!!!!! -->
             <% end %>
 
             <% else %>

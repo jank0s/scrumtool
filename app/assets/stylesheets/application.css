@@ -110,7 +110,7 @@
 .part-story .btn{
     margin-left: 10px;
 }
-.acceptance-tests{
+.acceptance-tests, .notes{
     list-style-type: none;
     padding: 0px;
     margin: 0px;

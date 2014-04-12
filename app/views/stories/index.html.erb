@@ -30,6 +30,24 @@
                         </div>
                         <div class="panel-body">
                             <%= story.description %>
+                            <ul class="acceptance-tests text-primary">
+                                <% story.test.split(/\n/).each do |test| %>
+                                    <li># <%= test %></li>
+                                <% end %>
+                            </ul>
+                            <% if !story.note.nil? %>
+                                <ul class="notes text-warning">
+                                    <% story.note.split(/\n/).each do |note| %>
+                                        <li>-- <%= note %></li>
+                                    <% end %>
+                                </ul>
+                            <% end %>
+                            <hr class="divider">
+                            <% if productowner? || admin? %>
+                                <div class="accept pull-right">
+                                    Acceptance test: <%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-xs btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-xs btn-success", :method => :patch %>
+                                </div>
+                            <% end %>
                         </div>
                     </div>
                 <% end %>

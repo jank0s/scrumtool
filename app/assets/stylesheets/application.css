@@ -115,6 +115,11 @@
     padding: 0px;
     margin: 0px;
 }
+.part-story .input-group{
+    width: 200px;
+    float: right;
+
+}
 
 
 .font-grey{

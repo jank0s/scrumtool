@@ -69,14 +69,17 @@
                                     <%= check_box_tag "story_id[]", story.id %>
                                 <% end %>
                                 <b><%= story.name %></b> ( Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>)
-                                <% if scrummaster? || admin? %>
-                                    | Estimates: <%= text_field_tag 'timeestimate[]', story.timeestimates %>
-                                     <%= hidden_field_tag 'storyid[]', story.id %>
-                                <% end %>
                             </div>
                             <% if scrummaster? || admin? || productowner? %>
-                                <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-xs btn-success pull-right" %>
-                                <%= link_to "Remove", story_path(story.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                                <%= link_to "Edit", edit_story_path(story.id), :class => "btn btn-sm btn-success pull-right" %>
+                                <%= link_to "Remove", story_path(story.id), :class => "btn btn-sm btn-danger pull-right", :method => :delete %>
+                            <% end %>
+                            <% if scrummaster? || admin? %>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">Estimates</span>
+                                    <%= text_field_tag 'timeestimate[]', story.timeestimates, class: 'form-control' %>
+                                    <%= hidden_field_tag 'storyid[]', story.id %>
+                                </div>
                             <% end %>
                             <div class="clear"></div>
                         </div>

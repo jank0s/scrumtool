@@ -23,8 +23,9 @@
                 <% @sprintStories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <%= story.name %> (Priority: <%= story.priority.name %><% if !story.value.nil? %> | Business value: <%= story.value %> <% end %>) | Estimates: <%= story.timeestimates %>
+                            <div class="story-head">
+                                <h4><%= story.name %></h4>
+                                <small>Priority: <%= story.priority.name %> <% if !story.value.nil? %> | Business value: <%= story.value %> <% end %> | Estimates: <%= story.timeestimates %></small>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -45,7 +46,7 @@
                             <hr class="divider">
                             <% if productowner? || admin? %>
                                 <div class="accept pull-right">
-                                    Acceptance test: <%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-xs btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-xs btn-success", :method => :patch %>
+                                    <b>Acceptance test: </b><%= link_to "Reject", reject_story_path(story.id), :class => "btn btn-sm btn-danger", :method => :patch %> <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
                                 </div>
                             <% end %>
                         </div>
@@ -81,8 +82,9 @@
                             <% if scrummaster? || admin? %>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-addon">Estimates</span>
-                                    <%= text_field_tag 'timeestimate[]', story.timeestimates, class: 'form-control' %>
                                     <%= hidden_field_tag 'storyid[]', story.id %>
+                                    <%= text_field_tag 'timeestimate[]', story.timeestimates, class: 'form-control' %>
+
                                 </div>
                             <% end %>
                             <div class="clear"></div>

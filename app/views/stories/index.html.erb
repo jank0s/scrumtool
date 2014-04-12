@@ -32,6 +32,9 @@
                                     <% if !story.value.nil? %> | Business value: <%= story.value %>
                                     <% end %> | Estimates: <%= story.timeestimates %></small>
                             </div>
+                            <button class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#notesModal<%= story.id %>">
+                                Edit notes
+                            </button>
                             <div class="clear"></div>
                         </div>
                         <div class="panel-body">
@@ -129,30 +132,6 @@
                         <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
                     <% end %>
                 <% end %>
-
-                <% @remainingStories.each do |story| %>
-                    <div class="modals">
-                        <div class="modal" id="notesModal<%= story.id %>" tabindex="-1" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Notes</h4>
-                                    </div>
-                                    <%= form_tag notes_story_path(story.id), method: 'patch' do %>
-                                        <div class="modal-body">
-                                            <%= text_area_tag 'value', story.note, class: 'form-control' %>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <%= submit_tag ("Save notes"), :class => "btn btn-primary pull-right" %>
-                                        </div>
-                                    <% end %>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% end %>
             <% else %>
                 No remaining user stories
             <% end %>
@@ -197,3 +176,27 @@
         </div>
     </div>
 </div>
+
+<% @stories.each do |story| %>
+    <div class="modals">
+        <div class="modal" id="notesModal<%= story.id %>" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Notes</h4>
+                    </div>
+                    <%= form_tag notes_story_path(story.id), method: 'patch' do %>
+                        <div class="modal-body">
+                            <%= text_area_tag 'value', story.note, class: 'form-control' %>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <%= submit_tag ("Save notes"), :class => "btn btn-primary pull-right" %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

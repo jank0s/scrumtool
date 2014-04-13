@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     before_action :admin_user, only: [:index, :new, :create]
 
     def index
-        @users=User.search(params[:search])
+        @users=User.where(active: true).search(params[:search])
     end
 
     def show

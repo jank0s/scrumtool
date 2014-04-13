@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412111851) do
+ActiveRecord::Schema.define(version: 20140413140757) do
 
   create_table "priorities", force: true do |t|
     t.string   "name"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20140412111851) do
     t.string   "remember_token"
     t.integer  "role_id"
     t.integer  "activeproject_id"
+    t.boolean  "active",           default: true
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"

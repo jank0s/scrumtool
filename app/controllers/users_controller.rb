@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-    before_action :signed_in_user, only: [:index, :show, :new, :create]
+    before_action :signed_in_user, only: [:index, :show, :new, :create, :destroy, :activate]
     before_action :correct_user, only: [:show, :edit, :update]
-    before_action :admin_user, only: [:index, :new, :create]
+    before_action :admin_user, only: [:index, :new, :create, :destroy, :activate]
 
     def index
         @users=User.where(active: true).search(params[:search])
@@ -36,6 +36,21 @@ class UsersController < ApplicationController
         else
             render "new"
         end
+    end
+
+    def destroy
+        @user=User.find(params[:id])
+        @user.remember_token=User.encrypt(User.new_remember_token)
+        @user.active=false
+        @user.save
+        redirect_to users_url
+    end
+
+    def activate
+        @user=User.find(params[:id])
+        @user.active=true
+        @user.save
+        redirect_to users_url
     end
 
     private

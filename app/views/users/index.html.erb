@@ -43,7 +43,10 @@
                         <td><%= user.username %></td>
                         <td><%= user.email %></td>
                         <td><%= user.role.name %></td>
-                        <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get %></td>
+                        <td>
+                            <%= link_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+                            <%= link_to "Remove", user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                        </td>
                     </tr>
                 <% end %>
                 </tbody>
@@ -84,7 +87,7 @@
                         <td><%= user.username %></td>
                         <td><%= user.email %></td>
                         <td><%= user.role.name %></td>
-                        <td><%= button_to "Activate", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
+                        <td><%= button_to "Activate", activate_users_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :patch %></td>
                     </tr>
                 <% end %>
                 </tbody>

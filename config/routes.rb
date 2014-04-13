@@ -6,7 +6,9 @@ Tpo11::Application.routes.draw do
     resources :sessions, only: [:new, :create, :destroy]
     match '/signout', to: 'sessions#destroy', via: 'delete'
     match '/signin', to: 'sessions#new', via: 'get'
-    resources :users, only: [:index, :show, :new, :create, :edit, :update]
+    resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+    match '/users/:id/activate', to: 'users#activate', via: 'patch', as: 'activate_users'
+
     resources :usertasks, only: [:index]
 
     resources :sprints

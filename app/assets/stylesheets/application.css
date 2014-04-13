@@ -91,7 +91,7 @@
 }
 
 /*user list panel*/
-.panel-list-user form input{
+.panel-list-user a{
     margin-right: 10px;
 }
 .input-group-search {

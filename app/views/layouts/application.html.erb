@@ -21,7 +21,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<%= link_to "TPO11", root_path, class: "navbar-brand", id: "navbar-brand-logo" %>
-                <% if activeproject? %>
+                <% if signed_in? && activeproject? %>
                     <span class="navbar-brand">- <%= current_user.activeproject.name %></span>
                 <% end %>
 			</div>

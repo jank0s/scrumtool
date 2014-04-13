@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
     def index
         @users=User.where(active: true).search(params[:search])
+        @remUsers=User.where(active: false).search(params[:search])
     end
 
     def show

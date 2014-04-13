@@ -1,40 +1,95 @@
-<h2>Users</h2>
-<div class="panel panel-default panel-list-user">
-    <div class="panel-heading">
-        <%= form_tag users_path, :method => 'get' do %>
-            <div class="input-group input-group-search pull-left">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                <%= text_field_tag :search, params[:search], :class => 'form-control' %>
-            </div>
-            <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
-        <% end %>
-        <%= button_to "Add user", new_user_path, :class => "btn btn-primary pull-right", :method => :get %>
-        <div class="clear"></div>
-    </div>
+<h1>Users</h1>
 
-    <!-- Table -->
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Username</th>
-            <th>E-Mail</th>
-            <th>Role</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @users.each do |user| %>
-            <tr>
-                <td><%= user.id %></td>
-                <td><%= user.name %> <%= user.surname %></td>
-                <td><%= user.username %></td>
-                <td><%= user.email %></td>
-                <td><%= user.role.name %></td>
-                <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get %></td>
-            </tr>
-        <% end %>
-        </tbody>
-    </table>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#active-users" data-toggle="tab">Active users</a></li>
+    <li><a href="#removed-users" data-toggle="tab">Removed users</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="active-users">
+        <h2>Active users</h2>
+        <div class="panel panel-default panel-list-user">
+            <div class="panel-heading">
+                <%= form_tag users_path, :method => 'get' do %>
+                    <div class="input-group input-group-search pull-left">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                        <%= text_field_tag :search, params[:search], :class => 'form-control' %>
+                    </div>
+                    <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
+                <% end %>
+                <%= button_to "Add user", new_user_path, :class => "btn btn-primary pull-right", :method => :get %>
+                <div class="clear"></div>
+            </div>
+
+            <!-- Table -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>E-Mail</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @users.each do |user| %>
+                    <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.name %> <%= user.surname %></td>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role.name %></td>
+                        <td><%= button_to "Edit", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> <%= button_to "Remove", edit_user_path(user.id), :class => "btn btn-xs btn-danger pull-right", :method => :get %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="removed-users">
+        <h2>Removed users</h2>
+        <div class="panel panel-default panel-list-user">
+            <div class="panel-heading">
+                <%= form_tag users_path, :method => 'get' do %>
+                    <div class="input-group input-group-search pull-left">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                        <%= text_field_tag :search, params[:search], :class => 'form-control' %>
+                    </div>
+                    <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pull-left" %>
+                <% end %>
+                <div class="clear"></div>
+            </div>
+
+            <!-- Table -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>E-Mail</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @remUsers.each do |user| %>
+                    <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.name %> <%= user.surname %></td>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role.name %></td>
+                        <td><%= button_to "Activate", edit_user_path(user.id), :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+

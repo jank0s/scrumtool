@@ -26,6 +26,10 @@
   clear: both;
 }
 
+#navbar-brand-logo{
+    color: #d9534f !important;
+}
+
 /*form sign in*/
 .form-signin {
   max-width: 330px;

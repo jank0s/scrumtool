@@ -1,0 +1,39 @@
+<% if @task.errors.any? %>
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@task.errors.count, "error") %>.
+    </div>
+<% end %>
+
+
+<div id="form-add-user">
+  <%= form_for @task do |f| %>
+      <h2>Edit Task: <%= @task.name %> </h2>
+
+      <% if @task.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @task.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <div class="input-group">
+        <%= f.label :name, "Task name", :class => "input-group-addon" %>
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
+      <div class="input-group">
+        <%= f.label :time_estimation, "Time", :class => "input-group-addon" %>
+        <%= f.text_field :time_estimation, :class => "form-control" %>
+      </div>
+
+      <div class="input-group">
+        <%= f.label :proposed_id, "Suggest:", :class => "input-group-addon" %>
+        <%= f.collection_select :proposed_id, @users, :id, :user, {:include_blank => true}, {:class => "form-control"} %>
+      </div>
+
+      <p class="buttons">
+        <%= f.submit "Save changes", :class => "btn btn-primary pull-right" %>
+      </p>
+  <% end %>
+</div>

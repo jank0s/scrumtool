@@ -36,10 +36,12 @@
 
           <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
 
-          <% if !sprint_running?(sprint) %>
-            <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
-          <% else %>
+          <% if sprint_past?(sprint) %>
+            <b>OVER</b>
+          <% elsif sprint_running?(sprint) %>
             <b>RUNNING</b>
+          <% else %>
+            <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
           <% end %>
 
           </td>

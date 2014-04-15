@@ -47,6 +47,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def accept
     @task = Task.find(params[:id])
     @task.assigned_to = current_user.id

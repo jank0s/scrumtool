@@ -51,6 +51,12 @@ module SessionsHelper
         sprint.start <= now && sprint.end >= now
     end
 
+    def sprint_past?(sprint)
+        now = Date.today
+
+        sprint.end < now
+    end
+
     def activeproject?
         current_user.activeproject!=nil
     end

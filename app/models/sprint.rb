@@ -32,9 +32,9 @@ class Sprint < ActiveRecord::Base
       return true
     else
       sprint.each do |s|
-        if s.start > self[:start] && s.start < self[:end]
+        if s.start >= self[:start] && s.start <= self[:end]
           errors[:base] << "Overlapping with another sprint"
-        elsif s.end > self[:start] && s.end < self[:end]
+        elsif s.end >= self[:start] && s.end <= self[:end]
           errors[:base] << "Overlapping with another sprint"
         elsif s.start < self[:start] && s.end > self[:end]
           errors[:base] << "Overlapping with another sprint"

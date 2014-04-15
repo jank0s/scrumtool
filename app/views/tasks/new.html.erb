@@ -36,6 +36,8 @@
           <td><%= task.time_estimation %></td>
           <td><%=  %></td>
           <td></td>
+
+          <td><%= button_to "Edit", edit_task_path(task.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
         </tr>
     <% end %>
     </tbody>

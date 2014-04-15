@@ -41,6 +41,10 @@ class ProjectsController < ApplicationController
 
     def destroy
     	Project.find(params[:id]).destroy
+        @users = User.where(activeproject_id: params[:id])
+        @users.each do |user|
+            user.update_attributes(:activeproject_id => nil)
+        end
     	redirect_to projects_url
     end
 

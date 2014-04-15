@@ -21,6 +21,9 @@
       <th>End</th>
       <th>Velocity</th>
       <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -34,18 +37,16 @@
           <td><%=  %></td>
           <td></td>
 
-          <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
-
           <% if sprint_past?(sprint) %>
-            <b>OVER</b>
+            <td class="text-right"><b>OVER</b></td>
+            <td></td>
           <% elsif sprint_running?(sprint) %>
-            <b>RUNNING</b>
+            <td class="text-right"><b>RUNNING</b></td>
+            <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> </td>
           <% else %>
-            <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+            <td> <%= button_to "Remove", sprint_path(sprint.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
+            <td><%= button_to "Edit", edit_sprint_path(sprint.id), :class => "btn btn-xs btn-success pull-right", :method => :get %> </td>
           <% end %>
-
-          </td>
-
 
         </tr>
       <% i+=1 %>

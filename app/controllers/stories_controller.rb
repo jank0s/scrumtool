@@ -64,20 +64,31 @@ class StoriesController < ApplicationController
         if params[:timeestimates]
             @timeestimate = params[:timeestimate]            
             @storyids = params[:storyid]
-
             i=0
+            ok = []
+            nok =[]
             @storyids.each do |s|
+                @storytoadd = Story.find_by(id: s)
                 if (@timeestimate[i].to_f > 0.0 && @timeestimate[i].to_f < 100.0)
                     @storytoadd = Story.find_by(id: s)
                     @storytoadd.update_attributes(timeestimates: @timeestimate[i].to_f)
-                    flash[:success] = "Time estimate is set."
+                    ok.push @storytoadd.name
                 elsif (@timeestimate[i].to_f > 100.0)
-                    flash[:warning] = "Cannot set time estime. Time estimate is bigger than 100.0"
+                    nok.push @storytoadd.name
                 elsif (@timeestimate[i].size != 0)
-                    flash[:warning] = "Cannot set time estime."
+                    nok.push @storytoadd.name
+                elsif (@timeestimate[i].size == 0)
+                    @storytoadd.update_attributes(:timeestimates => nil)
+                    ok.push @storytoadd.name
                 end
                 i+=1
             end
+            if (!ok.empty?)
+                flash[:success] = "Time is set for "+ok.map(&:inspect).join(', ')+"."
+            end
+            if (!nok.empty?)
+                flash[:warning] = "Time cannot be set for "+nok.map(&:inspect).join(', ')+"."
+            end            
         elsif params[:addtosprint] 
             @addto = params[:story_id].map(&:to_i)
             i=0
@@ -89,12 +100,12 @@ class StoriesController < ApplicationController
                         if (@storytoadd.timeestimates != nil)
                             @storytoadd.update_attributes(sprint_id: sprint.id)
                             flash[:success] = "Story added to current sprint."
-                        else
-                            flash[:warning] = "Cannot add story. Time estimates is not set."
+
                         end
                     end
                 end
             end
+           
         end
       redirect_to stories_url
     end

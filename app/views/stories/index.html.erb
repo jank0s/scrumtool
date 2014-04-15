@@ -106,7 +106,7 @@
                     <% @remainingStories.each do |story| %>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <% if (scrummaster? || admin?) && @current_sprint != nil %>
+                                <% if (scrummaster? || admin?) && @current_sprint != nil && !story.timeestimates.nil? %>
                                     <div class="story-check">
                                         <%= check_box_tag "story_id[]", story.id %>
                                     </div>

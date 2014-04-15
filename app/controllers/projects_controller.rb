@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
-    before_action :signed_in_user, only: [:index, :destroy]
-    before_action :admin_user, only: [:index, :destroy]
+    before_action :signed_in_user, only: [:index]
+    before_action :admin_user, only: [:index, :create, :edit, :update]
+    before_action :sm, only: [:index, :edit, :update, :create]
 
 	def index
 		@users = User.all
@@ -28,7 +29,11 @@ class ProjectsController < ApplicationController
     def update
         @project = Project.find(params[:id])
         if @project.update_attributes(project_params)
-            redirect_to projects_url
+            if (admin?)
+                redirect_to projects_url
+            else
+                redirect_to root_url
+            end
         else
             render 'edit'
         end
@@ -41,10 +46,14 @@ class ProjectsController < ApplicationController
 
 	private
 	def project_params
-        if admin?
+        if (admin? || scrummaster?)
             params.require(:project).permit(:name, :description, :scrummaster_id, :productowner_id, :user_ids => [])
         end
 
+    end
+
+    def sm
+        redirect_to root_url unless (scrummaster? || admin?)
     end
 
 	def signed_in_user
@@ -52,6 +61,6 @@ class ProjectsController < ApplicationController
     end
 
     def admin_user
-        redirect_to root_url unless admin?
+        redirect_to root_url unless (admin? || scrummaster?)
     end
 end

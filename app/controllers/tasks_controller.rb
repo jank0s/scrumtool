@@ -66,6 +66,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.assigned_to = current_user.id
     @task.proposed_id = nil
+    if (@task.assigned_date == nil)
+      @task.assigned_date = DateTime.now.in_time_zone.midnight
+    end
     if @task.save
       flash[:success] = "Task successfully accepted."
       redirect_to tasks_url

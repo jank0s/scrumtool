@@ -6,7 +6,8 @@ class UsertasksController < ApplicationController
 	def index
 		@stories=current_user.activeproject.stories
 		@userstories=@stories.joins(:tasks).where(:tasks => {:assigned_to => current_user})
-	end
+
+    end
 
 private
 	def signed_in_user

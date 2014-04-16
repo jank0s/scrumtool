@@ -17,7 +17,7 @@
                 <% @taskinprogress.each do |t| %>
                 <tr>
                     <td><b>Currently working on:</b> <%= t.name %></td>
-                    <td> <%= button_to "Stop work", {}, :class => "btn btn-xs btn-success pull-right" %></td>
+                    <td> <%= button_to "Stop work", stopwork_path(:id_task => t.id), :class => "btn btn-xs btn-success pull-right" %></td>
                 </tr>
                 <% end %>
                 </table>
@@ -122,7 +122,21 @@
     </div>
     <div class="tab-pane" id="todays-work">
         <div class="part-story">
-            
+            <% if !@todayswork.empty? %>
+                <% @todayswork.each do |t| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <%= t.name %>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        
+                    </div>
+                <% end %>
+            <% else %>
+                You have not done any tasks today.
+            <% end %>            
         </div>
     </div>
 </div>

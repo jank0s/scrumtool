@@ -9,11 +9,25 @@ class UsertasksController < ApplicationController
 
         @usertask = Task.where(:assigned_to => current_user)
         @taskinprogress=[]
+        @todayswork = []
+
         @usertask.each  do |task|
             if (task.startwork_date != nil && task.endwork_date == nil)
                 @taskinprogress.push task
             end
+            if (task.startwork_date != nil && task.endwork_date != nil)
+                if (task.startwork_date.to_date == Date.today)
+                    @todayswork.push task
+                end
+            end
         end
+    end
+
+    def stopwork
+        @id = params[:id_task]
+        @task = Task.find_by_id(@id)
+        @task.update_attributes(:endwork_date => DateTime.now.in_time_zone)
+        redirect_to usertasks_url
     end
 
     def startwork

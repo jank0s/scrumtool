@@ -27,6 +27,8 @@ Tpo11::Application.routes.draw do
     match '/release', to: 'tasks#release', via: 'post'
     match '/reject', to: 'tasks#reject', via: 'post'
     match '/startwork', to: 'usertasks#startwork', via: 'post'
+    match '/stopwork', to: 'usertasks#stopwork', via: 'post'
+
     resources :tasks do
         member do
             post 'new'

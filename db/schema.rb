@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140416164209) do
+ActiveRecord::Schema.define(version: 20140416182807) do
 
   create_table "posts", force: true do |t|
     t.text     "value"
@@ -106,5 +106,12 @@ ActiveRecord::Schema.define(version: 20140416164209) do
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+
+  create_table "worktimes", force: true do |t|
+    t.datetime "startwork"
+    t.datetime "endwork"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

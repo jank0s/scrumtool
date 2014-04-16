@@ -12,28 +12,44 @@ class UsertasksController < ApplicationController
         @todayswork = []
 
         @usertask.each  do |task|
-            if (task.startwork_date != nil && task.endwork_date == nil)
-                @taskinprogress.push task
-            end
-            if (task.startwork_date != nil && task.endwork_date != nil)
-                if (task.startwork_date.to_date == Date.today)
-                    @todayswork.push task
+            @worktimes = Worktime.where(:task_id => task.id)
+            if (!@worktimes.empty?)
+                @worktimes.each do |w|
+                    if (w.startwork != nil && w.endwork != nil)
+                        if (w.startwork.to_date == Date.today)
+                            @todayswork.push task
+                        end
+                    end
+                    if (w.startwork != nil && w.endwork == nil)
+                        @taskinprogress.push task
+                    end
                 end
             end
         end
+
+        
+
     end
 
     def stopwork
         @id = params[:id_task]
         @task = Task.find_by_id(@id)
-        @task.update_attributes(:endwork_date => DateTime.now.in_time_zone)
+        @worktimes = Worktime.where(task_id: @id)
+        if (!@worktimes.empty?)
+            @worktimes.each do |w|
+                if (w.startwork != nil)
+                    w.update_attributes(:endwork => DateTime.now.in_time_zone)
+                end
+            end
+        end
         redirect_to usertasks_url
     end
 
     def startwork
         @id = params[:id_task]
         @task = Task.find_by_id(@id)
-        @task.update_attributes(:startwork_date => DateTime.now.in_time_zone)
+        @worktime = Worktime.new(:startwork => DateTime.now.in_time_zone, :task_id => @id)
+        @worktime.save
         redirect_to usertasks_url
     end
 

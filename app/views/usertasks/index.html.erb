@@ -97,9 +97,9 @@
                                                     <% end %>
                                                 <td> </td>
                                                 <td>
-                                                    <% if !(task.startwork_date != nil && task.endwork_date == nil) %>
-                                                    <%= button_to "Start work", startwork_path(:id_task => task.id), :class => "btn btn-xs btn-success pull-right" %>
-                                                    <% end %>
+                                                    <% if (@taskinprogress.empty?) %>
+                                                        <%= button_to "Start work", startwork_path(:id_task => task.id), :class => "btn btn-xs btn-success pull-right" %>
+                                                    <% end %>  
                                                 </td>
                                                 <td><%= button_to "Work history", {}, :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
 

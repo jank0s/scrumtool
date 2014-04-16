@@ -11,11 +11,18 @@
 <div class="tab-content">
     <div class="tab-pane active" id="my-tasks">
         <div class="part-story">
-            
+            <% if !@taskinprogress.empty? %>
             <div class="panel panel-default">
-
-                BLEE
+                <table class="table table-striped">
+                <% @taskinprogress.each do |t| %>
+                <tr>
+                    <td><b>Currently working on:</b> <%= t.name %></td>
+                    <td> <%= button_to "Stop work", {}, :class => "btn btn-xs btn-success pull-right" %></td>
+                </tr>
+                <% end %>
+                </table>
             </div>
+            <% end %>
             <% if !@userstories.empty? %>
                 <% @userstories.each do |story| %>
                     <div class="panel panel-default">
@@ -89,7 +96,11 @@
                                                         </td>
                                                     <% end %>
                                                 <td> </td>
-                                                <td><%= button_to "Start work", {}, :class => "btn btn-xs btn-success pull-right", :method => :get  %></td>
+                                                <td>
+                                                    <% if !(task.startwork_date != nil && task.endwork_date == nil) %>
+                                                    <%= button_to "Start work", startwork_path(:id_task => task.id), :class => "btn btn-xs btn-success pull-right" %>
+                                                    <% end %>
+                                                </td>
                                                 <td><%= button_to "Work history", {}, :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
 
                                                 <% end %>

@@ -16,15 +16,17 @@
                 </div>
 
                 <div class="panel-body">
+
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon">Remaining</span>
+                    <%= text_field_tag 'time_remaining[]', w.remaining, class: 'form-control' %>
+                  </div>
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon">Done</span>
                     <%= hidden_field_tag 'time_id[]', w.id %>
                     <%= text_field_tag 'time_done[]', w.done, class: 'form-control' %>
                   </div>
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-addon">Remaining</span>
-                    <%= text_field_tag 'time_remaining[]', w.remaining, class: 'form-control' %>
-                  </div>
+
                 </div>
               </div>
               </div>

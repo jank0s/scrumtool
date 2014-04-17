@@ -4,12 +4,12 @@ class WorktimesController < ApplicationController
     @id = params[:id]
     @worktimes = Worktime.where(task_id: @id).order(:day)
 
-    testdate = Date.new(2014, 4, 20)
+    testdate = Date.new(2014, 4, 23)
     if @worktimes.last.day < testdate
       x = (testdate - @worktimes.last.day).to_i
 
-      x.times do |i|
-        Worktime.create(done: 0, remaining: 0, day: @worktimes.last.day + (i+1).days, task_id: @id)
+      for i in 1..x
+        Worktime.create(done: 0, remaining: 0, day: @worktimes.last.day + i.days, task_id: @id)
       end
     end
 

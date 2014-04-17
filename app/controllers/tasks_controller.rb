@@ -73,6 +73,8 @@ class TasksController < ApplicationController
       @task.assigned_date = DateTime.now.in_time_zone.midnight
     end
     if @task.save
+      #!!!!!!!!!!!!!!!!!!!!!!!!!!REMAINING""""""""""""""""""""
+      Worktime.create(done: 0, remaining: @task.time_estimation, day: Date.today, task_id: @task.id)
       flash[:success] = "Task successfully accepted."
       redirect_to tasks_url
     else

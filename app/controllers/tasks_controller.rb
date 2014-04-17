@@ -57,8 +57,10 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update_attributes(task_params)
-      redirect_to sprints_url
+      redirect_to tasks_url
     else
+      ap_id = current_user.activeproject_id
+      @users = Project.find(ap_id).users
       render "edit"
     end
   end

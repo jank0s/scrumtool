@@ -11,21 +11,21 @@ class UsertasksController < ApplicationController
         @taskinprogress=[]
         @todayswork = []
 
-        @usertask.each  do |task|
-            @worktimes = Worktime.where(:task_id => task.id)
-            if (!@worktimes.empty?)
-                @worktimes.each do |w|
-                    if (w.startwork != nil && w.endwork != nil)
-                        if (w.startwork.to_date == Date.today)
-                            @todayswork.push task
-                        end
-                    end
-                    if (w.startwork != nil && w.endwork == nil)
-                        @taskinprogress.push task
-                    end
-                end
-            end
-        end
+        #@usertask.each  do |task|
+        #    @worktimes = Worktime.where(:task_id => task.id)
+        #    if (!@worktimes.empty?)
+        #        @worktimes.each do |w|
+        #            if (w.startwork != nil && w.endwork != nil)
+        #                if (w.startwork.to_date == Date.today)
+        #                    @todayswork.push task
+        #                end
+        #            end
+        #            if (w.startwork != nil && w.endwork == nil)
+        #                @taskinprogress.push task
+        #            end
+        #        end
+        #    end
+        #end
 
         
 

@@ -38,8 +38,11 @@
           <td><%= task.time_estimation %></td>
           <td><%=  %></td>
           <td></td>
-
-          <td><%= button_to "Edit", edit_task_path(task.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+          <% if task.assigned_to == nil %>
+            <td><%= button_to "Edit", edit_task_path(task.id), :class => "btn btn-xs btn-success pull-right", :method => :get %>
+          <% else %>
+            <td></td>
+          <% end %>
         </tr>
     <% end %>
     </tbody>

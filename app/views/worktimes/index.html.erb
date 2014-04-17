@@ -3,7 +3,7 @@
 <div class="part-story">
 
   <% if !@worktimes.empty? %>
-      <%= form_tag addtosprint_path do %>
+      <%= form_tag worksave_url do %>
 
           <% @worktimes.each do |w| %>
               <div class="panel panel-default">
@@ -12,47 +12,29 @@
                   <div class="story-head">
                     <h4><%= w.day %></h4>
 
-
-                  <% if scrummaster? || admin? %>
-                      <div class="input-group input-group-sm">
-                        <span class="input-group-addon">Done</span>
-                        <%= hidden_field_tag 'storyid[]', w.id %>
-                        <%= text_field_tag 'timeestimate[]', w.done, class: 'form-control' %>
-                      </div>
-                      <div class="input-group input-group-sm">
-                        <span class="input-group-addon">Remaining</span>
-                        <%= text_field_tag 'timeestimate[]', w.remaining, class: 'form-control' %>
-                      </div>
-                  <% end %>
                   <div class="clear"></div>
                 </div>
 
                 <div class="panel-body">
-                  <%= story.description %>
-                  <ul class="acceptance-tests text-primary">
-                    <% story.test.split(/\n/).each do |test| %>
-                        <li># <%= test %></li>
-                    <% end %>
-                  </ul>
-                  <% if !story.note.nil? %>
-                      <ul class="notes text-warning">
-                        <% story.note.split(/\n/).each do |note| %>
-                            <li>-- <%= note %></li>
-                        <% end %>
-                      </ul>
-                  <% end %>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon">Done</span>
+                    <%= hidden_field_tag 'time_id[]', w.id %>
+                    <%= text_field_tag 'time_done[]', w.done, class: 'form-control' %>
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon">Remaining</span>
+                    <%= text_field_tag 'time_remaining[]', w.remaining, class: 'form-control' %>
+                  </div>
                 </div>
               </div>
+              </div>
           <% end %>
-          <% if scrummaster? || admin? %>
-              <% if @current_sprint != nil %>
-                  <%= submit_tag ("Add to current sprint"), :name => 'addtosprint', :class => "btn btn-primary pull-right" %>
-              <% end %>
-              <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
-          <% end %>
+
+          <%= submit_tag ("Save changes"), :name => 'timechanges', :class => "btn btn-primary pull-right" %>
+
       <% end %>
   <% else %>
       Error
   <% end %>
-</div>
+
 </div>

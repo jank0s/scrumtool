@@ -35,6 +35,7 @@ Tpo11::Application.routes.draw do
         end
     end
 
+    resources :worktimes
 
 
 end

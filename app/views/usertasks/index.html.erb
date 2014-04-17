@@ -101,7 +101,7 @@
                                                         <%= button_to "Start work", startwork_path(:id_task => task.id), :class => "btn btn-xs btn-success pull-right" %>
                                                     <% end %>  
                                                 </td>
-                                                <td><%= button_to "Work history", {}, :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
+                                                <td><%= button_to "Work history", worktimes_url(:id => task.id), :class => "btn btn-xs btn-success pull-right", :method => :get %></td>
 
                                                 <% end %>
 

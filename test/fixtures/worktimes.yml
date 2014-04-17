@@ -1,9 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  startwork: 2014-04-16 20:28:07
-  endwork: 2014-04-16 20:28:07
+  start: 2014-04-17 15:04:24
+  done: 1.5
+  remaining: 1.5
+  day: 2014-04-17
+  task_id: 1
 
 two:
-  startwork: 2014-04-16 20:28:07
-  endwork: 2014-04-16 20:28:07
+  start: 2014-04-17 15:04:24
+  done: 1.5
+  remaining: 1.5
+  day: 2014-04-17
+  task_id: 1

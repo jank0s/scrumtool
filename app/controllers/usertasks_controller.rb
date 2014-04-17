@@ -6,50 +6,41 @@ class UsertasksController < ApplicationController
 	def index
 		@stories=current_user.activeproject.stories
 		@userstories=@stories.joins(:tasks).where(:tasks => {:assigned_to => current_user}).uniq
-
         @usertask = Task.where(:assigned_to => current_user)
-        @taskinprogress=[]
-        @todayswork = []
-
-        #@usertask.each  do |task|
-        #    @worktimes = Worktime.where(:task_id => task.id)
-        #    if (!@worktimes.empty?)
-        #        @worktimes.each do |w|
-        #            if (w.startwork != nil && w.endwork != nil)
-        #                if (w.startwork.to_date == Date.today)
-        #                    @todayswork.push task
-        #                end
-        #            end
-        #            if (w.startwork != nil && w.endwork == nil)
-        #                @taskinprogress.push task
-        #            end
-        #        end
-        #    end
-        #end
-
-        
-
+        @taskinprogress=Task.where.not(:startwork => nil)
+        @todayswork = @usertask.joins(:worktimes).where(:worktimes => {:day => Date.today}).uniq
+        @todaystory = []
+        @todayswork.each do |t|
+            @todaystory.push t.story_id
+        end
+        @todaystory=@todaystory.uniq
+        @todaystories = Story.where(:id => @todaystory)
     end
 
     def stopwork
         @id = params[:id_task]
         @task = Task.find_by_id(@id)
-        @worktimes = Worktime.where(task_id: @id)
-        if (!@worktimes.empty?)
-            @worktimes.each do |w|
-                if (w.startwork != nil)
-                    w.update_attributes(:endwork => DateTime.now.in_time_zone)
-                end
+        @diff = ((Time.now-@task.startwork)/3600)
+        @diff = Integer(@diff*100)*0.01
+        if (@diff > 0.01)
+            @worktimes = Worktime.where(:task_id => @task.id, :day => Date.today)
+            if @worktimes.empty?
+                @worktime = Worktime.new(:task_id => @task.id, :day => Date.today, :done => @diff)
+                @worktime.save
+            else
+                @worktime = @worktimes.first
+                @done = @diff + @worktime.done
+                @worktime.update_attributes(:done => @done)
             end
         end
+        @task.update_attributes(:startwork => nil)
         redirect_to usertasks_url
     end
 
     def startwork
         @id = params[:id_task]
         @task = Task.find_by_id(@id)
-        @worktime = Worktime.new(:startwork => DateTime.now.in_time_zone, :task_id => @id)
-        @worktime.save
+        @task.update_attributes(:startwork => DateTime.now.in_time_zone)
         redirect_to usertasks_url
     end
 

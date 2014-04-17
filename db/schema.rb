@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417130421) do
+ActiveRecord::Schema.define(version: 20140417144214) do
 
   create_table "posts", force: true do |t|
     t.text     "value"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20140417130421) do
     t.integer  "proposed_id"
     t.float    "time_estimation"
     t.datetime "assigned_date"
+    t.datetime "startwork"
   end
 
   create_table "teammembers", force: true do |t|

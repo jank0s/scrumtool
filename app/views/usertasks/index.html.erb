@@ -122,21 +122,45 @@
     </div>
     <div class="tab-pane" id="todays-work">
         <div class="part-story">
-            <% if !@todayswork.empty? %>
-                <% @todayswork.each do |t| %>
+            <% if !@todaystories.empty? %>
+                <% @todaystories.each do |story| %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="pull-left">
-                                <%= t.name %>
+                            <div class="story-head">
+                                <b><%= story.name %></b>
                             </div>
                             <div class="clear"></div>
                         </div>
-                        
+                        <div class="panel-body">
+                            <small><%= story.description %></small>
+                        </div>
+                        <table class="table table-striped">
+                            <% @todayswork.each do |t| %>
+                                <tr>
+                                    <% if t.story_id == story.id %>
+                                        <% w = Worktime.where(:task_id => t.id, :day => Date.today).first %>
+                                        <td><%= t.name %></td>
+                                        <td>
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">Work spent:</span>
+                                                <%= text_field_tag 'done', w.done, class: 'form-control' %>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">Work remaining:</span>
+                                                <%= text_field_tag 'workremaining', w.remaining.to_i, class: 'form-control' %>
+                                            </div>
+                                        </td>
+                                    <% end %>
+                                </tr>
+                            <% end %>
+                        </table>
                     </div>
                 <% end %>
             <% else %>
                 You have not done any tasks today.
-            <% end %>            
+            <% end %>
         </div>
     </div>
 </div>

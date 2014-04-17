@@ -35,7 +35,8 @@ Tpo11::Application.routes.draw do
         end
     end
 
-    resources :worktimes
+    resources :worktimes, only: [:index]
+    match '/worktimes', to: 'worktimes#index', via: 'post'
 
 
 end

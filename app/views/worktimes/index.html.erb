@@ -1,3 +1,58 @@
-<% if @worktimes.count == 0 %>
-    <b>nema nista</b>
-<% end %>
+<h2>Work history</h2>
+
+<div class="part-story">
+
+  <% if !@worktimes.empty? %>
+      <%= form_tag addtosprint_path do %>
+
+          <% @worktimes.each do |w| %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+
+                  <div class="story-head">
+                    <h4><%= w.day %></h4>
+
+
+                  <% if scrummaster? || admin? %>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-addon">Done</span>
+                        <%= hidden_field_tag 'storyid[]', w.id %>
+                        <%= text_field_tag 'timeestimate[]', w.done, class: 'form-control' %>
+                      </div>
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-addon">Remaining</span>
+                        <%= text_field_tag 'timeestimate[]', w.remaining, class: 'form-control' %>
+                      </div>
+                  <% end %>
+                  <div class="clear"></div>
+                </div>
+
+                <div class="panel-body">
+                  <%= story.description %>
+                  <ul class="acceptance-tests text-primary">
+                    <% story.test.split(/\n/).each do |test| %>
+                        <li># <%= test %></li>
+                    <% end %>
+                  </ul>
+                  <% if !story.note.nil? %>
+                      <ul class="notes text-warning">
+                        <% story.note.split(/\n/).each do |note| %>
+                            <li>-- <%= note %></li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+          <% if scrummaster? || admin? %>
+              <% if @current_sprint != nil %>
+                  <%= submit_tag ("Add to current sprint"), :name => 'addtosprint', :class => "btn btn-primary pull-right" %>
+              <% end %>
+              <%= submit_tag ("Save time estimates"), :name => 'timeestimates', :class => "btn btn-primary pull-right" %>
+          <% end %>
+      <% end %>
+  <% else %>
+      Error
+  <% end %>
+</div>
+</div>

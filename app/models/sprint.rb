@@ -19,8 +19,11 @@ class Sprint < ActiveRecord::Base
   end
 
   def check_start_not_in_past
-    if self[:start] < Date.today
-      errors.add(:start, "cannot be in past")
+    
+    if !self[:id]
+      if self[:start] < Date.today
+        errors.add(:start, "cannot be in past")
+      end
     end
   end
 
@@ -32,14 +35,15 @@ class Sprint < ActiveRecord::Base
       return true
     else
       sprint.each do |s|
-        if s.start >= self[:start] && s.start <= self[:end]
-          errors[:base] << "Overlapping with another sprint"
-        elsif s.end >= self[:start] && s.end <= self[:end]
-          errors[:base] << "Overlapping with another sprint"
-        elsif s.start < self[:start] && s.end > self[:end]
-          errors[:base] << "Overlapping with another sprint"
+        if s.id != self[:id]
+          if s.start >= self[:start] && s.start <= self[:end]
+            errors[:base] << "Overlapping with another sprint1"
+          elsif s.end >= self[:start] && s.end <= self[:end]
+            errors[:base] << "Overlapping with another sprint2"
+          elsif s.start < self[:start] && s.end > self[:end]
+            errors[:base] << "Overlapping with another sprint3"
+          end
         end
-
       end
 
     end

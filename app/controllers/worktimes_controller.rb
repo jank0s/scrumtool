@@ -5,7 +5,7 @@ class WorktimesController < ApplicationController
     @worktimes = Worktime.where(task_id: @id).order(:day)
 
     testdate = Date.new(2014, 4, 23)
-    if @worktimes.last.day < testdate
+    if @worktimes.last.day < testdate # men tle fukne vn nil ce das task k se nikol ni delu
       x = (testdate - @worktimes.last.day).to_i
 
       for i in 1..x
@@ -30,8 +30,11 @@ class WorktimesController < ApplicationController
 
     @id = Worktime.find(@time_id.first).task_id
     @worktimes = Worktime.where(task_id: @id).order(:day)
-    render 'index'
-
+    if (params[:from_task]!=nil)
+      redirect_to usertasks_url 
+    else
+      render 'index'
+    end
   end
 
 end

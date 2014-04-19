@@ -123,7 +123,9 @@
     <div class="tab-pane" id="todays-work">
         <div class="part-story">
             <% if !@todaystories.empty? %>
+                <%= form_tag worksave_url do %>
                 <% @todaystories.each do |story| %>
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="story-head">
@@ -142,14 +144,15 @@
                                         <td><%= t.name %></td>
                                         <td>
                                             <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">Work spent:</span>
-                                                <%= text_field_tag 'done', w.done, class: 'form-control' %>
+                                                <%= hidden_field_tag 'time_id[]', w.id %>
+                                                <span class="input-group-addon">Spent (h):</span>
+                                                <%= text_field_tag 'time_done[]', w.done, class: 'form-control' %>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">Work remaining:</span>
-                                                <%= text_field_tag 'workremaining', w.remaining.to_i, class: 'form-control' %>
+                                                <span class="input-group-addon">Remaining (h):</span>
+                                                <%= text_field_tag 'time_remaining[]', w.remaining, class: 'form-control' %> 
                                             </div>
                                         </td>
                                     <% end %>
@@ -157,6 +160,9 @@
                             <% end %>
                         </table>
                     </div>
+                    <% end %>
+                    <%= hidden_field_tag 'from_task', 1 %>
+                    <%= submit_tag ("Save changes"), :name => 'timechanges',  :class => "btn btn-primary pull-right" %>
                 <% end %>
             <% else %>
                 You have not done any tasks today.

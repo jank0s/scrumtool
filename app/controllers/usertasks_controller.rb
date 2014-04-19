@@ -24,13 +24,20 @@ class UsertasksController < ApplicationController
         @diff = Integer(@diff*100)*0.01
         if (@diff > 0.01)
             @worktimes = Worktime.where(:task_id => @task.id, :day => Date.today)
-            if @worktimes.empty?
-                @worktime = Worktime.new(:task_id => @task.id, :day => Date.today, :done => @diff)
+            @taskremaining = @task.time_estimation
+            if @worktimes.empty?  
+                @remaining = @taskremaining-@diff  
+                @worktime = Worktime.new(:task_id => @task.id, :day => Date.today, :done => @diff, :remaining => @remaining)
                 @worktime.save
             else
                 @worktime = @worktimes.first
                 @done = @diff + @worktime.done
-                @worktime.update_attributes(:done => @done)
+                if (@taskremaining-@done>=0)
+                    @remaining = @taskremaining-@done
+                else
+                    @remaining = 0
+                end
+                @worktime.update_attributes(:done => @done, :remaining => @remaining)
             end
         end
         @task.update_attributes(:startwork => nil)

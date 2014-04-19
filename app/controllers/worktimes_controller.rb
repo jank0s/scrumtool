@@ -5,11 +5,12 @@ class WorktimesController < ApplicationController
     @worktimes = Worktime.where(task_id: @id).order(:day)
 
     testdate = Date.new(2014, 4, 23)
-    if @worktimes.last.day < testdate # men tle fukne vn nil ce das task k se nikol ni delu
+    if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
+      @r = @worktimes.last.remaining
       x = (testdate - @worktimes.last.day).to_i
 
       for i in 1..x
-        Worktime.create(done: 0, remaining: 0, day: @worktimes.last.day + i.days, task_id: @id)
+        Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: @id)
       end
     end
 
@@ -19,6 +20,14 @@ class WorktimesController < ApplicationController
     @time_id = params[:time_id]
     @time_done = params[:time_done]
     @time_remaining = params[:time_remaining]
+
+
+    @t = Task.find(params[:task_id])
+    if @time_remaining.last.to_i == 0
+      @t.update_attributes(completed: true)
+    else
+      @t.update_attributes(completed: false)
+    end
 
     i = 0
     @time_id.each do |time|

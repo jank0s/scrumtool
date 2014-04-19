@@ -4,7 +4,10 @@
 
   <% if !@worktimes.empty? %>
       <%= form_tag worksave_url do %>
-
+          <%= submit_tag ("Save changes"), :name => 'timechanges', :class => "btn btn-primary pull-right" %>
+          <br />
+          <br />
+          <br />
           <% @worktimes.each do |w| %>
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -31,8 +34,7 @@
               </div>
               </div>
           <% end %>
-
-          <%= submit_tag ("Save changes"), :name => 'timechanges', :class => "btn btn-primary pull-right" %>
+          <%= hidden_field_tag 'task_id', @id %>
 
       <% end %>
   <% else %>

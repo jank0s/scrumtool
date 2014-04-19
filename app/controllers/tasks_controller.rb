@@ -111,6 +111,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def destroy
+    Task.find(params[:id]).destroy
+    redirect_to tasks_url
+  end
+
 private
     def signed_in_user
         redirect_to signin_url unless signed_in?

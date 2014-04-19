@@ -19,7 +19,7 @@ class Sprint < ActiveRecord::Base
   end
 
   def check_start_not_in_past
-    
+
     if !self[:id]
       if self[:start] < Date.today
         errors.add(:start, "cannot be in past")

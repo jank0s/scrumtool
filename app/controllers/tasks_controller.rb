@@ -86,6 +86,10 @@ class TasksController < ApplicationController
   def release
     @task = Task.find(params[:id])
     @task.assigned_to = nil
+    @task.assigned_date = nil
+
+    Worktime.delete_all(task_id: @task.id)
+
     if @task.save
       flash[:success] = "Task successfully released."
       redirect_to :back

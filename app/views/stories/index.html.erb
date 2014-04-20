@@ -59,7 +59,9 @@
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#rejectModal<%= story.id %>">
                                         Reject
                                     </button>
-                                    <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
+                                    <% if story.done? %>
+                                        <%= link_to "Accept", accept_story_path(story.id), :class => "btn btn-sm btn-success", :method => :patch %>
+                                    <% end %>
                                 </div>
                             <% end %>
                         </div>

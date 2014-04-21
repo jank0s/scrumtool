@@ -21,7 +21,7 @@ class Story < ActiveRecord::Base
 
     private
     def validate_finished
-        if self[:finished]=true && !self.done?
+        if self[:finished]==true && !self.done?
             errors[:base] << "Story is not completed"
         else
             true

@@ -4,9 +4,9 @@ class HomeController < ApplicationController
     def index
         @user=current_user
         @projects=(@user.projects+@user.productowner_projects+@user.scrummaster_projects).uniq
-        #@posts=Post.all
-        @posts=Post.where(project_id: current_user.activeproject_id).order("created_at DESC").all
         @post=Post.new
+        @posts=Post.where(project_id: current_user.activeproject_id).order("created_at DESC").all
+        @users=Teammember.where(project_id: current_user.activeproject_id)
     end
 
     private

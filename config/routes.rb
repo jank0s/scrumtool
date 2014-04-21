@@ -39,7 +39,7 @@ Tpo11::Application.routes.draw do
     match '/worktimes', to: 'worktimes#index', via: 'post'
     match '/worksave', to: 'worktimes#update', via: 'post'
 
-    match '/newdiscussion', to: 'home#new_discussion', via: 'post'
+    resources :posts
 
 end
 

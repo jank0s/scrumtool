@@ -113,8 +113,13 @@ class StoriesController < ApplicationController
     def accept
         @story=Story.find(params[:id])
         @story.finished=true
-        @story.save
-        redirect_to stories_url
+        if @story.save
+            redirect_to stories_url
+        else
+            flash[:danger] = @story.errors.messages[:base].first
+            redirect_to stories_url
+        end
+
     end
 
     def reject

@@ -8,13 +8,14 @@ class UsertasksController < ApplicationController
 		@userstories=@stories.joins(:tasks).where(:tasks => {:assigned_to => current_user}).uniq
         @usertask = Task.where(:assigned_to => current_user)
         @taskinprogress=Task.where.not(:startwork => nil)
-        @todayswork = @usertask.joins(:worktimes).where(:worktimes => {:day => Date.today}).uniq
+        @todayswork = @usertask.joins(:worktimes).where(:worktimes => {:day => Date.today}).where.not(:worktimes => {:done => 0.0}).uniq
         @todaystory = []
         @todayswork.each do |t|
             @todaystory.push t.story_id
         end
         @todaystory=@todaystory.uniq
         @todaystories = Story.where(:id => @todaystory)
+        
     end
 
     def stopwork
@@ -26,18 +27,12 @@ class UsertasksController < ApplicationController
             @worktimes = Worktime.where(:task_id => @task.id, :day => Date.today)
             @taskremaining = @task.time_estimation
             if @worktimes.empty?  
-                @remaining = @taskremaining-@diff  
-                @worktime = Worktime.new(:task_id => @task.id, :day => Date.today, :done => @diff, :remaining => @remaining)
+                @worktime = Worktime.new(:task_id => @task.id, :day => Date.today, :done => @diff, :remaining=>@taskremaining)
                 @worktime.save
             else
                 @worktime = @worktimes.first
                 @done = @diff + @worktime.done
-                if (@taskremaining-@done>=0)
-                    @remaining = @taskremaining-@done
-                else
-                    @remaining = 0
-                end
-                @worktime.update_attributes(:done => @done, :remaining => @remaining)
+                @worktime.update_attributes(:done => @done, :remaining => @taskremaining)
             end
         end
         @task.update_attributes(:startwork => nil)

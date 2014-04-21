@@ -7,6 +7,10 @@ class HomeController < ApplicationController
         @posts=Posts.all
     end
 
+    def new_discussion
+
+    end
+
     private
     def signed_in_user
         redirect_to signin_url unless signed_in?

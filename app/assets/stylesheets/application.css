@@ -98,6 +98,9 @@
 .panel-list-user a{
     margin-right: 10px;
 }
+.panel-list-user input{
+    margin-right: 10px;
+}
 .input-group-search {
     width: 300px;
     margin-right: 10px;

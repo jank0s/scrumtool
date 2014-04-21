@@ -3,6 +3,7 @@ class HomeController < ApplicationController
 
     def index
         @user=current_user
+        @projects=(@user.projects+@user.productowner_projects+@user.scrummaster_projects).uniq
         @posts=Posts.all
     end
 

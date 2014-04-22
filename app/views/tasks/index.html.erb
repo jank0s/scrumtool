@@ -58,7 +58,7 @@
                                             <th>Name</th>
                                             <th>Status / action</th>
                                             <th>Assigned to</th>
-                                            <th>Time remaining</th>
+                                            <th>Estimated / remaining</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -96,7 +96,14 @@
                                                         <% end %>
                                                     </td>
                                                 <% end %>
-                                                <td><%= task.time_estimation %> h</td>
+                                                <td><%= task.time_estimation %> h /
+                                                <% @w = Worktime.where(task_id: task.id).order(:day).last %>
+                                                <% if @w == nil %>
+                                                <%= task.time_estimation %> h
+                                                <% else %>
+                                                <%= @w.remaining  %> h
+                                                <% end %>
+                                                </td>
                                                 <td><%=  %></td>
                                                 <td></td>
                                             </tr>

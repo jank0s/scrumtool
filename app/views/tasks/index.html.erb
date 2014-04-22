@@ -96,12 +96,12 @@
                                                         <% end %>
                                                     </td>
                                                 <% end %>
-                                                <td><%= task.time_estimation %> h /
+                                                <td><%= number_to_human(task.time_estimation) %> h /
                                                 <% @w = Worktime.where(task_id: task.id).order(:day).last %>
                                                 <% if @w == nil %>
-                                                <%= task.time_estimation %> h
+                                                <%= number_to_human(task.time_estimation) %> h
                                                 <% else %>
-                                                <%= @w.remaining  %> h
+                                                <%= number_to_human(@w.remaining)  %> h
                                                 <% end %>
                                                 </td>
                                                 <td><%=  %></td>

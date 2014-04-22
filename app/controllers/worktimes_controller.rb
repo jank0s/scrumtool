@@ -4,7 +4,7 @@ class WorktimesController < ApplicationController
     @id = params[:id]
     @worktimes = Worktime.where(task_id: @id).order(:day)
 
-    testdate = Date.new(2014, 4, 23)
+    testdate = Date.today
     if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
       @r = @worktimes.last.remaining
       x = (testdate - @worktimes.last.day).to_i

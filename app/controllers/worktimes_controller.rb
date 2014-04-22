@@ -23,9 +23,7 @@ class WorktimesController < ApplicationController
 
 
     @t = Task.find(params[:task_id])
-    puts "here"
-    puts @t
-    put params
+
     if @time_remaining.last.to_i == 0
       @t.update_attributes(completed: true)
     else

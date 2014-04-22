@@ -40,5 +40,7 @@ Tpo11::Application.routes.draw do
     match '/worksave', to: 'worktimes#update', via: 'post'
 
     resources :progress, only: [:index]
+    resources :posts
+
 end
 

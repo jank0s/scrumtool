@@ -157,12 +157,15 @@
                                         </td>
                                     <% end %>
                                 </tr>
+                            <%= hidden_field_tag 'task_id', t.id %>
                             <% end %>
+
                         </table>
                     </div>
+                    
                     <% end %>
-                    <%= hidden_field_tag 'from_task', 1 %>
-                    <%= submit_tag ("Save changes"), :name => 'timechanges',  :class => "btn btn-primary pull-right" %>
+                     <%= hidden_field_tag 'from_task', "1" %>
+                    <%= submit_tag ("Save changes"), :name => 'timechanges', :class => "btn btn-primary pull-right" %>
                 <% end %>
             <% else %>
                 You have not done any tasks today.

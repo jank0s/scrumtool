@@ -24,7 +24,7 @@ class WorktimesController < ApplicationController
 
     @t = Task.find(params[:task_id])
 
-    if @time_remaining.last == 0.0
+    if @time_remaining.last.to_f == 0.0
       @t.update_attributes(completed: true)
     else
       @t.update_attributes(completed: false)

@@ -29,6 +29,10 @@
                 <%= form_for @post do |f| %>
 
                     <div class="input-group">
+                        <%= f.label :topic, "Topic", :class => "input-group-addon" %>
+                        <%= f.text_field :topic, :class => "form-control" %>
+                    </div>
+                    <div class="input-group">
                       <%= f.label :value, "Post a new message", :class => "input-group-addon" %>
                       <%= f.text_area :value, :class => "form-control" %>
                     </div>
@@ -46,7 +50,8 @@
                       <div class="panel-heading">
                         <div class="story-head">
                           <% user=User.find(post.user_id) %>
-                          <small>User: <b><%= user.username %></b> |  Date&Time: <b><%= post.created_at %></b></small>
+                          <small><% if !post.topic.nil? %><font size="5" color="blue">Topic: <b><%= post.topic %></b></font> <font size="5">|</font> <% end %>
+                            <font size="4" color="green">User: <b><%= user.username %></b></font> <font size="5">|</font> Date&Time: <b><%= post.created_at %></b></small>
                         </div>
                         <div class="clear"></div>
                       </div>

@@ -51,7 +51,7 @@
                         <div class="clear"></div>
                       </div>
                       <div class="panel-body">
-                        <%= post.value %>
+                        <%= simple_format(post.value) %>
                         <% if scrummaster? || admin? || (current_user.id == post.user_id)%>
                         <td> <%= button_to "Remove", post_path(post.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
                         <% end %>

@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap.min
+//= require bootstrap-datepicker
+
 
 $(document).on('ready page:load', function (){
     $("#form-active-project select").change(function() {

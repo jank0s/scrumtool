@@ -18,11 +18,11 @@
 
         <div class="input-group">
             <%= f.label :start, "Sprint start*", :class => "input-group-addon" %>
-            <%= f.date_select :start, order: [:day, :month, :year], date_separator: "-", :class => "form-control" %>
+            <%= f.text_field :start, :class => "form-control", :id => "dp1" %>
         </div>
         <div class="input-group">
             <%= f.label :end, "Sprint end*", :class => "input-group-addon" %>
-            <%= f.date_select :end, order: [:day, :month, :year], date_separator: "-", :class => "form-control" %>
+            <%= f.text_field :end, :class => "form-control", :id => "dp2" %>
         </div>
         <div class="input-group">
             <%= f.label :velocity, "Sprint velocity*", :class => "input-group-addon" %>
@@ -33,3 +33,17 @@
         </p>
     <% end %>
 </div>
+<script>
+    $('#dp1').datepicker({
+        format: 'yyyy-mm-dd'
+    })
+    .on('changeDate', function(){
+        $('#dp1').datepicker('hide')
+    });
+    $('#dp2').datepicker({
+        format: 'yyyy-mm-dd'
+    })
+    .on('changeDate', function(){
+        $('#dp2').datepicker('hide')
+    })
+</script>

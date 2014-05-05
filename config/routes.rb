@@ -1,4 +1,6 @@
 Tpo11::Application.routes.draw do
+    mount Ckeditor::Engine => '/ckeditor'
+
     get "home/index"
     resources :home, only: [:index]
     root 'home#index'

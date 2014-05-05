@@ -45,6 +45,7 @@
                                 <% end %>
                             </ul>
                             <% if !story.note.nil? %>
+                                <br/>
                                 <ul class="notes text-warning">
                                     <% story.note.split(/\n/).each do |note| %>
                                         <li>-- <%= note %></li>

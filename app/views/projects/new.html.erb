@@ -7,7 +7,7 @@
     <%= form_for @project do |f| %>
         <h2>Add new project</h2>
         <% if @project.errors.any? %>
-            <div id="error_explanation">
+            <div id="error_explanation" class="text-danger">
                 <ul>
                     <% @project.errors.full_messages.each do |msg| %>
                         <li><%= msg %></li>

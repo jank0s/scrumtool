@@ -7,7 +7,7 @@
     <%= form_for @sprint do |f| %>
         <h2>Add new sprint</h2>
         <% if @sprint.errors.any? %>
-            <div id="error_explanation">
+            <div id="error_explanation" class="text-danger">
                 <ul>
                     <% @sprint.errors.full_messages.each do |msg| %>
                         <li><%= msg %></li>

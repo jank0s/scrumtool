@@ -7,7 +7,7 @@
     <%= form_for @story do |f| %>
         <h2>Edit story - <%= @story.name %></h2>
           <% if @story.errors.any? %>
-            <div id="error_explanation">
+            <div id="error_explanation" class="text-danger">
               <ul>
                 <% @story.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>

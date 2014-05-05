@@ -13,10 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require ckeditor/init
 //= require_tree .
 //= require bootstrap.min
 //= require bootstrap-datepicker
-//= require ckeditor/init
+
 
 $(document).on('ready page:load', function (){
     $("#form-active-project select").change(function() {

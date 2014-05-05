@@ -6,9 +6,10 @@ gem 'rails', '4.0.3'
 
 group :development do
   gem 'sqlite3', '1.3.8'
-  gem 'ckeditor', '4.0.4'
 end
 
+gem 'paperclip', '4.1.1'
+gem 'ckeditor', '4.0.4'
 gem 'sass-rails', '4.0.1'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.1'

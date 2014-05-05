@@ -1,5 +1,5 @@
 Tpo11::Application.routes.draw do
-    mount Ckeditor::Engine => '/ckeditor'
+  resources :articles
 
     get "home/index"
     resources :home, only: [:index]
@@ -43,6 +43,8 @@ Tpo11::Application.routes.draw do
 
     resources :progress, only: [:index]
     resources :posts
+
+    resources :articles
 
 end
 

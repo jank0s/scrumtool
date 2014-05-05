@@ -35,7 +35,7 @@
 			<div class="navbar-collapse collapse">
 				<% if signed_in? %>
                     <ul class="nav navbar-nav">
-                        <li><%= link_to "Project wall", root_path %></li>
+                        <li><%= link_to "Project", root_path %></li>
                         <% if activeproject? %>
                             <li><%= link_to "Product backlog", stories_path %></li>
                             <li><%= link_to "Sprint backlog", tasks_path %></li>

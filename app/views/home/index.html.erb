@@ -12,18 +12,13 @@
 <% if activeproject? %>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
-        <li><a href="#discussion" data-toggle="tab">Discussion</a></li>
+        <li class="active"><a href="#discussion" data-toggle="tab">Discussion</a></li>
         <li><a href="#documentation" data-toggle="tab">Documentation</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane active" id="scrum">
-            <h2>Daily scrum</h2>
-            ...
-        </div>
-        <div class="tab-pane" id="discussion">
+        <div class="tab-pane active" id="discussion">
             <h2>Discussion</h2>
             <div id="form-add">
                 <%= form_for @post do |f| %>

@@ -43,7 +43,7 @@ Tpo11::Application.routes.draw do
 
     resources :progress, only: [:index]
     resources :posts
-
+    resources :comments
     resources :articles
 
 end

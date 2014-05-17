@@ -12,18 +12,22 @@
 <% if activeproject? %>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
-        <li><a href="#discussion" data-toggle="tab">Discussion</a></li>
-        <li><a href="#documentation" data-toggle="tab">Documentation</a></li>
+        <li class="<%= 'active' if params[:tab] == 'scrum' %>"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
+        <li class="<%= 'active' if params[:tab] == 'discussion' %>"><a href="#discussion" data-toggle="tab">Discussion</a></li>
+        <!--<li><a href="#discussion" data-toggle="tab">Discussion</a></li>
+        <li><a href="#documentation" data-toggle="tab">Documentation</a></li>-->
+        <li class="<%= 'active' if params[:tab] == 'documentation' %>"><a href="#documentation" data-toggle="tab">Documentation</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane active" id="scrum">
+        <div class="<%= if (params[:tab] == 'scrum' || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="scrum">
+
             <h2>Daily scrum</h2>
             ...
         </div>
-        <div class="tab-pane" id="discussion">
+
+        <div class="<%= if params[:tab] == 'discussion' then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
             <h2>Discussion</h2>
             <div id="form-add">
                 <%= form_for @post do |f| %>
@@ -60,6 +64,30 @@
                         <% if scrummaster? || admin? || (current_user.id == post.user_id)%>
                         <td> <%= button_to "Remove", post_path(post.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
                         <% end %>
+                          <div class="clear"></div>
+                          <br />
+
+                          <! iteracija cez vse commente >
+                          <div class="panel panel-default">
+                            <div class = "panel-heading">
+                              <small><b>Ime: </b>Komentar</small><br />
+                              <small>datetime</small>
+                            </div>
+                          </div>
+
+                          <! now you can add new comment >
+                          <div id="form-add">
+                          <%= form_for @comment do |f| %>
+
+                            <div class="input-group pull-left">
+                                <%= f.text_field :value, :size => 50 ,:placeholder=>"Write your comment here" %>
+                                <%= f.hidden_field :post_id, :value => post.id%>
+                            </div>
+                             <p class="buttons">
+                                <%= f.submit "Add comment", :class => "btn btn-xs btn-primary pull-right" %>
+                            </p><p>
+                         <% end %>
+                        </div>
                       </div>
                     </div>
                 <% end %>
@@ -92,7 +120,8 @@
           </div>
 
         </div>
-        <div class="tab-pane" id="documentation">
+        <div class="<%= if params[:tab] == 'documentation' then 'tab-pane active'  else 'tab-pane' end%>" id="documentation">
+        <!--<div class="tab-pane" id="documentation">-->
             <h2>Documentation</h2>
             <%= link_to "View documentation", articles_path %>
         </div>

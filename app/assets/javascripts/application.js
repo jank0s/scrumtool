@@ -24,3 +24,5 @@ $(document).on('ready page:load', function (){
         $(this).parents("form").submit();
     });
 });
+
+

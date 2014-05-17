@@ -28,6 +28,7 @@ GEM
     arel (4.0.2)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
+    chartkick (1.2.4)
     ckeditor (4.0.4)
       mime-types
       orm_adapter
@@ -126,6 +127,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (= 3.1.2)
+  chartkick (~> 1.2.4)
   ckeditor (= 4.0.4)
   coffee-rails (= 4.0.1)
   jbuilder (= 1.0.2)

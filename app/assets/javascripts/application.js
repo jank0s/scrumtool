@@ -18,6 +18,8 @@
 //= require bootstrap.min
 //= require bootstrap-datepicker
 
+//= require jsapi 
+//= require chartkick
 
 $(document).on('ready page:load', function (){
     $("#form-active-project select").change(function() {

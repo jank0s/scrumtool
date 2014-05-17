@@ -7,16 +7,17 @@ class CommentsController < ApplicationController
     @comment.project_id = current_user.activeproject_id
     @comment.user_id = current_user.id
     #ne shran post_idja
+    @comment.post_id
     if @comment.save
-      redirect_to home_index_url
-    else
+      redirect_to home_index_url(tab:"discussion")
+	else
       render "index"
     end
   end
 
   def destroy
-    #Post.find(params[:id]).destroy
-    #redirect_to home_index_url
+    Comment.find(params[:id]).destroy
+    redirect_to home_index_url(tab:"discussion")
   end
 
   def comment_params

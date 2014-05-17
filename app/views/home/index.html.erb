@@ -67,20 +67,28 @@
                           <div class="clear"></div>
                           <br />
 
-                          <! iteracija cez vse commente >
-                          <div class="panel panel-default">
-                            <div class = "panel-heading">
-                              <small><b>Ime: </b>Komentar</small><br />
-                              <small>datetime</small>
+                          <% @comments.each do |comment| %>
+                          <% if comment.post_id == post.id %>
+                            <div class="panel panel-default">
+                              <div class = "panel-heading">
+                                  <% user_com=User.find(comment.user_id) %>
+                                  <small><b><%= user_com.username %>: </b>
+                                    <%= print_multiline(comment.value) %><%#= comment.value %></small><br />
+                                  <small><i><%= comment.created_at %></i></small>
+                                  <% if scrummaster? || admin? || (current_user.id == comment.user_id)%>
+                                  <%= button_to "Remove", comment_path(comment.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                                  <% end %>
+                                  <div class="clear"></div>
+                              </div>
                             </div>
-                          </div>
-
+                           <% end %>
+                          <% end %>
                           <! now you can add new comment >
                           <div id="form-add">
                           <%= form_for @comment do |f| %>
 
                             <div class="input-group pull-left">
-                                <%= f.text_field :value, :size => 50 ,:placeholder=>"Write your comment here" %>
+                                <%= f.text_area :value, :placeholder=>"Write your comment here", :class => "comment-text-area" %>
                                 <%= f.hidden_field :post_id, :value => post.id%>
                             </div>
                              <p class="buttons">

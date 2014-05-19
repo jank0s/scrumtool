@@ -6,7 +6,8 @@ class PostsController < ApplicationController
     @post.project_id = current_user.activeproject_id
     @post.user_id = current_user.id
     if @post.save
-      redirect_to home_index_url
+      redirect_to home_index_url(tab:"discussion")
+
     else
       render "index"
     end
@@ -14,7 +15,7 @@ class PostsController < ApplicationController
 
   def destroy
     Post.find(params[:id]).destroy
-    redirect_to home_index_url
+    redirect_to home_index_url(tab:"discussion")
   end
 
   def post_params

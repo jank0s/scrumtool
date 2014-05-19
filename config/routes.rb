@@ -1,4 +1,6 @@
 Tpo11::Application.routes.draw do
+  resources :articles
+
     get "home/index"
     resources :home, only: [:index]
     root 'home#index'
@@ -41,6 +43,8 @@ Tpo11::Application.routes.draw do
 
     resources :progress, only: [:index]
     resources :posts
+    resources :comments
+    resources :articles
 
 end
 

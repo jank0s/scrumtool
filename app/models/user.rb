@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
     belongs_to :role
     has_many :teammembers
     has_many :posts
+    has_many :comments
     belongs_to :activeproject, :class_name => 'Project'
     has_many :projects, through: :teammembers
     has_many :scrummaster_projects, :class_name => "Project", :foreign_key => "scrummaster_id"

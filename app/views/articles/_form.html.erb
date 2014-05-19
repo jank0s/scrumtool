@@ -1,0 +1,36 @@
+<% if @article.errors.any? %>
+    <ul>
+      <%= @article.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+      <% end %>
+    </ul>
+<% end %>
+<hr class="divider">
+<%= form_for @article do |f| %>
+    <div>
+      <%= f.label :title %>
+    </div>
+    <div>
+      <%= f.text_field :title %>
+    </div>
+    <hr class="divider">
+    <div>
+      <%= f.label :body %>
+    </div>
+    <div>
+      <%= f.text_area :body, rows: 10 %>
+    </div>
+    <hr class="divider">
+    <div>
+      <%= f.submit "Post documentation", :class => "btn btn-primary pull-right" %>
+    </div>
+<% end %>
+
+<script type="text/javascript">$(document).ready(function() {
+    if ($('textarea').length > 0) {
+        var data = $('textarea');
+        $.each(data, function(i) {
+            CKEDITOR.replace(data[i].id);
+        });
+    }
+});</script>

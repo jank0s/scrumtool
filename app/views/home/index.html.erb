@@ -131,7 +131,16 @@
         <div class="<%= if params[:tab] == 'documentation' then 'tab-pane active'  else 'tab-pane' end%>" id="documentation">
         <!--<div class="tab-pane" id="documentation">-->
             <h2>Documentation</h2>
-            <%= link_to "View documentation", articles_path %>
+              <% if @articles.empty? %>
+                  <%= link_to "New Documentation", new_article_path %>
+              <% end %>
+              <% @articles.each do |article| %>
+                  <h3>Title: <%= article.title.html_safe %></h3>
+                  <p><%= raw(article.body.html_safe) %></p>
+                  <%= link_to "Edit Documentation", edit_article_path(article) %>
+                  <td> <%= button_to "Remove", article_path(article.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
+                  <br />
+              <% end %>
         </div>
     </div>
 <% end %>

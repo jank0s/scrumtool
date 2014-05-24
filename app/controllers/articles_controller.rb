@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      redirect_to articles_path, notice: "The documentation has been successfully created."
+      redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully created."
     else
       render action: "new"
     end
@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
     if @article.update_attributes(article_params)
-      redirect_to articles_path, notice: "The documentation has been successfully updated."
+      redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully updated."
     else
       render action: "edit"
     end
@@ -35,7 +35,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     Article.find(params[:id]).destroy
-    redirect_to articles_path, notice: "The documentation has been successfully deleted."
+    redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully deleted."
   end
 
   private

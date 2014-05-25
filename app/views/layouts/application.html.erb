@@ -27,7 +27,17 @@
 			</div>
             <div class="nav navbar-text navbar-right">
                 <% if signed_in? %>
-                    <%= link_to current_user.name + " " + current_user.surname, edit_user_path(current_user) %> | <%= link_to "Sign out", signout_path, method: "delete" %>
+                	<% if admin? %>
+                		<% @roleonproject = "Admin" %>
+                	<% elsif productowner? %>
+                		<% @roleonproject = "Product Owner" %>
+                	<% elsif scrummaster? %>
+                		<% @roleonproject = "Scrum Master" %>
+                	<% else %>
+                		<% @roleonproject = "Team Member" %>
+                	<% end %>
+                    <%= link_to current_user.name + " " + current_user.surname, edit_user_path(current_user) %> <small><i><%= "("+@roleonproject +")" %></i></small>|
+                    <%= link_to "Sign out", signout_path, method: "delete" %>
                 <% else %>
                     Please sign in
                 <% end %>

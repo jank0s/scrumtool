@@ -5,7 +5,13 @@
 <%#= line_chart @goals.map{|goal|
     {name: goal.name, data: goal.feats.group_by_week(:created_at).count}
 } %>
-
+  <% if false %>
+<% @haha.each do |ha| %>
+  <%= ha.day %>
+      <%= ha.remaining %>
+<% end %>
+  <% end %>
+<div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>
 <table class="table table-striped">
@@ -30,3 +36,44 @@
     <% end %>
     </tbody>
 </table>
+
+  <script>
+      var work = <%= @lst %>;
+      console.log(work);
+      $('#burndown').highcharts({
+          credits: {
+              enabled: false
+          },
+          title: {
+              text: 'Burn down chart',
+              x: -20 //center
+          },
+          xAxis: {
+              min: 1,
+              categories: []
+          },
+          yAxis: {
+              title: {
+                  text: ''
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              valueSuffix: '°C'
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle',
+              borderWidth: 0
+          },
+          series: [{
+              name: 'Work remaining',
+              data: work
+          }]
+      });
+  </script>

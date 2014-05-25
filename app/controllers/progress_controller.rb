@@ -2,8 +2,8 @@ class ProgressController < ApplicationController
     before_action :signed_in_user
 
     def index
-    	@sprints = Sprint.all
-    	@stories = Story.all
+    	@sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+    	@stories = Story.where(project_id: current_user.activeproject_id)
     	@selected_velocity = Hash.new # vbistvu rabmo se neki za stet, to ni prov
     	# fora je, da je to vsota timeestimatov vseh zgodb, ki so ble
     	# kadarkol assignane za ta sprint!
@@ -18,7 +18,7 @@ class ProgressController < ApplicationController
     		@work_input[sprint.id] = 0
     	end
     	@stories.each do |story|
-    		@selected_velocity[story.sprint_id]+=story.timeestimates
+    		#@selected_velocity[story.sprint_id]+=story.timeestimates
 
     		@tasks = Task.all.where(:story_id => story.id)
 
@@ -32,7 +32,60 @@ class ProgressController < ApplicationController
     		@realized_velocity[finished.sprint_id]+=timeestimates
 
     		
-    	end
+      end
+
+      #BURNDOWN==================================================================================
+
+
+      @lst = []
+      @start = @sprints.first.start
+      @end = Date.today
+      @days = (@end - @start).to_i
+
+      @work_sum = 0
+
+      @stories.each do |story|
+        tasks_by_story = story.tasks
+
+        if tasks_by_story.length != 0
+          tasks_by_story.each do |task|
+
+
+
+            @worktimes = Worktime.where(task_id: task.id).order(:day)
+            if @worktimes.length != 0
+              testdate = Date.today
+              if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
+                @r = @worktimes.last.remaining
+                x = (testdate - @worktimes.last.day).to_i
+
+                for i in 1..x
+                  Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: task.id)
+                end
+              end
+            end
+
+
+
+
+            @work_sum += task.time_estimation
+          end
+        else
+          @work_sum += (story.timeestimates * 6)
+        end
+
+      end
+
+      @haha = Worktime.select("day as day, sum(remaining) as remaining").group("day").order("day")
+
+
+
+      for i in 0..(@days-1)
+        @lst.push(@work_sum - @haha[i].remaining)
+      end
+
+
+      #BURNDOWN==================================================================================
 
 
     end

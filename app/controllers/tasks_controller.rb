@@ -88,9 +88,8 @@ class TasksController < ApplicationController
     @task.assigned_to = nil
     @task.assigned_date = nil
 
-    Worktime.delete_all(task_id: @task.id)
-
     if @task.save
+      Worktime.delete_all(task_id: @task.id)
       flash[:success] = "Task successfully released."
       redirect_to :back
     else

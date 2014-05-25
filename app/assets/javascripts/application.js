@@ -20,6 +20,7 @@
 
 //= require jsapi 
 //= require chartkick
+//= require highcharts
 
 $(document).on('ready page:load', function (){
     $("#form-active-project select").change(function() {

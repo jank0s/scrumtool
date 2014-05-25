@@ -88,7 +88,9 @@ class StoriesController < ApplicationController
             end
             if (!nok.empty?)
                 flash[:warning] = "Time cannot be set for "+nok.map(&:inspect).join(', ')+"."
-            end            
+            end
+
+
         elsif params[:addtosprint] 
             @addto = params[:story_id].map(&:to_i)
             i=0

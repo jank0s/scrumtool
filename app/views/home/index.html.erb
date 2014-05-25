@@ -54,8 +54,8 @@
                       <div class="panel-heading">
                         <div class="story-head">
                           <% user=User.find(post.user_id) %>
-                          <small><% if !post.topic.blank? %><font size="5" color="blue">Topic: <b><%= post.topic %></b></font> <font size="5">|</font> <% end %>
-                            <font size="4" color="green">User: <b><%= user.username %></b></font> <font size="5">|</font> Date&Time: <b><%= post.created_at %></b></small>
+                          <span class="topic"><% if !post.topic.blank? %>Topic: <b><%= post.topic %></b></span> | <% end %>
+                            <span class="user">User: <b><%= user.username %></b></span> | <small> Date & Time: <b><%= post.created_at %></b></small>
                         </div>
                         <div class="clear"></div>
                       </div>
@@ -73,7 +73,7 @@
                               <div class = "panel-heading">
                                   <% user_com=User.find(comment.user_id) %>
                                   <small><b><%= user_com.username %>: </b>
-                                    <%= print_multiline(comment.value) %><%#= comment.value %></small><br />
+                                    <%= print_multiline(comment.value) %></small><br />
                                   <small><i><%= comment.created_at %></i></small>
                                   <% if scrummaster? || admin? || (current_user.id == comment.user_id)%>
                                   <%= button_to "Remove", comment_path(comment.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -83,7 +83,6 @@
                             </div>
                            <% end %>
                           <% end %>
-                          <! now you can add new comment >
                           <div id="form-add">
                           <%= form_for @comment do |f| %>
 

@@ -36,7 +36,7 @@
                 	<% else %>
                 		<% @roleonproject = "Team Member" %>
                 	<% end %>
-                    <%= link_to current_user.name + " " + current_user.surname, edit_user_path(current_user) %> <small><i><%= "("+@roleonproject +")" %></i></small>|
+                    <%= link_to current_user.name + " " + current_user.surname, edit_user_path(current_user) %> <span class="role"><%= "("+@roleonproject +")" %></span> |
                     <%= link_to "Sign out", signout_path, method: "delete" %>
                 <% else %>
                     Please sign in

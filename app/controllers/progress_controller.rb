@@ -44,7 +44,7 @@ class ProgressController < ApplicationController
 
       @work_sum = 0
       @task_lst = []
-
+      @kst = []
       @stories.each do |story|
         tasks_by_story = story.tasks
 
@@ -62,30 +62,29 @@ class ProgressController < ApplicationController
 
                 for i in 1..x
                   Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: task.id,
-                                  task_estimation: @task.time_estimation)
+                                  task_estimation: task.time_estimation)
                 end
               end
             end
 
-
-
-
             @work_sum += task.time_estimation
+            @kst.append(task.time_estimation)
           end
         else
           @work_sum += (story.timeestimates * 6)
+          @kst.append(story.timeestimates * 6)
         end
 
       end
 
       @hihi = Worktime.where(:task_id => @task_lst)
       puts @hihi
-      @haha = Worktime.select("day as day, sum(remaining) as remaining").group("day").order("day")
+      @haha = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").group("day").order("day")
 
 
 
       for i in 0..(@days-1)
-        @lst.push(@work_sum - @haha[i].remaining)
+        @lst.push(@work_sum + @haha[i].remaining)
       end
 
 

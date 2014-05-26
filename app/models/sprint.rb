@@ -9,7 +9,7 @@ class Sprint < ActiveRecord::Base
   validates :velocity, presence: true, :numericality => {:greater_than_or_equal_to => 1, :less_than_or_equal_to => 1000}
   validates :project_id, presence: true
 
-  validate :check_start_not_in_past, :check_start_before_end, :check_overlapping
+  #validate :check_start_not_in_past, :check_start_before_end, :check_overlapping
 
   private
   def check_start_before_end

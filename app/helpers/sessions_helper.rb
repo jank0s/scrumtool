@@ -42,7 +42,11 @@ module SessionsHelper
     end
 
     def productowner?
-        current_user.activeproject.productowner==current_user
+        ap = current_user.activeproject_id
+        if  ap != nil
+            return current_user.id == Project.find(ap).productowner_id
+        end
+        false
     end
 
     def sprint_running?(sprint)

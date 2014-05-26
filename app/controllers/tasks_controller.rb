@@ -91,9 +91,28 @@ class TasksController < ApplicationController
       @task.assigned_date = DateTime.now.in_time_zone.midnight
     end
     if @task.save
-      #!!!!!!!!!!!!!!!!!!!!!!!!!!REMAINING""""""""""""""""""""
-      #Worktime.create(done: 0, remaining: @task.time_estimation, day: Date.today, task_id: @task.id)
       flash[:success] = "Task successfully accepted."
+
+      #=================================================================================================================
+      #*****************************************************************************************************************
+
+      #WHEN TASK ADDED CREATE WORKTIMES FOR TASK, FROM START OF FIRST SPRINT TO TODAY
+
+      @sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+      @start = @sprints.first.start
+      @end = Date.today
+      @days = (@end - @start).to_i
+
+      for i in 0..(@days-1)
+        Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
+                        task_estimation: @task.time_estimation)
+      end
+
+
+      #*****************************************************************************************************************
+      #=================================================================================================================
+
+
       redirect_to tasks_url
     else
       flash[:warning] = "Task is not successfully accepted."

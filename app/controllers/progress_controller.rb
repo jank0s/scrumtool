@@ -2,6 +2,7 @@ class ProgressController < ApplicationController
     before_action :signed_in_user
 
     def index
+      @start_lst = []
     	@sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
     	@stories = Story.where(project_id: current_user.activeproject_id)
     	@selected_velocity = Hash.new # vbistvu rabmo se neki za stet, to ni prov
@@ -12,7 +13,8 @@ class ProgressController < ApplicationController
     	@realized_velocity = Hash.new # je OK, ker se steje za tiste, ki so koncane
     	@work_input = Hash.new # ista fora k pr selected...
     	# sam da mormo pr taskih se dt da steje vse ure...
-    	@sprints.each do |sprint| 
+    	@sprints.each do |sprint|
+        @start_lst.append(sprint.start)
     		@selected_velocity[sprint.id] = 0
     		@realized_velocity[sprint.id] = 0
     		@work_input[sprint.id] = 0
@@ -81,13 +83,27 @@ class ProgressController < ApplicationController
       @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
       @n = @haha.length
 
+      @history = History.where(project_id: current_user.activeproject).order(:sprint_id)
+
+      @sn = 0
+
       for i in 0..(@days)
-        @lst.push(@work_sum + @haha[i].remaining)
+        if i==0
+          @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 + @haha[i].remaining})
+        elsif (@start_lst.include?(@start+i.days) && i!=0)
+          @sn += 1
+          @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 + @haha[i].remaining})
+        else
+          @lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
+        end
+
+        #@lst.push(@work_sum + @haha[i].remaining)
+        #@lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
       end
 
+      #@lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:71.5})
 
       #BURNDOWN==================================================================================
-
 
     end
 

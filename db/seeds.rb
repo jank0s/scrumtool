@@ -26,5 +26,7 @@ Task.create(name: "Task2", story_id: "1", completed: false, time_estimation: 2, 
 Task.create(name: "Task3", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-04-20 00:00:00")
 Task.create(name: "Task4", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-04-20 00:00:00")
 
-History.create(sprint_id: 1, estimation: 4)
-History.create(sprint_id: 2, estimation: 6)
+History.create(sprint_id: 1, estimation: 4, project_id:1)
+History.create(sprint_id: 2, estimation: 6, project_id:1)
+
+

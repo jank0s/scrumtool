@@ -37,6 +37,24 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:success] = "Task successfully saved."
+      #=================================================================================================================
+      #*****************************************************************************************************************
+
+      #WHEN TASK ADDED CREATE WORKTIMES FOR TASK, FROM START OF FIRST SPRINT TO TODAY
+
+      @sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+      @start = @sprints.first.start
+      @end = Date.today
+      @days = (@end - @start).to_i
+
+      for i in 0..(@days-1)
+        Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
+                        task_estimation: @task.time_estimation)
+      end
+
+
+      #*****************************************************************************************************************
+      #=================================================================================================================
       redirect_to tasks_url
     else
       #redirect_to indextask_url(:id => @task.story_id)
@@ -74,7 +92,7 @@ class TasksController < ApplicationController
     end
     if @task.save
       #!!!!!!!!!!!!!!!!!!!!!!!!!!REMAINING""""""""""""""""""""
-      Worktime.create(done: 0, remaining: @task.time_estimation, day: Date.today, task_id: @task.id)
+      #Worktime.create(done: 0, remaining: @task.time_estimation, day: Date.today, task_id: @task.id)
       flash[:success] = "Task successfully accepted."
       redirect_to tasks_url
     else

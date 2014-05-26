@@ -43,6 +43,7 @@ class ProgressController < ApplicationController
       @days = (@end - @start).to_i
 
       @work_sum = 0
+      @task_lst = []
 
       @stories.each do |story|
         tasks_by_story = story.tasks
@@ -50,7 +51,7 @@ class ProgressController < ApplicationController
         if tasks_by_story.length != 0
           tasks_by_story.each do |task|
 
-
+          @task_lst.append(task.id)
 
             @worktimes = Worktime.where(task_id: task.id).order(:day)
             if @worktimes.length != 0
@@ -60,7 +61,8 @@ class ProgressController < ApplicationController
                 x = (testdate - @worktimes.last.day).to_i
 
                 for i in 1..x
-                  Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: task.id)
+                  Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: task.id,
+                                  task_estimation: @task.time_estimation)
                 end
               end
             end
@@ -76,6 +78,8 @@ class ProgressController < ApplicationController
 
       end
 
+      @hihi = Worktime.where(:task_id => @task_lst)
+      puts @hihi
       @haha = Worktime.select("day as day, sum(remaining) as remaining").group("day").order("day")
 
 

@@ -2,7 +2,8 @@ class WorktimesController < ApplicationController
 
   def index
     @id = params[:id]
-    @worktimes = Worktime.where(task_id: @id).order(:day)
+    @t = Task.find(@id)
+    @worktimes = Worktime.where(task_id: @id).where("day >= ?", @t.assigned_date.to_date).order(:day)
 
     testdate = Date.today
     if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
@@ -10,7 +11,8 @@ class WorktimesController < ApplicationController
       x = (testdate - @worktimes.last.day).to_i
 
       for i in 1..x
-        Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: @id)
+        Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: @id,
+                        task_estimation: @task.time_estimation)
       end
     end
 

@@ -22,6 +22,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    @articles = Article.order("created_at DESC")
   end
 
   def update
@@ -36,6 +37,13 @@ class ArticlesController < ApplicationController
   def destroy
     Article.find(params[:id]).destroy
     redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully deleted."
+  end
+
+  def notes
+    @article=Article.find(params[:id])
+    @article.body=params[:value]
+    @article.save
+    redirect_to home_index_url(tab:"documentation")
   end
 
   private

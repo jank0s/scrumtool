@@ -20,7 +20,14 @@
     <div>
       <%= f.text_area :body, rows: 10 %>
     </div>
-    <hr class="divider">
+    <br>
+    <% @articles.each do |article| %>
+        <button class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#notesModal<%= article.id %>">
+          Import user stories
+        </button>
+    <% end %>
+    <br>
+    <br>
     <div>
       <%= f.submit "Post documentation", :class => "btn btn-primary pull-right" %>
     </div>
@@ -34,3 +41,27 @@
         });
     }
 });</script>
+
+<% @articles.each do |article| %>
+    <div class="modals">
+      <div class="modal" id="notesModal<%= article.id %>" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Notes</h4>
+            </div>
+            <%= form_tag notes_article_path(article.id), method: 'patch' do %>
+                <div class="modal-body">
+                  <%= hidden_field_tag 'value', article.body, class: 'form-control' %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <%= submit_tag ("Save article"), :class => "btn btn-primary pull-right" %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>

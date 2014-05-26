@@ -12,7 +12,6 @@
 <% if activeproject? %>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li class="<%= 'active' if params[:tab] == 'scrum' %>"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
         <li class="<%= 'active' if params[:tab] == 'discussion' %>"><a href="#discussion" data-toggle="tab">Discussion</a></li>
         <!--<li><a href="#discussion" data-toggle="tab">Discussion</a></li>
         <li><a href="#documentation" data-toggle="tab">Documentation</a></li>-->
@@ -21,13 +20,8 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="<%= if (params[:tab] == 'scrum' || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="scrum">
-
-            <h2>Daily scrum</h2>
-            ...
-        </div>
-
-        <div class="<%= if params[:tab] == 'discussion' then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
+      
+        <div class="<%= if (params[:tab] == 'discussion'  || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
             <h2>Discussion</h2>
             <div id="form-add">
                 <%= form_for @post do |f| %>

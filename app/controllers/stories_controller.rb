@@ -90,6 +90,38 @@ class StoriesController < ApplicationController
                 flash[:warning] = "Time cannot be set for "+nok.map(&:inspect).join(', ')+"."
             end
 
+            #=================================================================================================================
+            #*****************************************************************************************************************
+            @sprints = Sprint.where(project_id: current_user.activeproject).order(:start)
+
+            @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
+
+            @sum = @ss.n
+            @in = 0
+            @sprints.each do |s|
+              if sprint_running?(s)
+                History.create(sprint_id: s.id, estimation: @sum)
+                @in = 1
+                break
+              end
+
+              if @in == 0
+                @spr = Sprint.where("start > ?", Date.today).order(:start).first
+
+                if @spr == nil
+                  flash[:warning] = "Nastav nov pofukan sprint da shranm"
+                else
+                  History.create(sprint_id: @spr.id, estimation: @sum)
+                end
+              end
+            end
+
+
+
+
+            #*****************************************************************************************************************
+            #=================================================================================================================
+
 
         elsif params[:addtosprint] 
             @addto = params[:story_id].map(&:to_i)

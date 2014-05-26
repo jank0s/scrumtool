@@ -1,17 +1,16 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 <h1>Reports</h1>
-<h2>Burn down chart
+<h2>Burn down chart</h2>
 <%#= bar_chart @users.group(:created_at) %>
 <%#= line_chart @goals.map{|goal|
     {name: goal.name, data: goal.feats.group_by_week(:created_at).count}
 } %>
-  <% if false %>
+
 <% @haha.each do |ha| %>
   <%= ha.day %>
-      <%= ha.remaining %>
 <% end %>
-  <% end %>
-  <%= @kst %>
+
+  <%= @ss.n %>
 <div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>

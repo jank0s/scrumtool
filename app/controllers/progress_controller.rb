@@ -77,13 +77,11 @@ class ProgressController < ApplicationController
 
       end
 
-      @hihi = Worktime.where(:task_id => @task_lst)
-      puts @hihi
-      @haha = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").group("day").order("day")
+      @haha = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").where(:task_id => @task_lst).group("day").order("day")
+      @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
+      @n = @haha.length
 
-
-
-      for i in 0..(@days-1)
+      for i in 0..(@days)
         @lst.push(@work_sum + @haha[i].remaining)
       end
 

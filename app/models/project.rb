@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
     validates :description, presence: true, length: {minimum: 2}
     validates :teammembers, presence: true
     validate :productowner_cannot_be_scrummaster
+    belongs_to :poker
 
     def self.search(search)
         if search

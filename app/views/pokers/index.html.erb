@@ -1,0 +1,4 @@
+<h1>Planning poker</h1>
+<% if productowner? || scrummaster? %>
+        <%= button_to "Start game", new_poker_path, :class => "btn btn-primary pull-left", :method => :get %>
+<% end %>

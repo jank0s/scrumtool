@@ -46,6 +46,6 @@ Tpo11::Application.routes.draw do
     resources :comments
     resources :articles
     match '/articles/:id/notes', to: 'articles#notes', via: 'patch', as: 'notes_article'
-
+    resources :pokers
 end
 

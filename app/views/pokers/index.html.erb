@@ -1,4 +1,12 @@
 <h1>Planning poker</h1>
 <% if productowner? || scrummaster? %>
-        <%= button_to "Start game", new_poker_path, :class => "btn btn-primary pull-left", :method => :get %>
+	Choose game players for this round of planning poker: 
+	<%= form_tag("/pokers/new/", :method => "get") do %>
+	<% @users.each do |t| %> 
+	    <%= check_box_tag  "user_checkbox[]",t.id %> <%= t.name %> <%= t.surname %> (<%= (t.username) %>)<br />
+	<%end%>
+
+	<%= submit_tag("Start game", :class=>"btn btn-primary pull-left") %>
+	
+	<%end %>
 <% end %>

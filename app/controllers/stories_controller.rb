@@ -109,10 +109,17 @@ class StoriesController < ApplicationController
                 @spr = Sprint.where("start > ?", Date.today).order(:start).first
 
                 if @spr == nil
-                  flash[:warning] = "Nastav nov pofukan sprint da shranm"
+                  flash[:warning] = "First create new sprint"
                 else
-                  History.create(sprint_id: @spr.id, estimation: @sum)
+                  @hist = History.where(sprint_id: @spr.id).first
+                  if @hist == nil
+                    History.create(sprint_id: @spr.id, estimation: @sum, project_id: current_user.activeproject)
+                  else
+                    @hist.estimation = @sum
+                    @hist.save
+                  end
                 end
+                break
               end
             end
 

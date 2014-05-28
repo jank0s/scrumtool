@@ -5,12 +5,12 @@
 <%#= line_chart @goals.map{|goal|
     {name: goal.name, data: goal.feats.group_by_week(:created_at).count}
 } %>
-
+<% if false %>
 <% @haha.each do |ha| %>
   <%= ha.day %>
 <% end %>
-
-  <%= @lst%>
+<% end %>
+  <%= @xax %>
 <div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>
@@ -39,6 +39,7 @@
 
   <script>
       var work = <%= @lst.to_json.html_safe %>;
+      var lol = <%= @xax.to_json.html_safe %>;
       console.log(work);
       $('#burndown').highcharts({
           credits: {
@@ -49,7 +50,7 @@
               x: -20 //center
           },
           xAxis: {
-              categories: []
+              categories: lol
           },
           yAxis: {
               title: {

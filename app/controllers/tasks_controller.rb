@@ -47,7 +47,7 @@ class TasksController < ApplicationController
       @end = Date.today
       @days = (@end - @start).to_i
 
-      for i in 0..(@days-1)
+      for i in 0..(@days)
         Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
                         task_estimation: @task.time_estimation)
       end
@@ -103,7 +103,7 @@ class TasksController < ApplicationController
       @end = Date.today
       @days = (@end - @start).to_i
 
-      for i in 0..(@days-1)
+      for i in 0..(@days)
         Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
                         task_estimation: @task.time_estimation)
       end

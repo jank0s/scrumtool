@@ -92,40 +92,33 @@ class StoriesController < ApplicationController
 
             #=================================================================================================================
             #*****************************************************************************************************************
-            @sprints = Sprint.where(project_id: current_user.activeproject).order(:start)
-
             @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
-
             @sum = @ss.n
-            @in = 0
-            @sprints.each do |s|
-              if sprint_running?(s)
-                History.create(sprint_id: s.id, estimation: @sum)
-                @in = 1
-                break
-              end
 
-              if @in == 0
-                @spr = Sprint.where("start > ?", Date.today).order(:start).first
+            sprint_id = currently_running_sprint
 
-                if @spr == nil
-                  flash[:warning] = "First create new sprint"
+            if sprint_id == -1
+                future_sprint = Sprint.where("start > ?", Date.today).order(:start).first
+                if future_sprint == nil
+                    flash[:warning] = "First create new sprint"
                 else
-                  @hist = History.where(sprint_id: @spr.id).first
-                  if @hist == nil
-                    History.create(sprint_id: @spr.id, estimation: @sum, project_id: current_user.activeproject)
-                  else
-                    @hist.estimation = @sum
-                    @hist.save
-                  end
+                    history = History.where(sprint_id: future_sprint.id).first
+                    if history == nil
+                      History.create(sprint_id: future_sprint.id, estimation: @sum, project_id: current_user.activeproject_id)
+                    else
+                      history.estimation = @sum
+                      history.save
+                    end
                 end
-                break
-              end
+            else
+                history = History.where(sprint_id: sprint_id).first
+                if history == nil
+                    History.create(sprint_id: sprint_id, estimation: @sum, project_id: current_user.activeproject_id)
+                else
+                    history.estimation = @sum
+                    history.save
+                end
             end
-
-
-
-
             #*****************************************************************************************************************
             #=================================================================================================================
 

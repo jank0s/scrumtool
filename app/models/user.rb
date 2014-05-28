@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     belongs_to :role
-    has_many :rounds
+    has_many :entries
     has_many :teammembers
     has_many :posts
     has_many :comments

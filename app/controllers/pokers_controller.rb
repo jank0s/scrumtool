@@ -23,6 +23,10 @@ class PokersController < ApplicationController
         	@poker.save
        	end
         @round = Round.find_by(poker_id: @poker.id, active: true)
+        @rounds_inactive = Round.where(poker_id: @poker.id, active: false)
+        
+        @pokercards = Array.new
+        @pokercards = [0, 0.5, 1, 1.5, 2, 3, 5, 8, 13, 20, 40, "Pass", "Custom"]
    	end
 
    	def startgame
@@ -30,7 +34,6 @@ class PokersController < ApplicationController
    		@poker = Poker.find_by(story_id: @story_id)
    		@round = Round.new(active: true, poker_id:@poker.id)
    		@round.save
-   		# make new Round, write it in cookie
    		redirect_to :back
    	end
 
@@ -39,6 +42,12 @@ class PokersController < ApplicationController
    		@poker = Poker.find_by(story_id: @story_id)
    		@round = Round.find_by(poker_id: @poker.id, active: true)
    		@round.update_attributes(:active => false)
+   		redirect_to :back
+   	end
+
+   	def makeentry
+   		# get value from the button or ...
+   		
    		redirect_to :back
    	end
 

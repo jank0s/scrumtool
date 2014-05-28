@@ -18,13 +18,48 @@
             <% end %>
         </div>
     </div>
-<h2>Planning poker round</h2>
-<% if !@round.nil? %>
+<h2>Planning poker rounds</h2>
+	<% if !@rounds_inactive.nil? %>
+		<table class="table table-striped">
+  			<thead>
+		    <tr>
+		      <th>Round</th>
+		      <th>Name</th>
+		      <th>Average (pts)</th>
+		      <th>Average (h)</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @rounds_inactive.each do |r| %>
+		      <tr>
+		        <td><%= r.created_at %></td>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		      </tr>
+		    <% end %>
+		    <!-- ce entry != nil, pokazes se stanje -->
+		  </tbody>
+		</table>
+
 	<small>All values represents story points (unless otherwise specified)</small><br />
 
-	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %>
+	<% else %>
+		No rounds have been played yet.
+	<% end %>
+<% if !@round.nil? %>
+	<% if scrummaster? %>
+	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %><div class="clear"></div>
+	<% end %>
+	<p><b>Your estimate: </b>
+	<% @pokercards.each do |p| %>
+
+		<%= button_to p, {:action => "makeentry", :controller => "pokers", :entry => p}, :class => "pokerbutton", :method => :post %>
+		<!-- Vsak button klice controller, da nafila entry -->
+	<% end %>
+	</p>	
+
 <% else %>
-	No rounds or valid rounds have been played yet.
 	<%= button_to "Start a new round", {:action => "startgame", :controller => "pokers", :story =>{:story_id=>@story_id}}, :class => "btn btn-primary pull-left", :method => :post %>
 	<%= button_to "Cancel", pokers_path, :class => "btn btn-primary pull-right", :method => :get %>
 <% end %>

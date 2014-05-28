@@ -1,4 +1,31 @@
 <h1>Planning poker</h1>
-Playing: <br />
-<% @users.each do |u| %><i><%= u.username %></i><br />
+<h2>User story: <%= @story.name %></h2>
+	<div class="panel panel-default">
+        <div class="panel-body">
+            <%= @story.description %>
+            <ul class="acceptance-tests text-primary">
+                <% @story.test.split(/\n/).each do |test| %>
+                    <li># <%= test %></li>
+                <% end %>
+            </ul>
+            <% if !@story.note.nil? %>
+                <br/>
+                <ul class="notes text-warning">
+                    <% @story.note.split(/\n/).each do |note| %>
+                        <li>-- <%= note %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+<h2>Planning poker round</h2>
+<% if !@round.nil? %>
+	<small>All values represents story points (unless otherwise specified)</small><br />
+
+	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %>
+<% else %>
+	No rounds or valid rounds have been played yet.
+	<%= button_to "Start a new round", {:action => "startgame", :controller => "pokers", :story =>{:story_id=>@story_id}}, :class => "btn btn-primary pull-left", :method => :post %>
+	<%= button_to "Cancel", pokers_path, :class => "btn btn-primary pull-right", :method => :get %>
 <% end %>
+

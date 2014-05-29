@@ -64,4 +64,17 @@ module SessionsHelper
     def activeproject?
         current_user.activeproject!=nil
     end
+
+    def currently_running_sprint
+        sprints = Sprint.where(project_id: current_user.activeproject_id)
+
+        sprints.each do |s|
+          now = Date.today
+          if s.start <= now && s.end >= now
+            return s.id
+          end
+        end
+
+        return -1
+    end
 end

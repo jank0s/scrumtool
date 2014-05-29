@@ -92,33 +92,30 @@ class StoriesController < ApplicationController
 
             #=================================================================================================================
             #*****************************************************************************************************************
-            @sprints = Sprint.where(project_id: current_user.activeproject).order(:start)
+            #stories_time_sum = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject_id).first
+            #stories_time_sum = stories_time_sum.n
 
-            @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
+            sprint_id = currently_running_sprint
+            stories = Story.where(finished: false, project_id: current_user.activeproject_id)
 
-            @sum = @ss.n
-            @in = 0
-            @sprints.each do |s|
-              if sprint_running?(s)
-                History.create(sprint_id: s.id, estimation: @sum)
-                @in = 1
-                break
-              end
-
-              if @in == 0
-                @spr = Sprint.where("start > ?", Date.today).order(:start).first
-
-                if @spr == nil
-                  flash[:warning] = "Nastav nov pofukan sprint da shranm"
+            if sprint_id == -1
+                future_sprint = Sprint.where("start > ?", Date.today).order(:start).first
+                if future_sprint == nil
+                    flash[:warning] = "First create new sprint"
                 else
-                  History.create(sprint_id: @spr.id, estimation: @sum)
+                    History.delete_all(sprint_id: future_sprint.id)
+                    stories.each do |s|
+                        History.create(story_id: s.id, sprint_id: future_sprint.id, estimation: s.timeestimates,
+                                       project_id: current_user.activeproject_id)
+                    end
                 end
-              end
+            else
+                History.delete_all(sprint_id: sprint_id)
+                stories.each do |s|
+                  History.create(story_id: s.id, sprint_id: sprint_id, estimation: s.timeestimates,
+                                 project_id: current_user.activeproject_id)
+                end
             end
-
-
-
-
             #*****************************************************************************************************************
             #=================================================================================================================
 

@@ -1,7 +1,7 @@
 class Story < ActiveRecord::Base
     belongs_to :project
     belongs_to :priority
-
+    has_many :pokers
     belongs_to :sprint #new
 
     has_many :tasks

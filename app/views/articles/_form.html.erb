@@ -13,7 +13,7 @@
     <div>
       <%= f.text_field :title %>
     </div>
-    <hr class="divider">
+    </br>
     <div>
       <%= f.label :body %>
     </div>
@@ -37,10 +37,11 @@
     if ($('textarea').length > 0) {
         var data = $('textarea');
         $.each(data, function(i) {
-            CKEDITOR.replace(data[i].id);
+            CKEDITOR.replace(data[i].id, { height: '400px' } );
         });
     }
 });</script>
+
 
 <% @articles.each do |article| %>
     <div class="modals">
@@ -51,17 +52,53 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" id="myModalLabel">Import user stories</h4>
             </div>
-            <%= form_tag notes_article_path(article.id), method: 'patch' do %>
-                <div class="modal-body">
-                  <%= hidden_field_tag 'value', article.body, class: 'form-control' %>
-                </div>
+
+            <%= form_tag edit_documentation_article_path(article.id), method: 'patch' do %>
+
+                <ul style="list-style: none;">
+                  <h3>Available stories</h3>
+                  <% @stories.each do |story| %>
+                      <li>
+                        <%= check_box_tag("story_ids[]", story.id) %>
+                        <%= label_tag(story.name) %>
+                      </li>
+                  <% end %>
+                </ul>
+
+                <hr class="divider">
+                <ul style="list-style: none;">
+                  <input type="checkbox" id="selectAll" value="selectAll"> <b>Select all stories</b>
+                </ul>
+                <hr class="divider">
+
+                <ul style="list-style: none;">
+                    <h3>What to import</h3>
+                    <%= select_tag "conditions", "<option selected='selected'>Title</option><option selected='selected'>Description</option><option>Acceptance tests</option><option>Notes</option>".html_safe, multiple: true, class: 'form_input' %>
+                </ul>
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <%= submit_tag ("Save article"), :class => "btn btn-primary pull-right" %>
+                  <%= submit_tag ("Import"), :class => "btn btn-primary pull-right" %>
                 </div>
+
             <% end %>
+
           </div>
         </div>
       </div>
     </div>
 <% end %>
+
+<script type="text/javascript">$(document).ready(function() {
+    $('#selectAll').click(function() {
+    if (this.checked) {
+    $(':checkbox').each(function() {
+    this.checked = true;
+    });
+    } else {
+    $(':checkbox').each(function() {
+    this.checked = false;
+    });
+    }
+    });
+});</script>

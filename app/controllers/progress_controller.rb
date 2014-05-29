@@ -55,6 +55,7 @@ class ProgressController < ApplicationController
       i = 0
       j = 0
       d = 1
+      last = 0
       sprint_estimated = 0
       worktimes_for_sprint = 0
       sprint_constant_time = 0
@@ -62,7 +63,7 @@ class ProgressController < ApplicationController
           if day == sprints_lst[i] && (i % 2 == 0)    #start of sprint
               in_sprint = true
               sprint_estimated = History.select("sum(estimation) as n").where(sprint_id: sprints_ids[j]).first
-              worktimes_for_sprint = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").where(sprint_id: sprints_ids[j])
+              worktimes_for_sprint = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").where(sprint_id: sprints_ids[j]).group(:day)
               story_ids = Worktime.select("distinct story_id").where(sprint_id: sprints_ids[j])
 
               stories_lst = []
@@ -70,98 +71,73 @@ class ProgressController < ApplicationController
                   stories_lst << s.story_id
               end
 
-              @stt = History.select("sum(estimation) as n").where.not(story_id: stories_lst).where(sprint_id: sprints_ids[j]).first
+              sprint_by_stories = History.select("sum(estimation) as n").where.not(story_id: stories_lst).where(sprint_id: sprints_ids[j]).first
+              sprint_by_stories = sprint_by_stories.n * 6
+
+              sprint_by_stories_with_tasks = Worktime.select("sum(task_estimation) as n").where(sprint_id: sprints_ids[j]).first
+              divide = Worktime.select("distinct task_id").where(sprint_id: sprints_ids[j]).length
+###########################################################################
+###########################################################################
+              if sprint_by_stories_with_tasks
+                  sprint_by_stories_with_tasks = 0
+              else
+                  sprint_by_stories_with_tasks = sprint_by_stories_with_tasks.n / divide
+              end
+
+              sprint_constant_time = sprint_by_stories + sprint_by_stories_with_tasks
               i += 1
               j += 1
               @y_axis.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y: sprint_estimated.n })
               @x_axis.push("Sprint" + j.to_s)
+              huh = true
+              worktimes_for_sprint.each do |w|
+                  if w.day == day
+                      @y_axis.push(sprint_constant_time + w.remaining)
+                      huh = false
+                  end
+              end
+
+              if huh
+                @y_axis.push(sprint_constant_time)
+              end
           elsif day == sprints_lst[i]                 #end of sprint
               in_sprint = false
               @x_axis.push(d)
               d += 1
+              i += 1
+              huh = true
+              worktimes_for_sprint.each do |w|
+                if w.day == day
+                  @y_axis.push(sprint_constant_time + w.remaining)
+                  last = sprint_constant_time + w.remaining
+                  huh = false
+                end
+                if huh
+                  @y_axis.push(sprint_constant_time)
+                  last = sprint_constant_time + w.remaining
+                end
+              end
+
+
           else                                        #between two sprints OR inside sprint
+              if in_sprint
+                  worktimes_for_sprint.each do |w|
+                    if w.day == day
+                      @y_axis.push(sprint_constant_time + w.remaining)
+                      huh = false
+                    end
+                  end
+
+                  if huh
+                    @y_axis.push(sprint_constant_time)
+                  end
+              else
+                 @y_axis.push(last)
+              end
               @x_axis.push(d)
               d += 1
           end
       end
-
-      @lst = []
-      @start = @sprints.first.start
-      @end = Date.today
-      @days = (@end - @start).to_i
-
-      @work_sum = 0
-      @task_lst = []
-      @kst = []
-      @stories.each do |story|
-        tasks_by_story = story.tasks
-
-        if tasks_by_story.length != 0
-          tasks_by_story.each do |task|
-
-          @task_lst.append(task.id)
-
-            @worktimes = Worktime.where(task_id: task.id).order(:day)
-            if @worktimes.length != 0
-              testdate = Date.today
-              if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
-                @r = @worktimes.last.remaining
-                x = (testdate - @worktimes.last.day).to_i
-
-                for i in 1..x
-                  Worktime.create(done: 0, remaining: @r, day: @worktimes.last.day + i.days, task_id: task.id,
-                                  task_estimation: task.time_estimation)
-                end
-              end
-            end
-
-            @work_sum += task.time_estimation
-            @kst.append(task.time_estimation)
-          end
-        else
-          @work_sum += (story.timeestimates * 6)
-          @kst.append(story.timeestimates * 6)
-        end
-
-      end
-
-      @haha = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").where(:task_id => @task_lst).group("day").order("day")
-      @ss = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject).first
-      @n = @haha.length
-
-      @history = History.where(project_id: current_user.activeproject).order(:sprint_id)
-
-      @sn = 0
-      @xax = []
-      @j = 0
-      @spr = 1
-      @d = 1
-      for i in 0..(@days)
-        if i==0
-          @xax.push("Spr"+ i.to_s)
-          @xax.push(@d)
-          @d+=1
-          @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 })
-          @lst.push(@work_sum + @haha[i].remaining)
-        elsif (@start_lst.include?(@start+i.days) && i!=0)
-          @sn += 1
-          @xax.push("Drek")
-          @xax.push(@d)
-          @d+=1
-          @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 })
-          @lst.push(@work_sum + @haha[i].remaining)
-        else
-          @lst.push(@work_sum + @haha[i].remaining)
-          @xax.push(@d)
-          @d+=1
-        end
-
-        #@lst.push(@work_sum + @haha[i].remaining)
-        #@lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
-      end
-
-      #@lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:71.5})
-
       #BURNDOWN==================================================================================
 
     end

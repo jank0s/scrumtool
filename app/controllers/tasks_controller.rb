@@ -22,11 +22,11 @@ class TasksController < ApplicationController
   end
 
   def new
-  	@story = Story.find(params[:id])
+    @story = Story.find(params[:id])
 
     @tasks = Task.where(story_id: @story.id)
 
-  	@task = Task.new
+    @task = Task.new
 
     ap_id = current_user.activeproject_id
     @users = Project.find(ap_id).users

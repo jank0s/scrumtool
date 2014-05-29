@@ -3,37 +3,37 @@ class ProgressController < ApplicationController
 
     def index
       @start_lst = []
-    	@sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
-    	@stories = Story.where(project_id: current_user.activeproject_id)
-    	@selected_velocity = Hash.new # vbistvu rabmo se neki za stet, to ni prov
-    	# fora je, da je to vsota timeestimatov vseh zgodb, ki so ble
-    	# kadarkol assignane za ta sprint!
-    	# se prav rabmo povezavo Sprint -> vec zgodb, zgodba -> vec sprintih
+      @sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+      @stories = Story.where(project_id: current_user.activeproject_id)
+      @selected_velocity = Hash.new # vbistvu rabmo se neki za stet, to ni prov
+      # fora je, da je to vsota timeestimatov vseh zgodb, ki so ble
+      # kadarkol assignane za ta sprint!
+      # se prav rabmo povezavo Sprint -> vec zgodb, zgodba -> vec sprintih
 
-    	@realized_velocity = Hash.new # je OK, ker se steje za tiste, ki so koncane
-    	@work_input = Hash.new # ista fora k pr selected...
-    	# sam da mormo pr taskih se dt da steje vse ure...
-    	@sprints.each do |sprint|
+      @realized_velocity = Hash.new # je OK, ker se steje za tiste, ki so koncane
+      @work_input = Hash.new # ista fora k pr selected...
+      # sam da mormo pr taskih se dt da steje vse ure...
+      @sprints.each do |sprint|
         @start_lst.append(sprint.start)
-    		@selected_velocity[sprint.id] = 0
-    		@realized_velocity[sprint.id] = 0
-    		@work_input[sprint.id] = 0
-    	end
-    	@stories.each do |story|
-    		#@selected_velocity[story.sprint_id]+=story.timeestimates
+        @selected_velocity[sprint.id] = 0
+        @realized_velocity[sprint.id] = 0
+        @work_input[sprint.id] = 0
+      end
+      @stories.each do |story|
+        #@selected_velocity[story.sprint_id]+=story.timeestimates
 
-    		@tasks = Task.all.where(:story_id => story.id)
+        @tasks = Task.all.where(:story_id => story.id)
 
-    		@tasks.each do |task|
-    			@work_input[story.sprint_id]+=task.time_estimation
-    		end
-    	end 
+        @tasks.each do |task|
+          @work_input[story.sprint_id]+=task.time_estimation
+        end
+      end 
 
-    	@finished_stories = Story.all.where(:finished => true)
-    	@finished_stories.each do |finished|
-    		@realized_velocity[finished.sprint_id]+=timeestimates
+      @finished_stories = Story.all.where(:finished => true)
+      @finished_stories.each do |finished|
+        @realized_velocity[finished.sprint_id]+=timeestimates
 
-    		
+        
       end
 
       #BURNDOWN==================================================================================

@@ -50,4 +50,3 @@ History.create(sprint_id: 1, estimation: 3, project_id:1, story_id: 3)
 History.create(sprint_id: 1, estimation: 3, project_id:1, story_id: 4)
 
 
-

@@ -1,6 +1,5 @@
 <h1>Planning poker</h1>
 <% if productowner? || scrummaster? %>
-	
 	<%= form_tag("/pokers/new/", :method => "post") do %>
 		Select a story to estimate:  <%= select("story", "story_id", @stories.collect {|s| [ s.timeestimates.to_s << ' pt - ' << s.name, s.id ] }, { :include_blank => false }) %>
 
@@ -10,5 +9,7 @@
 	<%= submit_tag("Start game", :class=>"btn btn-primary pull-left") %>
 	
 	<%end %>
-<!-- ce se igra ze igra, ga spustis direkt notr (ce je projekt ok...) -->
+
+<% else @running_poker.empty? %>
+	There is no game.
 <% end %>

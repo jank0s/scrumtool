@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140529194838) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "value"
   end
 
   create_table "histories", force: true do |t|

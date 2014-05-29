@@ -7,18 +7,12 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def new
-    @article = Article.new
-    @articles = Article.order("created_at DESC")
-    @stories = Story.order("created_at ASC")
-  end
-
   def create
     @article = Article.new(article_params)
     if @article.save
-      redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully created."
+      redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully created2."
     else
-      render action: "new"
+      render action: "edit"
     end
   end
 

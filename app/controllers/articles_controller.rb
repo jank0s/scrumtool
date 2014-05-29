@@ -3,6 +3,12 @@ class ArticlesController < ApplicationController
     @articles = Article.order("created_at DESC")
   end
 
+  def new
+    @article = Article.new
+    @articles = Article.order("created_at DESC")
+    @stories = Story.order("created_at ASC")
+  end
+
   def show
     @article = Article.find(params[:id])
   end

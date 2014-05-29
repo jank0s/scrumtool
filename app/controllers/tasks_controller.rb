@@ -52,17 +52,16 @@ class TasksController < ApplicationController
       #                  task_estimation: @task.time_estimation)
       #end
 
+      story_id = task_params[:story_id]
       sprint_id = currently_running_sprint
       sprint = Sprint.find(sprint_id)
 
       sprint_start = sprint.start
       sprint_end = sprint.end
-      puts "drek"
-      puts sprint_start
-      puts sprint_end
+
       sprint_start.upto(sprint_end) do |day|
         Worktime.create(done: 0, remaining: @task.time_estimation, day: day, task_id: @task.id,
-                        task_estimation: @task.time_estimation, sprint_id: sprint_id)
+                        task_estimation: @task.time_estimation, sprint_id: sprint_id, story_id: story_id)
       end
 
       #*****************************************************************************************************************

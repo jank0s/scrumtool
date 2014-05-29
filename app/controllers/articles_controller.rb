@@ -49,14 +49,17 @@ class ArticlesController < ApplicationController
 
     @stories.each do |story|
       if !@conditions[0].nil?
-        @article.body = @article.body + "<p><h1><span style='color:#008000'>" + story.name + "</span></h1></p>"
-      elsif !@conditions[1].nil?
-        @article.body = @article.body + "<p><b>" + story.description + "</b></p>"
-      elsif !@conditions[2].nil?
+        @article.body = @article.body + "<p><span style='font-size:24px'><span style='color:#008000'>" + story.name + "</span></p>"
+      end
+      if !@conditions[1].nil?
+        @article.body = @article.body + "<p><strong>" + story.description + "</strong></p>"
+      end
+      if !@conditions[2].nil?
         if !story.test.nil?
           @article.body = @article.body + "<p>" + story.test + "</p>"
         end
-      elsif !@conditions[3].nil?
+      end
+      if !@conditions[3].nil?
           if !story.note.nil?
             @article.body = @article.body + "<p>" + story.note + "</p>"
           end
@@ -64,7 +67,7 @@ class ArticlesController < ApplicationController
     end
 
     @article.save
-    redirect_to home_index_url(tab:"documentation")
+    redirect_to edit_article_path(@article)
   end
 
   private

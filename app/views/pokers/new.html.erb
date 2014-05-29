@@ -18,27 +18,60 @@
             <% end %>
         </div>
     </div>
+  <% @average=0 %>
 <h2>Planning poker rounds</h2>
 	<% if !@rounds_inactive.nil? %>
 		<table class="table table-striped">
   			<thead>
 		    <tr>
 		      <th>Round</th>
-		      <th>Name</th>
+		       <% @ids.each do |u| %>
+		       		<th><%= User.find_by_id(u).username %></th>
+		       <% end %>
 		      <th>Average (pts)</th>
 		      <th>Average (h)</th>
 		    </tr>
 		  </thead>
+
 		  <tbody>
-		    <% @rounds_inactive.each do |r| %>
-		      <tr>
-		        <td><%= r.created_at %></td>
-		        <td></td>
-		        <td></td>
-		        <td></td>
-		      </tr>
-		    <% end %>
-		    <!-- ce entry != nil, pokazes se stanje -->
+		  		<% @roundhash.each do |round, user| %>
+		      	<tr>
+		      		<% if @curr_round.to_i != round.to_i %>
+			        	<td><%= Round.find_by_id(round).created_at %></td>
+			        	 <% @average=0 %>
+			        	<% @it=0 %>
+			        	<% user.each do |value| %>
+			        		<% if value[1].nil? %>
+			        			<td>-</td>
+			        		<% else %>
+			        			<td><%= value[1] %></td>
+			        			<% @average = @average+value[1] %>
+			        			<% @it = @it+1 %>
+			        		<% end %>
+			        	<% end %>
+				        <td><%= @average = (@it == 0) ? 0 : @average/@it %></td>
+				        <td><%= @average*6 %></td>
+				     <% elsif @has_voted.empty?  %>
+				    	<td><%= Round.find_by_id(round).created_at %></td>
+			        	<td colspan = "<%= 2+@ids.size %>"><b>Send your estimates to see result</b></td>
+			        <% else %>
+				    	<td><%= Round.find_by_id(round).created_at %></td>
+			        	<% @average=0 %>
+			        	<% @it=0 %>
+			        	<% user.each do |value| %>
+			        		<% if value[1].nil? %>
+			        			<td>-</td>
+			        		<% else %>
+			        			<td><%= value[1] %></td>
+			        			<% @average = @average+value[1] %>
+			        			<% @it = @it+1 %>
+			        		<% end %>
+			        	<% end %>
+				        <td><%= @average = (@it == 0) ? 0 : @average/@it %></td>
+				        <td><%= @average*6 %></td>
+			        <% end %>
+		      	</tr>
+		      	<% end %>
 		  </tbody>
 		</table>
 
@@ -49,18 +82,24 @@
 	<% end %>
 <% if !@round.nil? %>
 	<% if scrummaster? %>
-	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %><div class="clear"></div>
+	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %>
 	<% end %>
-	<p><b>Your estimate: </b>
-	<% @pokercards.each do |p| %>
-
-		<%= button_to p, {:action => "makeentry", :controller => "pokers", :entry => p}, :class => "pokerbutton", :method => :post %>
-		<!-- Vsak button klice controller, da nafila entry -->
+	<% if scrummaster? %>
+	<%= button_to "Use last estimate", {:action => "savetime", :controller => "pokers", :time => @average}, :class => "btn btn-primary pull-right", :method => :post %>
+	
+	<% end %>
+	<div class="clear"></div>
+	<% if @has_voted.empty?  %>
+		<p><b>Your estimate: </b>
+		<% @pokercards.each do |p| %>
+			<%= button_to p, {:action => "makeentry", :controller => "pokers", :entry => p}, :class => "	pokerbutton", :method => :post %>
 	<% end %>
 	</p>	
 
-<% else %>
+	<% end %>
+<% elsif scrummaster? %>
 	<%= button_to "Start a new round", {:action => "startgame", :controller => "pokers", :story =>{:story_id=>@story_id}}, :class => "btn btn-primary pull-left", :method => :post %>
-	<%= button_to "Cancel", pokers_path, :class => "btn btn-primary pull-right", :method => :get %>
+	<%= button_to "Cancel", {:action => "cancel", :controller => "pokers"}, :class => "btn btn-primary pull-right", :method => :post %>
+	<!-- popravi da cancel controller dela... -->
 <% end %>
 

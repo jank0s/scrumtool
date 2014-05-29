@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529142840) do
+ActiveRecord::Schema.define(version: 20140529194838) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 20140529142840) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "value"
   end
 
   create_table "histories", force: true do |t|
@@ -43,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140529142840) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
+    t.integer  "story_id"
   end
 
   create_table "pokers", force: true do |t|
@@ -165,6 +165,8 @@ ActiveRecord::Schema.define(version: 20140529142840) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "task_estimation"
+    t.integer  "sprint_id"
+    t.integer  "story_id"
   end
 
 end

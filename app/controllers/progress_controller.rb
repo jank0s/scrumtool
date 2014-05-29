@@ -96,16 +96,16 @@ class ProgressController < ApplicationController
           @xax.push(@d)
           @d+=1
           @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 })
-          @lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
+          @lst.push(@work_sum + @haha[i].remaining)
         elsif (@start_lst.include?(@start+i.days) && i!=0)
           @sn += 1
           @xax.push("Drek")
           @xax.push(@d)
           @d+=1
           @lst.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y:@history[@sn].estimation*6 })
-          @lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
+          @lst.push(@work_sum + @haha[i].remaining)
         else
-          @lst.push(@history[@sn].estimation*6 + @haha[i].remaining)
+          @lst.push(@work_sum + @haha[i].remaining)
           @xax.push(@d)
           @d+=1
         end

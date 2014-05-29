@@ -3,13 +3,53 @@ class PokersController < ApplicationController
     before_action :correct_user
 
 	def index
-		@users = User.where(activeproject_id: current_user.activeproject)
+		@rstories=current_user.activeproject.stories
+		@stories=@rstories.where(finished: false, sprint_id: nil)
     end
     def new
-    	@ids = params[:user_checkbox]
-    	@users = User.where(id: @ids)
+    	a = params[:story]
+    	
+    	if !a.nil?
+    		@story_id = a[:story_id]
+    		cookies[:story_id] = @story_id
+    	end
+    	if a.nil?
+    		@story_id = cookies[:story_id]
+    	end
+    	@story = Story.find(@story_id)
+    	@poker = Poker.find_by(story_id: @story_id)
+    	if @poker.nil?
+	    	@poker = Poker.new(active: true, story_id: @story_id)
+        	@poker.save
+       	end
+        @round = Round.find_by(poker_id: @poker.id, active: true)
+        @rounds_inactive = Round.where(poker_id: @poker.id, active: false)
+        
+        @pokercards = Array.new
+        @pokercards = [0, 0.5, 1, 1.5, 2, 3, 5, 8, 13, 20, 40, "Pass", "Custom"]
    	end
 
+   	def startgame
+   		@story_id = cookies[:story_id]
+   		@poker = Poker.find_by(story_id: @story_id)
+   		@round = Round.new(active: true, poker_id:@poker.id)
+   		@round.save
+   		redirect_to :back
+   	end
+
+   	def endgame
+   		@story_id = cookies[:story_id]
+   		@poker = Poker.find_by(story_id: @story_id)
+   		@round = Round.find_by(poker_id: @poker.id, active: true)
+   		@round.update_attributes(:active => false)
+   		redirect_to :back
+   	end
+
+   	def makeentry
+   		# get value from the button or ...
+   		
+   		redirect_to :back
+   	end
 
    	private
 

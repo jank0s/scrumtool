@@ -47,5 +47,10 @@ Tpo11::Application.routes.draw do
     resources :articles
     match '/articles/:id/notes', to: 'articles#notes', via: 'patch', as: 'notes_article'
     resources :pokers
+    match '/pokers/new', to: 'pokers#new', via: 'post'
+    match '/pokers/startgame', to: 'pokers#startgame', via: 'post'
+    match '/pokers/endgame', to: 'pokers#endgame', via: 'post'
+    match '/pokers/makeentry', to: 'pokers#makeentry', via: 'post'
+
 end
 

@@ -1,4 +1,66 @@
 <h1>Planning poker</h1>
-Playing: <br />
-<% @users.each do |u| %><i><%= u.username %></i><br />
+<h2>User story: <%= @story.name %></h2>
+	<div class="panel panel-default">
+        <div class="panel-body">
+            <%= @story.description %>
+            <ul class="acceptance-tests text-primary">
+                <% @story.test.split(/\n/).each do |test| %>
+                    <li># <%= test %></li>
+                <% end %>
+            </ul>
+            <% if !@story.note.nil? %>
+                <br/>
+                <ul class="notes text-warning">
+                    <% @story.note.split(/\n/).each do |note| %>
+                        <li>-- <%= note %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+<h2>Planning poker rounds</h2>
+	<% if !@rounds_inactive.nil? %>
+		<table class="table table-striped">
+  			<thead>
+		    <tr>
+		      <th>Round</th>
+		      <th>Name</th>
+		      <th>Average (pts)</th>
+		      <th>Average (h)</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @rounds_inactive.each do |r| %>
+		      <tr>
+		        <td><%= r.created_at %></td>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		      </tr>
+		    <% end %>
+		    <!-- ce entry != nil, pokazes se stanje -->
+		  </tbody>
+		</table>
+
+	<small>All values represents story points (unless otherwise specified)</small><br />
+
+	<% else %>
+		No rounds have been played yet.
+	<% end %>
+<% if !@round.nil? %>
+	<% if scrummaster? %>
+	<%= button_to "End the round", {:action => "endgame", :controller => "pokers"}, :class => "btn btn-primary pull-left", :method => :post %><div class="clear"></div>
+	<% end %>
+	<p><b>Your estimate: </b>
+	<% @pokercards.each do |p| %>
+
+		<%= button_to p, {:action => "makeentry", :controller => "pokers", :entry => p}, :class => "pokerbutton", :method => :post %>
+		<!-- Vsak button klice controller, da nafila entry -->
+	<% end %>
+	</p>	
+
+<% else %>
+	<%= button_to "Start a new round", {:action => "startgame", :controller => "pokers", :story =>{:story_id=>@story_id}}, :class => "btn btn-primary pull-left", :method => :post %>
+	<%= button_to "Cancel", pokers_path, :class => "btn btn-primary pull-right", :method => :get %>
 <% end %>
+

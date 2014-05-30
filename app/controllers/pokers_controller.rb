@@ -75,6 +75,7 @@ class PokersController < ApplicationController
     	if !@curr_round.nil?
     		@curr_round = @curr_round.id
     	end
+    	
    	end
 
    	def startgame

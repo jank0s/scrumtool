@@ -11,11 +11,9 @@
       <%= f.text_area :body, rows: 10 %>
     </div>
     <br>
-    <% @articles.each do |article| %>
-        <button class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#notesModal<%= article.id %>">
-          Import user stories
-        </button>
-    <% end %>
+    <button class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#notesModal">
+      Import user stories
+    </button>
     <br>
     <br>
     <div>
@@ -32,10 +30,9 @@
     }
 });</script>
 
-
 <% @articles.each do |article| %>
     <div class="modals">
-      <div class="modal" id="notesModal<%= article.id %>" tabindex="-1" role="dialog">
+      <div class="modal" id="notesModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -43,7 +40,15 @@
               <h4 class="modal-title" id="myModalLabel">Import user stories</h4>
             </div>
 
-            <%= form_tag edit_documentation_article_path(article.id), method: 'patch' do %>
+            <%= form_tag edit_documentation_article_path, method: 'patch' do %>
+
+                <ul style="list-style: none;">
+                  <h3>Insert stories</h3>
+                  <li>
+                    <%= select_tag "bottomtop", "<option selected='selected'>at the bottom of the document</option><option>at the top of the document</option>".html_safe, multiple: false, class: 'form_input' %>
+                  </li>
+                </ul>
+                <hr class="divider">
 
                 <ul style="list-style: none;">
                   <h3>Available stories</h3>
@@ -55,7 +60,7 @@
                   <% end %>
                 </ul>
 
-                <hr class="divider">
+                </br>
                 <ul style="list-style: none;">
                   <input type="checkbox" id="selectAll" value="selectAll"> <b>Select all stories</b>
                 </ul>

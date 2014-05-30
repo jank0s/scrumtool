@@ -6,6 +6,12 @@ class HomeController < ApplicationController
         @projects=(@user.projects+@user.productowner_projects+@user.scrummaster_projects).uniq
         @post=Post.new
         @articles = Article.order("created_at DESC")
+        if @articles.size==0
+          @article = Article.new
+          @article.body = ""
+          @article.save
+        end
+
         @comment = Comment.new
         @posts=Post.where(project_id: current_user.activeproject_id).order("created_at DESC").all
         @comments = Comment.where(project_id: current_user.activeproject_id).order("created_at DESC").all

@@ -45,24 +45,46 @@ class ArticlesController < ApplicationController
   def edit_documentation
     @stories = Story.find(params[:story_ids])
     @conditions = params[:conditions]
+    @bottomtop = params[:bottomtop]
     @article=Article.find(params[:id])
 
-    @stories.each do |story|
-      if !@conditions[0].nil?
-        @article.body = @article.body + "<p><span style='font-size:24px'><span style='color:#008000'>" + story.name + "</span></p>"
-      end
-      if !@conditions[1].nil?
-        @article.body = @article.body + "<p><strong>" + story.description + "</strong></p>"
-      end
-      if !@conditions[2].nil?
-        if !story.test.nil?
-          @article.body = @article.body + "<p>" + story.test + "</p>"
+    if @bottomtop[7]=="b"
+      @stories.each do |story|
+        if !@conditions[0].nil?
+          @article.body = @article.body + "<p><span style='font-size:24px'><span style='color:#008000'>" + story.name + "</span></p>"
+        end
+        if !@conditions[1].nil?
+          @article.body = @article.body + "<p><strong>" + story.description + "</strong></p>"
+        end
+        if !@conditions[2].nil?
+          if !story.test.nil?
+            @article.body = @article.body + "<p>" + story.test + "</p>"
+          end
+        end
+        if !@conditions[3].nil?
+            if !story.note.nil?
+              @article.body = @article.body + "<p>" + story.note + "</p>"
+            end
         end
       end
-      if !@conditions[3].nil?
+    else
+      @stories.each do |story|
+        if !@conditions[3].nil?
           if !story.note.nil?
-            @article.body = @article.body + "<p>" + story.note + "</p>"
+            @article.body = "<p>" + story.note + "</p>" + @article.body
           end
+        end
+        if !@conditions[2].nil?
+          if !story.test.nil?
+            @article.body = "<p>" + story.test + "</p>" + @article.body
+          end
+        end
+        if !@conditions[1].nil?
+          @article.body =  "<p><strong>" + story.description + "</strong></p>" + @article.body
+        end
+        if !@conditions[0].nil?
+          @article.body = "<p><span style='font-size:24px'><span style='color:#008000'>" + story.name + "</span></p>" + @article.body
+        end
       end
     end
 

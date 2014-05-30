@@ -43,6 +43,14 @@
             <%= form_tag edit_documentation_article_path, method: 'patch' do %>
 
                 <ul style="list-style: none;">
+                  <h3>Insert stories</h3>
+                  <li>
+                    <%= select_tag "bottomtop", "<option selected='selected'>at the bottom of the document</option><option>at the top of the document</option>".html_safe, multiple: false, class: 'form_input' %>
+                  </li>
+                </ul>
+                <hr class="divider">
+
+                <ul style="list-style: none;">
                   <h3>Available stories</h3>
                   <% @stories.each do |story| %>
                       <li>
@@ -52,7 +60,7 @@
                   <% end %>
                 </ul>
 
-                <hr class="divider">
+                </br>
                 <ul style="list-style: none;">
                   <input type="checkbox" id="selectAll" value="selectAll"> <b>Select all stories</b>
                 </ul>

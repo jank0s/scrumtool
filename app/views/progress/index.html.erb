@@ -11,7 +11,9 @@
 <% end %>
 <% end %>
 <%= @y_axis %>
-<%= %>
+<%= @x_axis %>
+<%= @test %>
+<%= @sss %>
 <div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>
@@ -39,8 +41,8 @@
 </table>
 
   <script>
-      var work = <%= @lst.to_json.html_safe %>;
-      var lol = <%= @xax.to_json.html_safe %>;
+      var work = <%= @y_axis.to_json.html_safe %>;
+      var lol = <%= @x_axis.to_json.html_safe %>;
       console.log(work);
       $('#burndown').highcharts({
           credits: {
@@ -61,7 +63,8 @@
                   value: 0,
                   width: 1,
                   color: '#808080'
-              }]
+              }],
+              min: 0
           },
           tooltip: {
               valueSuffix: 'h'

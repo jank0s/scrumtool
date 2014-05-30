@@ -1,3 +1,4 @@
+
 <h1>Planning poker</h1>
 <h2>User story: <%= @story.name %></h2>
 	<div class="panel panel-default">
@@ -19,6 +20,8 @@
         </div>
     </div>
   <% @average=0 %>
+  <div id="refreshdiv">
+
 <h2>Planning poker rounds</h2>
 	<% if !@rounds_inactive.nil? %>
 
@@ -134,4 +137,6 @@
 	<% end %>
 	<%= button_to "Cancel", {:action => "cancel", :controller => "pokers"}, :class => "btn btn-primary pull-right", :method => :post %>
 <% end %>
+</div>
+
 

@@ -28,6 +28,10 @@ $(document).on('ready page:load', function (){
     });
 });
 
-
-
+$(document).ready(
+     function() {
+      setInterval(function() {
+        $('html').load('/pokers/new');
+    }, 3000);
+});
 

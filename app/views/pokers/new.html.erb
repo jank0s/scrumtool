@@ -21,6 +21,7 @@
   <% @average=0 %>
 <h2>Planning poker rounds</h2>
 	<% if !@rounds_inactive.nil? %>
+
 		<table class="table table-striped">
   			<thead>
 		    <tr>
@@ -67,8 +68,8 @@
 			        			<% @it = @it+1 %>
 			        		<% end %>
 			        	<% end %>
-				        <td><%= @average = (@it == 0) ? 0 : @average/@it %></td>
-				        <td><%= @average*6 %></td>
+				        <td><%= number_with_precision(@average = (@it == 0) ? 0 : @average/@it, :precision => 2) %></td>
+				        <td><%= number_with_precision(@average*6, :precision => 2) %></td>
 			        <% end %>
 		      	</tr>
 		      	<% end %>
@@ -77,6 +78,7 @@
 
 	<small>All values represents story points (unless otherwise specified)</small><br />
 
+	<!-- popravi da bo kazal prov -->
 	<% else %>
 		No rounds have been played yet.
 	<% end %>
@@ -93,13 +95,43 @@
 		<p><b>Your estimate: </b>
 		<% @pokercards.each do |p| %>
 			<%= button_to p, {:action => "makeentry", :controller => "pokers", :entry => p}, :class => "	pokerbutton", :method => :post %>
-	<% end %>
+		<% end %>
+		<button data-toggle="modal" data-target="#pokerModal">Custom</button>
+		
+
+		<div class="modals">
+        <div class="modal" id="pokerModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Add custom estimate</h4>
+                    </div>
+                    	<form action="/pokers/makeentry" method="post">
+ 
+						 
+						  	Enter your custom estimate time:<%= text_field_tag "entry" %>
+
+						  	<div class="modal-footer">
+	                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+	                            <%= submit_tag ("Save estimate"), :class => "btn btn-primary pull-right" %>
+	                        </div>
+
+						</form>
+                    	
+                        
+                </div>
+            </div>
+        </div>
+    </div>
 	</p>	
 
 	<% end %>
 <% elsif scrummaster? %>
 	<%= button_to "Start a new round", {:action => "startgame", :controller => "pokers", :story =>{:story_id=>@story_id}}, :class => "btn btn-primary pull-left", :method => :post %>
+	<% if !@rounds_inactive.empty? %>
+		<%= button_to "Use last estimate", {:action => "savetime", :controller => "pokers", :time => @average}, :class => "btn btn-primary pull-right", :method => :post %>
+	<% end %>
 	<%= button_to "Cancel", {:action => "cancel", :controller => "pokers"}, :class => "btn btn-primary pull-right", :method => :post %>
-	<!-- popravi da cancel controller dela... -->
 <% end %>
 

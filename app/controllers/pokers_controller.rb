@@ -1,4 +1,5 @@
 class PokersController < ApplicationController
+	skip_before_action :verify_authenticity_token
 	before_action :signed_in_user
     before_action :correct_user
 
@@ -21,6 +22,8 @@ class PokersController < ApplicationController
     		if @poker.nil?
 	    		@poker = Poker.new(active: true, story_id: @story_id)
     			@poker.save
+    		else
+    			@poker.update_attributes(active: true)
        		end
        	else
        		@poker = Poker.where(active: true, :story_id=>@stories).first
@@ -40,7 +43,7 @@ class PokersController < ApplicationController
         @round_all = Round.select(:id).where(poker_id: @poker.id)
 
         @pokercards = Array.new
-        @pokercards = [0, 0.5, 1, 1.5, 2, 3, 5, 8, 13, 20, 40, "Pass", "Custom"]
+        @pokercards = [0, 0.5, 1, 1.5, 2, 3, 5, 8, 13, 20, 40, "Pass"]
 
     	@users = Project.find(current_user.activeproject_id).users
     	@ids = []
@@ -72,7 +75,6 @@ class PokersController < ApplicationController
     	if !@curr_round.nil?
     		@curr_round = @curr_round.id
     	end
-
    	end
 
    	def startgame
@@ -112,14 +114,16 @@ class PokersController < ApplicationController
    		if value.to_s == "Pass"
    			@entry = Entry.new(user_id: current_user.id, round_id: @round.id, value: nil)
    			@entry.save
-   		elsif value.to_i
+   			redirect_to :back
+   		elsif is_float?(value)
    			@entry = Entry.new(user_id: current_user.id, round_id: @round.id, value: value.to_f)
    			@entry.save
+   			redirect_to :back
+   		else 
+   			flash[:warning] = 'Enter right value!'
+   			redirect_to :back
    		end
-
-   		## ce custom pop up -> enter value....
-
-   		redirect_to :back
+   		
    	end
 
    	def cancel
@@ -135,21 +139,27 @@ class PokersController < ApplicationController
    	end
 
    	def savetime
-   		# ce se ni nobenga value vstavis prejsni average !!!!
    		@time = params[:time]
-   		@rstories=current_user.activeproject.stories
-		@stories=@rstories.where(finished: false, sprint_id: nil)
-		@poker = Poker.where(active: true, :story_id=>@stories).first
-		@poker.update_attributes(:active => false)
-       	@story_id = @poker.story_id
+   		if (!@time.nil?)
+	   		@rstories=current_user.activeproject.stories
+			@stories=@rstories.where(finished: false, sprint_id: nil)
+			@poker = Poker.where(active: true, :story_id=>@stories).first
+			@poker.update_attributes(:active => false)
+	       	@story_id = @poker.story_id
 
-   		@story = Story.find_by(id: @story_id)
-   		@story.update_attributes(:timeestimates => @time)
-   		return redirect_to pokers_path
+	   		@story = Story.find_by(id: @story_id)
+	   		@story.update_attributes(:timeestimates => @time)
+	   	end
+	   		return redirect_to pokers_path
 
    	end
    	private
-
+   	def is_float?(fl)
+  		!!Float(fl) rescue false
+	end
+   	def is_float2?(fl)
+   		fl =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
+	end
     def signed_in_user
         redirect_to signin_url unless signed_in?
     end

@@ -27,11 +27,23 @@ $(document).on('ready page:load', function (){
         $(this).parents("form").submit();
     });
 });
+/*
+$(document).ready(function () {
+    // will call refreshPartial every 3 seconds
+    setInterval(refreshPartial, 3000)
 
-$(document).ready(
-     function() {
-      setInterval(function() {
-        $('html').load('/pokers/new');
-    }, 3000);
 });
 
+// calls action refreshing the partial
+function refreshPartial() {
+  $.ajax({
+    url: "pokers/new";
+ })
+}
+*/
+setInterval(function(){
+  $.get("/pokers/new.js", function(data){
+    $("#refreshdiv").html(data);
+  },
+  "html")
+}, 2000);

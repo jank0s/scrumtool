@@ -82,14 +82,17 @@ class ProgressController < ApplicationController
 
 
               sprint_by_stories_with_tasks = Worktime.select("sum(task_estimation) as n").where(sprint_id: sprints_ids[j]).first
-              divide = Worktime.select("distinct task_id").where(sprint_id: sprints_ids[j]).length
-
-              if divide == 0
+              #divide = Worktime.select("distinct task_id").where(sprint_id: sprints_ids[j]).length
+              #divide by sprint length
+              ss = Sprint.find(sprints_ids[j])
+              divide = ss.end - ss.start + 1
+              @sss = ss.end - ss.start + 1
+              if sprint_by_stories_with_tasks.n == nil
                   sprint_by_stories_with_tasks = 0
               else
                   sprint_by_stories_with_tasks = sprint_by_stories_with_tasks.n / divide
               end
-
+              @test = sprint_by_stories_with_tasks
               @sprint_constant_time = sprint_by_stories + sprint_by_stories_with_tasks
               i += 1
               j += 1

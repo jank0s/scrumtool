@@ -12,6 +12,8 @@
 <% end %>
 <%= @y_axis %>
 <%= @x_axis %>
+<%= @test %>
+<%= @sss %>
 <div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>
@@ -61,7 +63,8 @@
                   value: 0,
                   width: 1,
                   color: '#808080'
-              }]
+              }],
+              min: 0
           },
           tooltip: {
               valueSuffix: 'h'

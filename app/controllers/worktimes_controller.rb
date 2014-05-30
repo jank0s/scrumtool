@@ -39,7 +39,7 @@ class WorktimesController < ApplicationController
       @time.update_attributes(done: @time_done[i].to_f, remaining: @time_remaining[i].to_f)
       i+=1
     end
-
+    #TUUUUUUUUUUUUKI DA SE VID SAMO ODKAR SI ASSIGNAN
     @id = Worktime.find(@time_id.first).task_id
     @worktimes = Worktime.where(task_id: @id).order(:day)
     if (params[:from_task]!=nil)

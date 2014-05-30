@@ -12,8 +12,7 @@
 <% end %>
 <%= @y_axis %>
 <%= @x_axis %>
-<%= @test %>
-<%= @sss %>
+<%= @workload_axis %>
 <div id="burndown"></div>
 
 <h2>Sprint Velocity</h2>
@@ -43,6 +42,7 @@
   <script>
       var work = <%= @y_axis.to_json.html_safe %>;
       var lol = <%= @x_axis.to_json.html_safe %>;
+      var workload = <%= @workload_axis.to_json.html_safe %>;
       console.log(work);
       $('#burndown').highcharts({
           credits: {
@@ -78,6 +78,9 @@
           series: [{
               name: 'Work remaining',
               data: work
+          }, {
+              name: 'Workload',
+              data: workload
           }]
       });
   </script>

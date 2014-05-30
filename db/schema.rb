@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529194838) do
+ActiveRecord::Schema.define(version: 20140530161823) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -156,6 +156,15 @@ ActiveRecord::Schema.define(version: 20140529194838) do
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+
+  create_table "workloads", force: true do |t|
+    t.integer  "sprint_id"
+    t.float    "estimation"
+    t.integer  "project_id"
+    t.integer  "story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "worktimes", force: true do |t|
     t.datetime "start"

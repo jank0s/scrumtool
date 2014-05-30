@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sprint_id: 1
+  estimation: 1.5
+  project_id: 1
+  story_id: 1
+
+two:
+  sprint_id: 1
+  estimation: 1.5
+  project_id: 1
+  story_id: 1

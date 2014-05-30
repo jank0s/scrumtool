@@ -15,6 +15,7 @@ class ProgressController < ApplicationController
       # sam da mormo pr taskih se dt da steje vse ure...
       @sprints.each do |sprint|
         @start_lst.append(sprint.start)
+
         @selected_velocity[sprint.id] = 0
         @realized_velocity[sprint.id] = 0
         @work_input[sprint.id] = 0
@@ -51,6 +52,8 @@ class ProgressController < ApplicationController
 
       @y_axis = []
       @x_axis = []
+      @workload_axis = []
+      done_sum = 0
       in_sprint = false
       i = 0
       j = 0
@@ -58,12 +61,15 @@ class ProgressController < ApplicationController
       last = 0
       sprint_estimated = 0
       worktimes_for_sprint = 0
+
+      test = 0
       @sprint_constant_time = 0
       starts.upto(ends) do |day|
           if day == sprints_lst[i] && (i % 2 == 0)    #start of sprint
+
               in_sprint = true
               sprint_estimated = History.select("sum(estimation) as n").where(sprint_id: sprints_ids[j]).first
-              worktimes_for_sprint = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining").where(sprint_id: sprints_ids[j]).group(:day)
+              worktimes_for_sprint = Worktime.select("day as day, sum(remaining)-sum(task_estimation) as remaining, sum(done) as done").where(sprint_id: sprints_ids[j]).group(:day)
 
               story_ids = Worktime.select("distinct story_id").where(sprint_id: sprints_ids[j]) #get stories with tasks
 
@@ -98,11 +104,14 @@ class ProgressController < ApplicationController
               j += 1
               @y_axis.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y: sprint_estimated.n*6 })
               @x_axis.push("Sprint" + j.to_s)
+              @workload_axis.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y: sprint_estimated.n*6 + done_sum})
               huh = true
               worktimes_for_sprint.each do |w| #ni kul ce ni worktimeov
                   if w.day == day
                       @y_axis.push(@sprint_constant_time + w.remaining)
                       @x_axis.push(d)
+                      done_sum = done_sum + w.done
+                      @workload_axis.push(@sprint_constant_time + done_sum)
                       d += 1
                       huh = false
                   end
@@ -111,6 +120,7 @@ class ProgressController < ApplicationController
               if huh
                 @y_axis.push(@sprint_constant_time)
                 @x_axis.push(d)
+                @workload_axis.push(@sprint_constant_time + done_sum)
                 d += 1
               end
           elsif day == sprints_lst[i]                 #end of sprint
@@ -122,12 +132,15 @@ class ProgressController < ApplicationController
               worktimes_for_sprint.each do |w|
                 if w.day == day
                   @y_axis.push(@sprint_constant_time + w.remaining)
+                  done_sum = done_sum + w.done
+                  @workload_axis.push(@sprint_constant_time + done_sum)
                   last = @sprint_constant_time + w.remaining
                   huh = false
                 end
               end
               if huh
                 @y_axis.push(@sprint_constant_time)
+                @workload_axis.push(@sprint_constant_time + done_sum)
                 last = @sprint_constant_time
               end
 
@@ -138,15 +151,19 @@ class ProgressController < ApplicationController
                   worktimes_for_sprint.each do |w|
                     if w.day == day
                       @y_axis.push(@sprint_constant_time + w.remaining)
+                      done_sum = done_sum + w.done
+                      @workload_axis.push(@sprint_constant_time + done_sum)
                       huh = false
                     end
                   end
 
                   if huh
                     @y_axis.push(@sprint_constant_time)
+                    @workload_axis.push(@sprint_constant_time + done_sum)
                   end
               else
                  @y_axis.push(last)
+                 @workload_axis.push(last + done_sum)
               end
               @x_axis.push(d)
               d += 1

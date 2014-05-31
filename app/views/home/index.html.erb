@@ -128,11 +128,21 @@
                 <%= link_to "New Documentation", new_article_path %>
               <% end %>
               <% @articles.each do |article| %>
-                  <% if !article.body.nil? %>
-                    <p><%= raw(article.body.html_safe) %></p>
+                  <% if article.project_id == current_user.activeproject_id %>
+                      <% if article.editing == false || article.user_id == current_user.id %>
+                          <% if !article.body.nil? %>
+                            <p><%= raw(article.body.html_safe) %></p>
+                          <% end %>
+                          <%= link_to "Edit Documentation", edit_article_path(article) %>
+                          <br />
+                      <% else %>
+                          Editing locked!
+                          <br>
+                          <% user=User.find(article.user_id) %>
+                          <%= user.username %>
+                          is currently editing the documentation.
+                      <% end %>
                   <% end %>
-                  <%= link_to "Edit Documentation", edit_article_path(article) %>
-                  <br />
               <% end %>
         </div>
     </div>

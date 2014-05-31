@@ -5,11 +5,13 @@ class HomeController < ApplicationController
         @user=current_user
         @projects=(@user.projects+@user.productowner_projects+@user.scrummaster_projects).uniq
         @post=Post.new
-        @articles=Article.order("created_at DESC")
+        @articles=Article.where(project_id: current_user.activeproject_id)
         if @articles.size==0
           @article=Article.new
           @article.body=""
-          #@article.title=current_user.activeproject_id
+          @article.user_id=0
+          @article.editing=false
+          @article.project_id=current_user.activeproject_id
           @article.save
         end
 

@@ -7,23 +7,24 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def create
-    @article = Article.new(article_params)
-    if @article.save
-      redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully created."
-    else
-      render action: "index"
-    end
-  end
-
   def edit
     @article = Article.find(params[:id])
-    @articles = Article.order("created_at DESC")
-    @stories = Story.order("created_at ASC")
+    if @article.user_id=current_user.id || @article.editing=false
+      @article.editing=true
+      @article.user_id=current_user.id
+      @article.save
+      @articles = Article.order("created_at DESC")
+      @stories = Story.order("created_at ASC")
+    else
+      redirect_to home_index_url(tab:"documentation")
+    end
   end
 
   def update
     @article = Article.find(params[:id])
+    @article.user_id=0
+    @article.editing=false
+    @article.save
     if @article.update_attributes(article_params)
       redirect_to home_index_url(tab:"documentation"), notice: "The documentation has been successfully updated."
     else

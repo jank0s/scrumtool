@@ -28,7 +28,7 @@ class PokersController < ApplicationController
        	else
        		@poker = Poker.where(active: true, :story_id=>@stories).first
        		if @poker.nil?
-    			return redirect_to pokers_path
+    			return redirect_to '/pokers/'
        		end
 	       	@story_id = @poker.story_id
     		
@@ -75,7 +75,7 @@ class PokersController < ApplicationController
     	if !@curr_round.nil?
     		@curr_round = @curr_round.id
     	end
-    	
+
    	end
 
    	def startgame

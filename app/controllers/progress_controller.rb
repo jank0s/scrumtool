@@ -33,24 +33,31 @@ class ProgressController < ApplicationController
         else
           @realized_velocity[sprint.id] = real.neki
         end
-        @work_input[sprint.id] = 0
-      end
-      @stories.each do |story|
-        #@selected_velocity[story.sprint_id]+=story.timeestimates
-
-        @tasks = Task.all.where(:story_id => story.id)
-
-        @tasks.each do |task|
-          @work_input[story.sprint_id]+=task.time_estimation
+        input = Worktime.select("sum(done) as sum").where(sprint_id: sprint.id).first
+        if input.sum == nil
+          @work_input[sprint.id] = 0
+        else
+          @work_input[sprint.id] = input.sum
         end
-      end 
-
-      @finished_stories = Story.all.where(:finished => true)
-      @finished_stories.each do |finished|
-        @realized_velocity[finished.sprint_id]+=timeestimates
-
-        
       end
+
+
+      #@stories.each do |story|
+      #  #@selected_velocity[story.sprint_id]+=story.timeestimates
+      #
+      #  @tasks = Task.all.where(:story_id => story.id)
+      #
+      #  @tasks.each do |task|
+      #    @work_input[story.sprint_id]+=task.time_estimation
+      #  end
+      #end
+      #
+      #@finished_stories = Story.all.where(:finished => true)
+      #@finished_stories.each do |finished|
+      #  @realized_velocity[finished.sprint_id]+=timeestimates
+      #
+      #
+      #end
 
       #BURNDOWN==================================================================================
 

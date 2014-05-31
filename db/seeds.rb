@@ -20,7 +20,7 @@ Sprint.create(start: "2014-05-28", end: "2014-05-31", velocity: 3, project_id: 1
 Story.create(project_id: 1, name: "Story1", description: "Story one", priority_id: 1, sprint_id: 2, finished: false, test: "", timeestimates: 2)
 Story.create(project_id: 1, name: "Story2", description: "Story two", priority_id: 1, sprint_id: 2, finished: false, test: "", timeestimates: 1)
 Story.create(project_id: 1, name: "Story3", description: "Story three", priority_id: 1, finished: false, test: "", timeestimates: 1)
-Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: false, test: "", timeestimates: 1)
+Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: false, test: "", timeestimates: 1, finished_in_sprint: 1)
 
 Task.create(name: "Task1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-04-20 00:00:00")
 Task.create(name: "Task2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-04-20 00:00:00")
@@ -57,7 +57,7 @@ History.create(sprint_id: 1, estimation: 3, project_id:1, story_id: 4, belongs_s
 History.create(sprint_id: 2, estimation: 2, project_id:1, story_id: 1, belongs_sprint: true)
 History.create(sprint_id: 2, estimation: 1, project_id:1, story_id: 2, belongs_sprint: true)
 History.create(sprint_id: 2, estimation: 1, project_id:1, story_id: 3, belongs_sprint: true)
-History.create(sprint_id: 2, estimation: 1, project_id:1, story_id: 4, belongs_sprint: false)
+#History.create(sprint_id: 2, estimation: 1, project_id:1, story_id: 4, belongs_sprint: false)
 
 #Workload.create(sprint_id: 1, estimation: 2, project_id:1, story_id: 1)
 #Workload.create(sprint_id: 1, estimation: 1, project_id:1, story_id: 2)

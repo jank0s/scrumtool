@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531094255) do
+ActiveRecord::Schema.define(version: 20140531105937) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20140531094255) do
     t.float    "timeestimates"
     t.integer  "sprint_id"
     t.text     "note"
+    t.integer  "finished_in_sprint"
   end
 
   create_table "tasks", force: true do |t|

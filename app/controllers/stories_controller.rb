@@ -144,6 +144,7 @@ class StoriesController < ApplicationController
     def accept
         @story=Story.find(params[:id])
         @story.finished=true
+        @story.finished_in_sprint = currently_running_sprint
         if @story.save
             redirect_to stories_url
         else

@@ -21,7 +21,18 @@ class ProgressController < ApplicationController
         else
           @selected_velocity[sprint.id] = selected.estimationsum
         end
-        @realized_velocity[sprint.id] = 0
+
+        stories_lst = []
+        realized = Story.where(finished_in_sprint: sprint.id)
+        realized.each do |r|
+          stories_lst << r.id
+        end
+        real = History.select("sum(estimation) as neki").where(sprint_id: sprint.id, story_id: stories_lst).first
+        if real.neki == nil
+          @realized_velocity[sprint.id] = 0
+        else
+          @realized_velocity[sprint.id] = real.neki
+        end
         @work_input[sprint.id] = 0
       end
       @stories.each do |story|

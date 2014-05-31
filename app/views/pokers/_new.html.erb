@@ -1,6 +1,31 @@
 <div id="refreshdiv">
-	<% if !@rounds_inactive.nil? %>
+	<h1>Planning poker</h1>
+<h2>User story: <%= @story.name %></h2>
+	<div class="panel panel-default">
+        <div class="panel-body">
+            <%= @story.description %>
+            <ul class="acceptance-tests text-primary">
+                <% @story.test.split(/\n/).each do |test| %>
+                    <li># <%= test %></li>
+                <% end %>
+            </ul>
+            <% if !@story.note.nil? %>
+                <br/>
+                <ul class="notes text-warning">
+                    <% @story.note.split(/\n/).each do |note| %>
+                        <li>-- <%= note %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+  <% @average=0 %>
+<h2>Planning poker rounds</h2>
 
+
+
+	<% if !@rounds_inactive.nil? %>
+	<% if !@rounds_inactive.empty? || !@curr_round.nil? %>
 		<table class="table table-striped">
   			<thead>
 		    <tr>
@@ -29,8 +54,9 @@
 			        			<% @it = @it+1 %>
 			        		<% end %>
 			        	<% end %>
-				        <td><%= @average = (@it == 0) ? 0 : @average/@it %></td>
-				        <td><%= @average*6 %></td>
+				        <td><%= number_with_precision(@average = (@it == 0) ? 0 : @average/@it, :precision => 2) %></td>
+				        <% average2 = @average*6 %>
+				        <td><%= number_with_precision(average2, :precision => 2) %></td>
 				     <% elsif @has_voted.empty?  %>
 				    	<td><%= Round.find_by_id(round).created_at %></td>
 			        	<td colspan = "<%= 2+@ids.size %>"><b>Send your estimates to see result</b></td>
@@ -48,7 +74,8 @@
 			        		<% end %>
 			        	<% end %>
 				        <td><%= number_with_precision(@average = (@it == 0) ? 0 : @average/@it, :precision => 2) %></td>
-				        <td><%= number_with_precision(@average*6, :precision => 2) %></td>
+				        <% average2 = @average*6 %>
+				        <td><%= number_with_precision(average2, :precision => 2) %></td>
 			        <% end %>
 		      	</tr>
 		      	<% end %>
@@ -56,7 +83,9 @@
 		</table>
 
 	<small>All values represents story points (unless otherwise specified)</small><br />
-
+		<% elsif @curr_round.nil? %>
+			No rounds have been played yet.
+		<% end %>
 	<!-- popravi da bo kazal prov -->
 	<% else %>
 		No rounds have been played yet.

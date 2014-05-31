@@ -11,10 +11,19 @@
 <% end %>
 <% end %>
 <%= @y_axis %>
+<br />
 <%= @x_axis %>
+<br />
 <%= @workload_axis %>
+<br />
+<%= @work_done %>
+<br />
+<%= @work_remaining %>
 <div id="burndown"></div>
 
+
+<b>Project status:</b>
+<%= @work_remaining %>h of work remaining / <%= @work_done %>h of work spent
 <h2>Sprint Velocity</h2>
 <table class="table table-striped">
     <thead>

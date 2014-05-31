@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530161823) do
+ActiveRecord::Schema.define(version: 20140531094255) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20140530161823) do
     t.datetime "updated_at"
     t.integer  "project_id"
     t.integer  "story_id"
+    t.boolean  "belongs_sprint"
   end
 
   create_table "pokers", force: true do |t|

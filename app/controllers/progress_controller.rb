@@ -15,8 +15,12 @@ class ProgressController < ApplicationController
       # sam da mormo pr taskih se dt da steje vse ure...
       @sprints.each do |sprint|
         @start_lst.append(sprint.start)
-
-        @selected_velocity[sprint.id] = 0
+        selected = History.select("sum(estimation) as estimationsum").where(sprint_id: sprint.id, belongs_sprint: true).first
+        if selected.estimationsum == nil
+          @selected_velocity[sprint.id] = 0
+        else
+          @selected_velocity[sprint.id] = selected.estimationsum
+        end
         @realized_velocity[sprint.id] = 0
         @work_input[sprint.id] = 0
       end
@@ -169,6 +173,9 @@ class ProgressController < ApplicationController
               d += 1
           end
       end
+
+      @work_done = done_sum
+      @work_remaining = @y_axis.last
       #BURNDOWN==================================================================================
 
     end

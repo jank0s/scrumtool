@@ -20,7 +20,7 @@ Sprint.create(start: "2014-05-28", end: "2014-06-03", velocity: 3, project_id: 1
 Story.create(project_id: 1, name: "Story1", description: "Story one", priority_id: 1, sprint_id: 2, finished: false, test: "", timeestimates: 2)
 Story.create(project_id: 1, name: "Story2", description: "Story two", priority_id: 1, sprint_id: 2, finished: false, test: "", timeestimates: 1)
 Story.create(project_id: 1, name: "Story3", description: "Story three", priority_id: 1, finished: false, test: "", timeestimates: 1)
-Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: false, test: "", timeestimates: 1, finished_in_sprint: 1)
+Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: true, test: "", timeestimates: 1, finished_in_sprint: 1)
 
 Task.create(name: "Task1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00")
 Task.create(name: "Task2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-05-28 00:00:00")

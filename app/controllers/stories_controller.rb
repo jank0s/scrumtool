@@ -20,7 +20,8 @@ class StoriesController < ApplicationController
             @sprintStories=@stories.where(finished: false, sprint_id: @current_sprint)
         end
         @remainingStories=@stories.where(finished: false, sprint_id: nil)
-        @finishedStories=@stories.where(finished: true)
+        #@finishedStories=@stories.where(finished: true)
+        @finishedStories = Story.where(project_id: current_user.activeproject_id, finished: true)
     end
 
     def new

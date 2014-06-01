@@ -9,7 +9,7 @@
 <% @stt.each do |ha| %>
   <%= ha.id %>
 <% end %>
-<% end %>
+
 <%= @y_axis %>
 <br />
 <%= @x_axis %>
@@ -19,6 +19,7 @@
 <%= @work_done %>
 <br />
 <%= @work_remaining %>
+<% end %>
 <div id="burndown"></div>
 
 
@@ -76,7 +77,16 @@
               min: 0
           },
           tooltip: {
-              valueSuffix: 'h'
+              shared: true,
+              formatter: function() {
+                  var s = "<b>" + this.x + "</b><br />";
+
+                  s += this.points[1].series.name + ": " + this.points[1].y +
+                          "h <br />" + this.points[0].series.name + ": " + this.points[0].y + "h <br />" +
+                          "Work done: " + (this.points[1].y-this.points[0].y);
+
+                  return s;
+              }
           },
           legend: {
               layout: 'vertical',

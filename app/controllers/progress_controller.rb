@@ -126,14 +126,14 @@ class ProgressController < ApplicationController
               j += 1
               @y_axis.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y: sprint_estimated.n*6 })
               @x_axis.push("Sprint" + j.to_s)
-              @workload_axis.push({ marker: { fillColor: '#FF0000',lineWidth: 3,lineColor: '#FF0000'},y: sprint_estimated.n*6 + done_sum})
+              @workload_axis.push(sprint_estimated.n*6 + done_sum)
               huh = true
               worktimes_for_sprint.each do |w| #ni kul ce ni worktimeov
                   if w.day == day
                       @y_axis.push(@sprint_constant_time + w.remaining)
                       @x_axis.push(d)
                       done_sum = done_sum + w.done
-                      @workload_axis.push(@sprint_constant_time + done_sum)
+                      @workload_axis.push(@sprint_constant_time + w.remaining + done_sum)
                       d += 1
                       huh = false
                   end
@@ -155,7 +155,7 @@ class ProgressController < ApplicationController
                 if w.day == day
                   @y_axis.push(@sprint_constant_time + w.remaining)
                   done_sum = done_sum + w.done
-                  @workload_axis.push(@sprint_constant_time + done_sum)
+                  @workload_axis.push(@sprint_constant_time + w.remaining + done_sum)
                   last = @sprint_constant_time + w.remaining
                   huh = false
                 end
@@ -174,7 +174,7 @@ class ProgressController < ApplicationController
                     if w.day == day
                       @y_axis.push(@sprint_constant_time + w.remaining)
                       done_sum = done_sum + w.done
-                      @workload_axis.push(@sprint_constant_time + done_sum)
+                      @workload_axis.push(@sprint_constant_time + w.remaining + done_sum)
                       huh = false
                     end
                   end

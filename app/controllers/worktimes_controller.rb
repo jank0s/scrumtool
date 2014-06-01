@@ -3,7 +3,9 @@ class WorktimesController < ApplicationController
   def index
     @id = params[:id]
     @t = Task.find(@id)
-    @worktimes = Worktime.where(task_id: @id).where("day >= ?", @t.assigned_date.to_date).order(:day)
+    today = Date.today
+    @worktimes = Worktime.where(task_id: @id).where("day >= ?", @t.assigned_date.to_date)
+                                              .where("day <= ?", today).order(:day)
 
     #testdate = Date.today
     #if @worktimes.last.day < testdate   # SPRAVT V HASH, DA VSE NAENKRAT ZAPISE
@@ -24,7 +26,7 @@ class WorktimesController < ApplicationController
     @time_remaining = params[:time_remaining]
     @time_day = params[:time_day]
 
-
+    all = Worktime.where(task_id: params[:task_id], sprint_id: currently_running_sprint).order(:id)
     @t = Task.find(params[:task_id])
 
     #if @time_remaining.last.to_f == 0.0
@@ -37,8 +39,8 @@ class WorktimesController < ApplicationController
     i = 0
     j = 0
     inside = false
-    @time_id.each do |time|
-      @time = Worktime.find(time)
+    all.each do |time|
+      @time = Worktime.find(time.id)
       if @time.day == today && @time_remaining[i].to_f == 0.0
         @lst << @time.day
         @lst << @time_remaining[i].to_f
@@ -63,8 +65,12 @@ class WorktimesController < ApplicationController
 
 
     #TUUUUUUUUUUUUKI DA SE VID SAMO ODKAR SI ASSIGNAN
-    @id = Worktime.find(@time_id.first).task_id
-    @worktimes = Worktime.where(task_id: @id).order(:day)
+    #@id = Worktime.find(@time_id.first).task_id
+    #@worktimes = Worktime.where(task_id: @id).order(:day)
+    today = Date.today
+    @worktimes = Worktime.where(task_id: @t.id).where("day >= ?", @t.assigned_date.to_date)
+    .where("day <= ?", today).order(:day)
+
     if (params[:from_task]!=nil)
       redirect_to usertasks_url 
     else

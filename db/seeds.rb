@@ -22,10 +22,10 @@ Story.create(project_id: 1, name: "Story2", description: "Story two", priority_i
 Story.create(project_id: 1, name: "Story3", description: "Story three", priority_id: 1, finished: false, test: "", timeestimates: 1)
 Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: false, test: "", timeestimates: 1, finished_in_sprint: 1)
 
-Task.create(name: "Task1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-04-20 00:00:00")
-Task.create(name: "Task2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-04-20 00:00:00")
-Task.create(name: "Task3", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-04-20 00:00:00")
-Task.create(name: "Task4", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-04-20 00:00:00")
+Task.create(name: "Task1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00")
+Task.create(name: "Task2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-05-28 00:00:00")
+Task.create(name: "Task3", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00")
+Task.create(name: "Task4", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-05-28 00:00:00")
 
 Worktime.create(done: 0, remaining: 6, day: "2014-05-28", task_id: 1, task_estimation: 6, sprint_id: 2, story_id: 1)
 Worktime.create(done: 0, remaining: 6, day: "2014-05-29", task_id: 1, task_estimation: 6, sprint_id: 2, story_id: 1)
@@ -56,11 +56,11 @@ Worktime.create(done: 0, remaining: 5, day: "2014-06-01", task_id: 4, task_estim
 Worktime.create(done: 0, remaining: 5, day: "2014-06-02", task_id: 4, task_estimation: 5, sprint_id: 2, story_id: 1)
 Worktime.create(done: 0, remaining: 5, day: "2014-06-03", task_id: 4, task_estimation: 5, sprint_id: 2, story_id: 1)
 
-Worktime.create(done: 0, remaining: 2, day: "2014-05-20", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
-Worktime.create(done: 3, remaining: 2, day: "2014-05-21", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
-Worktime.create(done: 0, remaining: 2, day: "2014-05-22", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
-Worktime.create(done: 0, remaining: 2, day: "2014-05-23", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
-Worktime.create(done: 0, remaining: 2, day: "2014-05-24", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
+#Worktime.create(done: 0, remaining: 2, day: "2014-05-20", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
+#Worktime.create(done: 0, remaining: 2, day: "2014-05-21", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
+#Worktime.create(done: 0, remaining: 2, day: "2014-05-22", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
+#Worktime.create(done: 0, remaining: 2, day: "2014-05-23", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
+#Worktime.create(done: 0, remaining: 2, day: "2014-05-24", task_id: 1, task_estimation: 2, sprint_id: 1, story_id: 2)
 
 History.create(sprint_id: 1, estimation: 2, project_id:1, story_id: 1, belongs_sprint: false)
 History.create(sprint_id: 1, estimation: 1, project_id:1, story_id: 2, belongs_sprint: false)

@@ -1,5 +1,5 @@
 <h2>Work history</h2>
-
+<%= @lst %>
 <div class="part-story">
 
   <% if !@worktimes.empty? %>
@@ -27,6 +27,8 @@
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon">Done</span>
                     <%= hidden_field_tag 'time_id[]', w.id %>
+                    <!--NEWNEW-->
+                    <%= hidden_field_tag 'time_day[]', w.day %>
                     <%= text_field_tag 'time_done[]', w.done, class: 'form-control' %>
                   </div>
 

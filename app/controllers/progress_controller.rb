@@ -63,6 +63,7 @@ class ProgressController < ApplicationController
 
       sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
       starts = sprints.first.start
+      @project_start = starts
       ends = Date.today
 
       sprints_lst = []

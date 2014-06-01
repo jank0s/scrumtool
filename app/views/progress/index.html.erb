@@ -53,6 +53,7 @@
       var work = <%= @y_axis.to_json.html_safe %>;
       var lol = <%= @x_axis.to_json.html_safe %>;
       var workload = <%= @workload_axis.to_json.html_safe %>;
+      var pstart = new String(<%= @project_start.to_json.html_safe %>);
       console.log(work);
       $('#burndown').highcharts({
           credits: {
@@ -63,11 +64,14 @@
               x: -20 //center
           },
           xAxis: {
+              title: {
+                  text: "Days since project start " + pstart
+              },
               categories: lol
           },
           yAxis: {
               title: {
-                  text: ''
+                  text: 'Hours of work'
               },
               plotLines: [{
                   value: 0,

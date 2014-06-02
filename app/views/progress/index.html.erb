@@ -1,12 +1,30 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 <h1>Reports</h1>
-<h2>Burn down chart
+<h2>Burn down chart</h2>
 <%#= bar_chart @users.group(:created_at) %>
 <%#= line_chart @goals.map{|goal|
     {name: goal.name, data: goal.feats.group_by_week(:created_at).count}
 } %>
+<% if false %>
+<% @stt.each do |ha| %>
+  <%= ha.id %>
+<% end %>
+
+<%= @y_axis %>
+<br />
+<%= @x_axis %>
+<br />
+<%= @workload_axis %>
+<br />
+<%= @work_done %>
+<br />
+<%= @work_remaining %>
+<% end %>
+<div id="burndown"></div>
 
 
+<b>Project status:</b>
+<%= @work_remaining %>h of work remaining / <%= @work_done %>h of work spent
 <h2>Sprint Velocity</h2>
 <table class="table table-striped">
     <thead>
@@ -30,3 +48,62 @@
     <% end %>
     </tbody>
 </table>
+
+  <script>
+      var work = <%= @y_axis.to_json.html_safe %>;
+      var lol = <%= @x_axis.to_json.html_safe %>;
+      var workload = <%= @workload_axis.to_json.html_safe %>;
+      var pstart = new String(<%= @project_start.to_json.html_safe %>);
+      console.log(work);
+      $('#burndown').highcharts({
+          credits: {
+              enabled: false
+          },
+          title: {
+              text: 'Burn down chart',
+              x: -20 //center
+          },
+          xAxis: {
+              title: {
+                  text: "Days since project start " + pstart
+              },
+              categories: lol
+          },
+          yAxis: {
+              title: {
+                  text: 'Hours of work'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }],
+              min: 0
+          },
+          tooltip: {
+              shared: true,
+              formatter: function() {
+                  var s = "<b>" + this.x + "</b><br />";
+
+                  s += this.points[1].series.name + ": " + this.points[1].y +
+                          "h <br />" + this.points[0].series.name + ": " + this.points[0].y + "h <br />" +
+                          "Work done: " + (this.points[1].y-this.points[0].y);
+
+                  return s;
+              }
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle',
+              borderWidth: 0
+          },
+          series: [{
+              name: 'Work remaining',
+              data: work
+          }, {
+              name: 'Workload',
+              data: workload
+          }]
+      });
+  </script>

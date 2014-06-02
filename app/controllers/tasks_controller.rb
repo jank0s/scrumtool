@@ -22,11 +22,11 @@ class TasksController < ApplicationController
   end
 
   def new
-  	@story = Story.find(params[:id])
+    @story = Story.find(params[:id])
 
     @tasks = Task.where(story_id: @story.id)
 
-  	@task = Task.new
+    @task = Task.new
 
     ap_id = current_user.activeproject_id
     @users = Project.find(ap_id).users
@@ -37,6 +37,35 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:success] = "Task successfully saved."
+      #=================================================================================================================
+      #*****************************************************************************************************************
+
+      #WHEN TASK ADDED CREATE WORKTIMES FOR TASK, FROM START OF FIRST SPRINT TO TODAY
+
+      #@sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+      #@start = @sprints.first.start
+      #@end = Date.today
+      #@days = (@end - @start).to_i
+      #
+      #for i in 0..(@days)
+      #  Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
+      #                  task_estimation: @task.time_estimation)
+      #end
+
+      story_id = task_params[:story_id]
+      sprint_id = currently_running_sprint
+      sprint = Sprint.find(sprint_id)
+
+      sprint_start = sprint.start
+      sprint_end = sprint.end
+
+      sprint_start.upto(sprint_end) do |day|
+        Worktime.create(done: 0, remaining: @task.time_estimation, day: day, task_id: @task.id,
+                        task_estimation: @task.time_estimation, sprint_id: sprint_id, story_id: story_id)
+      end
+
+      #*****************************************************************************************************************
+      #=================================================================================================================
       redirect_to tasks_url
     else
       #redirect_to indextask_url(:id => @task.story_id)
@@ -73,9 +102,41 @@ class TasksController < ApplicationController
       @task.assigned_date = DateTime.now.in_time_zone.midnight
     end
     if @task.save
-      #!!!!!!!!!!!!!!!!!!!!!!!!!!REMAINING""""""""""""""""""""
-      Worktime.create(done: 0, remaining: @task.time_estimation, day: Date.today, task_id: @task.id)
       flash[:success] = "Task successfully accepted."
+
+      #=================================================================================================================
+      #*****************************************************************************************************************
+
+      #WHEN TASK ADDED CREATE WORKTIMES FOR TASK, FROM START TO END OF CURRENT SPRINT
+
+      #@sprints = Sprint.where(project_id: current_user.activeproject_id).order(:start)
+      #@start = @sprints.first.start
+      #@end = Date.today
+      #@days = (@end - @start).to_i
+      #
+      #for i in 0..(@days)
+      #  Worktime.create(done: 0, remaining: @task.time_estimation, day: @start + i.days, task_id: @task.id,
+      #                  task_estimation: @task.time_estimation)
+      #end
+
+      #sprint_id = currently_running_sprint
+      #puts "drek"
+      #puts sprint_id
+      #sprint = Sprint.find(sprint_id)
+      #
+      #sprint_start = sprint.start
+      #sprint_end = sprint.end
+      #puts sprint_start
+      #puts sprint_end
+      #sprint_start.upto(sprint_end) do |day|
+      #  Worktime.create(done: 0, remaining: @task.time_estimation, day: day, task_id: @task.id,
+      #                  task_estimation: @task.time_estimation, sprint_id: sprint_id)
+      #end
+
+      #*****************************************************************************************************************
+      #=================================================================================================================
+
+
       redirect_to tasks_url
     else
       flash[:warning] = "Task is not successfully accepted."
@@ -88,9 +149,8 @@ class TasksController < ApplicationController
     @task.assigned_to = nil
     @task.assigned_date = nil
 
-    Worktime.delete_all(task_id: @task.id)
-
     if @task.save
+      Worktime.delete_all(task_id: @task.id)
       flash[:success] = "Task successfully released."
       redirect_to :back
     else

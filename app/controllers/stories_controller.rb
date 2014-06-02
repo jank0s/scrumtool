@@ -20,7 +20,8 @@ class StoriesController < ApplicationController
             @sprintStories=@stories.where(finished: false, sprint_id: @current_sprint)
         end
         @remainingStories=@stories.where(finished: false, sprint_id: nil)
-        @finishedStories=@stories.where(finished: true)
+        #@finishedStories=@stories.where(finished: true)
+        @finishedStories = Story.where(project_id: current_user.activeproject_id, finished: true)
     end
 
     def new
@@ -88,7 +89,38 @@ class StoriesController < ApplicationController
             end
             if (!nok.empty?)
                 flash[:warning] = "Time cannot be set for "+nok.map(&:inspect).join(', ')+"."
-            end            
+            end
+
+            #=================================================================================================================
+            #*****************************************************************************************************************
+            #stories_time_sum = Story.select("sum(timeestimates) as n").where(project_id: current_user.activeproject_id).first
+            #stories_time_sum = stories_time_sum.n
+
+            sprint_id = currently_running_sprint
+            stories = Story.where(finished: false, project_id: current_user.activeproject_id)
+
+            if sprint_id == -1
+                future_sprint = Sprint.where("start > ?", Date.today).order(:start).first
+                if future_sprint == nil
+                    flash[:warning] = "First create new sprint"
+                else
+                    History.delete_all(sprint_id: future_sprint.id)
+                    stories.each do |s|
+                        History.create(story_id: s.id, sprint_id: future_sprint.id, estimation: s.timeestimates,
+                                       project_id: current_user.activeproject_id)
+                    end
+                end
+            else
+                History.delete_all(sprint_id: sprint_id)
+                stories.each do |s|
+                  History.create(story_id: s.id, sprint_id: sprint_id, estimation: s.timeestimates,
+                                 project_id: current_user.activeproject_id)
+                end
+            end
+            #*****************************************************************************************************************
+            #=================================================================================================================
+
+
         elsif params[:addtosprint] 
             @addto = params[:story_id].map(&:to_i)
             i=0
@@ -113,6 +145,7 @@ class StoriesController < ApplicationController
     def accept
         @story=Story.find(params[:id])
         @story.finished=true
+        @story.finished_in_sprint = currently_running_sprint
         if @story.save
             redirect_to stories_url
         else

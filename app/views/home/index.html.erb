@@ -12,7 +12,6 @@
 <% if activeproject? %>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li class="<%= 'active' if params[:tab] == 'scrum' %>"><a href="#scrum" data-toggle="tab">Daily scrum</a></li>
         <li class="<%= 'active' if params[:tab] == 'discussion' %>"><a href="#discussion" data-toggle="tab">Discussion</a></li>
         <!--<li><a href="#discussion" data-toggle="tab">Discussion</a></li>
         <li><a href="#documentation" data-toggle="tab">Documentation</a></li>-->
@@ -21,13 +20,8 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="<%= if (params[:tab] == 'scrum' || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="scrum">
 
-            <h2>Daily scrum</h2>
-            ...
-        </div>
-
-        <div class="<%= if params[:tab] == 'discussion' then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
+        <div class="<%= if (params[:tab] == 'discussion'  || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
             <h2>Discussion</h2>
             <div id="form-add">
                 <%= form_for @post do |f| %>
@@ -54,9 +48,9 @@
                             <div class="panel-heading">
                                 <div class="story-head">
                                     <% user=User.find(post.user_id) %>
-                                    <small><% if !post.topic.blank? %><font size="5" color="blue">Topic: <b><%= post.topic %></b></font> <font size="5">|</font> <% end %>
-                                        <font size="4" color="green">User: <b><%= user.username %></b></font> <font size="5">|</font> Date&Time: <b><%= post.created_at %></b></small>
-                                </div>
+                                    <span class="topic"><% if !post.topic.blank? %>Topic: <b><%= post.topic %></b></span> | <% end %>
+                                        <span class="user">User: <b><%= user.username %></b></span> | <small> Date & Time: <b><%= post.created_at %></b></small>
+                                        </div>
                                 <div class="clear"></div>
                             </div>
                             <div class="panel-body">
@@ -73,7 +67,7 @@
                                             <div class = "panel-heading">
                                                 <% user_com=User.find(comment.user_id) %>
                                                 <small><b><%= user_com.username %>: </b>
-                                                    <%= print_multiline(comment.value) %><%#= comment.value %></small><br />
+                                                    <%= print_multiline(comment.value) %></small><br />
                                                 <small><i><%= comment.created_at %></i></small>
                                                 <% if scrummaster? || admin? || (current_user.id == comment.user_id)%>
                                                     <%= button_to "Remove", comment_path(comment.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
@@ -83,7 +77,6 @@
                                         </div>
                                     <% end %>
                                 <% end %>
-                                <! now you can add new comment >
                                 <div id="form-add">
                                     <%= form_for @comment do |f| %>
 
@@ -131,7 +124,26 @@
         <div class="<%= if params[:tab] == 'documentation' then 'tab-pane active'  else 'tab-pane' end%>" id="documentation">
             <!--<div class="tab-pane" id="documentation">-->
             <h2>Documentation</h2>
-            <%= link_to "View documentation", articles_path %>
+            <% if @articles.empty? %>
+                <%= link_to "New Documentation", new_article_path %>
+            <% end %>
+            <% @articles.each do |article| %>
+                <% if article.project_id == current_user.activeproject_id %>
+                    <% if article.editing == false || article.user_id == current_user.id %>
+                        <% if !article.body.nil? %>
+                            <p><%= raw(article.body.html_safe) %></p>
+                        <% end %>
+                        <%= link_to "Edit Documentation", edit_article_path(article) %>
+                        <br />
+                    <% else %>
+                        Editing locked!
+                        <br>
+                        <% user=User.find(article.user_id) %>
+                        <%= user.username %>
+                        is currently editing the documentation.
+                    <% end %>
+                <% end %>
+            <% end %>
         </div>
     </div>
 <% end %>

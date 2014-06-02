@@ -42,7 +42,11 @@ module SessionsHelper
     end
 
     def productowner?
-        current_user.activeproject.productowner==current_user
+        ap = current_user.activeproject_id
+        if  ap != nil
+            return current_user.id == Project.find(ap).productowner_id
+        end
+        false
     end
 
     def sprint_running?(sprint)
@@ -59,5 +63,18 @@ module SessionsHelper
 
     def activeproject?
         current_user.activeproject!=nil
+    end
+
+    def currently_running_sprint
+        sprints = Sprint.where(project_id: current_user.activeproject_id)
+
+        sprints.each do |s|
+          now = Date.today
+          if s.start <= now && s.end >= now
+            return s.id
+          end
+        end
+
+        return -1
     end
 end

@@ -11,22 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140517104153) do
+ActiveRecord::Schema.define(version: 20140531140756) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
+    t.boolean  "editing"
+    t.integer  "user_id"
   end
 
   create_table "comments", force: true do |t|
     t.text     "value"
-    t.string   "user_id"
-    t.string   "project_id"
+    t.integer  "user_id",    limit: 255
+    t.integer  "project_id", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "post_id"
+  end
+
+  create_table "entries", force: true do |t|
+    t.integer  "round_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "value"
+  end
+
+  create_table "histories", force: true do |t|
+    t.integer  "sprint_id"
+    t.float    "estimation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.integer  "story_id"
+    t.boolean  "belongs_sprint"
+  end
+
+  create_table "pokers", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "story_id"
+    t.boolean  "active"
   end
 
   create_table "posts", force: true do |t|
@@ -64,6 +92,15 @@ ActiveRecord::Schema.define(version: 20140517104153) do
     t.datetime "updated_at"
   end
 
+  create_table "rounds", force: true do |t|
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "poker_id"
+    t.integer  "user_id"
+    t.boolean  "active"
+  end
+
   create_table "sprints", force: true do |t|
     t.date     "start"
     t.date     "end"
@@ -86,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140517104153) do
     t.float    "timeestimates"
     t.integer  "sprint_id"
     t.text     "note"
+    t.integer  "finished_in_sprint"
   end
 
   create_table "tasks", force: true do |t|
@@ -124,6 +162,15 @@ ActiveRecord::Schema.define(version: 20140517104153) do
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
+  create_table "workloads", force: true do |t|
+    t.integer  "sprint_id"
+    t.float    "estimation"
+    t.integer  "project_id"
+    t.integer  "story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "worktimes", force: true do |t|
     t.datetime "start"
     t.float    "done"
@@ -132,6 +179,9 @@ ActiveRecord::Schema.define(version: 20140517104153) do
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "task_estimation"
+    t.integer  "sprint_id"
+    t.integer  "story_id"
   end
 
 end

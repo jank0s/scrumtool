@@ -1,7 +1,7 @@
 class Story < ActiveRecord::Base
     belongs_to :project
     belongs_to :priority
-
+    has_many :pokers
     belongs_to :sprint #new
 
     has_many :tasks
@@ -11,7 +11,7 @@ class Story < ActiveRecord::Base
     validates :description, :presence => true, length: {minimum: 3}
     validates :priority_id, :presence => true
     validates :value, :numericality => {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100}, :allow_blank => true
-    validate :validate_finished
+    #validate :validate_finished
     #validates :timeestimates, :numericality => {:greater_than_or_equal_to => 0.0, :less_than_or_equal_to => 100.0}
 
     def done?

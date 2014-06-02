@@ -27,9 +27,9 @@ Story.create(project_id: 1, name: "Story3", description: "Story three", priority
 Story.create(project_id: 1, name: "Story4", description: "Story four", priority_id: 1, finished: true, test: "", timeestimates: 3, finished_in_sprint: 1)
 
 Task.create(name: "Task1.2", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00", assigned_to: 2)
-Task.create(name: "Task2.2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-05-28 00:00:00")
+Task.create(name: "Task2.2", story_id: "1", completed: false, time_estimation: 2, assigned_date: "2014-06-02 00:00:00")
 Task.create(name: "Task3.2", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00", assigned_to: 2)
-Task.create(name: "Task4.2", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-05-28 00:00:00")
+Task.create(name: "Task4.2", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-06-02 00:00:00")
 
 #Task.create(name: "Task1.1", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00")
 #Task.create(name: "Task2.1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00")

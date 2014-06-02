@@ -27,8 +27,8 @@ Task.create(name: "Task2.2", story_id: "1", completed: false, time_estimation: 2
 Task.create(name: "Task3.2", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00")
 Task.create(name: "Task4.2", story_id: "1", completed: false, time_estimation: 5, assigned_date: "2014-05-28 00:00:00")
 
-Task.create(name: "Task1.1", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00")
-Task.create(name: "Task2.1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00")
+#Task.create(name: "Task1.1", story_id: "1", completed: false, time_estimation: 4, assigned_date: "2014-05-28 00:00:00")
+#Task.create(name: "Task2.1", story_id: "1", completed: false, time_estimation: 6, assigned_date: "2014-05-28 00:00:00")
 
 Worktime.create(done: 0, remaining: 6, day: "2014-05-28", task_id: 1, task_estimation: 6, sprint_id: 2, story_id: 1)
 Worktime.create(done: 0, remaining: 6, day: "2014-05-29", task_id: 1, task_estimation: 6, sprint_id: 2, story_id: 1)

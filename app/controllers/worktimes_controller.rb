@@ -25,9 +25,10 @@ class WorktimesController < ApplicationController
     @time_done = params[:time_done]
     @time_remaining = params[:time_remaining]
     @time_day = params[:time_day]
-
-    all = Worktime.where(task_id: params[:task_id], sprint_id: currently_running_sprint).order(:id)
     @t = Task.find(params[:task_id])
+    #all = Worktime.where(task_id: params[:task_id], sprint_id: currently_running_sprint).order(:id)
+    all = Worktime.where(task_id: @t.id).where("day >= ?", @t.assigned_date.to_date).order(:id)
+
 
     #if @time_remaining.last.to_f == 0.0
     #  @t.update_attributes(completed: true)
@@ -42,8 +43,8 @@ class WorktimesController < ApplicationController
     all.each do |time|
       @time = Worktime.find(time.id)
       if @time.day == today && @time_remaining[i].to_f == 0.0
-        @lst << @time.day
-        @lst << @time_remaining[i].to_f
+        @lst << @time_day
+        @lst << @time_remaining
         @t.update_attributes(completed: true)
         inside = true
       end
@@ -70,7 +71,7 @@ class WorktimesController < ApplicationController
     today = Date.today
     @worktimes = Worktime.where(task_id: @t.id).where("day >= ?", @t.assigned_date.to_date)
     .where("day <= ?", today).order(:day)
-
+    @id = @t.id
     if (params[:from_task]!=nil)
       redirect_to usertasks_url 
     else

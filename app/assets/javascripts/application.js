@@ -28,37 +28,43 @@ $(document).on('ready page:load', function (){
     });
 });
 
-
 $(document).ready(function(){
-	if (window.location.pathname == '/pokers/' || window.location.pathname == '/pokers'){
+	if (window.location.pathname == '/pokers/' || window.location.pathname == '/pokers' || window.location.pathname == '/pokers/new' || window.location.pathname == '/pokers/new/'){
 		setTimeout(function(){
    			window.location.reload();
-		}, 5000);
+		}, 10000);
 
 	}
 });
 
 // if other site, do not do this
 $(document).ready(function () {
-	if(window.location.pathname == '/pokers/new/' || window.location.pathname=='/pokers/new')
-		console.log("drek");
-		$.ajax({
+	if(window.location.pathname == '/pokers/new/' || window.location.pathname=='/pokers/new'){
+		/*$.ajax({
 	            url: "/pokers/new",
 	            type: "GET",
 	            datatype: "application/json",
- 	       }).done(function(data) {
-	       	console.log(data),
-	       	console.log("BBB")
-		});
+	            //data: JSON.stringify(data),
+	            success: function(result){
+	            	console.log("drek1");
+	            	console.log(result.length);
+
+	            },
+ 	       
+		});*/
 		
 
 		setInterval(function(){
 			$.get("/pokers/new.js", function(data){
 				$("#refreshdiv").html(data);
+				window.location.reload();
 			},
 			"html")
 		}, 5000);
+	}
 });
+
+
 
 
 	function custom(){

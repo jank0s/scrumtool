@@ -29,39 +29,63 @@ $(document).on('ready page:load', function (){
 });
 
 
-// if other site, do not do this
-$(document).ready(function () {
-	if(window.location.pathname == '/pokers/new/')
-	setInterval(function(){
-		$.get("/pokers/new.js", function(data){
-			$("#refreshdiv").html(data);
-		},
-		"html")
-	}, 5000);
+$(document).ready(function(){
+	if (window.location.pathname == '/pokers/' || window.location.pathname == '/pokers'){
+		setTimeout(function(){
+   			window.location.reload();
+		}, 5000);
+
+	}
 });
 
-//function custom(){
-//	var customestimate = prompt("Please enter your estimate ","");
-//	if (isInt(customestimate) || isFloat(customestimate)){
-//		data = {};
-//		var entry = "entry";
-//		data[entry] = customestimate;
-//		$.ajax({
-//		  type: "POST",
-//		  url: '/pokers/makeentry',
-//		  data: data,
-//		  dataType :"json"
-//		});
-//	}
-//	else {
-//		alert(Write right number!);
-//	}
-//};
+// if other site, do not do this
+$(document).ready(function () {
+	if(window.location.pathname == '/pokers/new/' || window.location.pathname=='/pokers/new')
+		console.log("drek");
+		$.ajax({
+	            url: "/pokers/new",
+	            type: "GET",
+	            datatype: "application/json",
+ 	       }).done(function(data) {
+	       	console.log(data),
+	       	console.log("BBB")
+		});
+		
 
-//function isFloat(n) {
-//    return parseFloat(n)==n && n>0;
-//};
-//
-//var isInt = function(n) {
-//	return parseInt(n) == n && n>0;
-//};
+		setInterval(function(){
+			$.get("/pokers/new.js", function(data){
+				$("#refreshdiv").html(data);
+			},
+			"html")
+		}, 5000);
+});
+
+
+	function custom(){
+ 		
+			var customestimate = prompt("Please enter your estimate ","");
+		if (isInt(customestimate) || isFloat(customestimate)){
+		data = {};
+		var entry = "entry";
+			data[entry] = customestimate;
+			$.ajax({
+			  type: "POST",
+			  url: '/pokers/makeentry',
+			  data: data,
+			  dataType :"json"
+			});
+			}
+		else {
+			alert('Write right number!');
+			}
+		
+	}
+
+
+function isFloat(n) {
+    return parseFloat(n)==n && n>0;
+};
+
+var isInt = function(n) {
+	return parseInt(n) == n && n>0;
+};

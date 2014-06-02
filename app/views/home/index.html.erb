@@ -20,7 +20,7 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-      
+
         <div class="<%= if (params[:tab] == 'discussion'  || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>" id="discussion">
             <h2>Discussion</h2>
             <div id="form-add">
@@ -31,119 +31,119 @@
                         <%= f.text_field :topic, :class => "form-control" %>
                     </div>
                     <div class="input-group">
-                      <%= f.label :value, "Post a new message", :class => "input-group-addon" %>
-                      <%= f.text_area :value, :class => "form-control" %>
+                        <%= f.label :value, "Post a new message", :class => "input-group-addon" %>
+                        <%= f.text_area :value, :class => "form-control" %>
                     </div>
                     <p class="buttons">
-                      <%= f.submit "Add post", :class => "btn btn-primary pull-right" %>
+                        <%= f.submit "Add post", :class => "btn btn-primary pull-right" %>
                     </p><p>&nbsp;</p>
                 <% end %>
             </div>
 
 
-          <div class="part-story">
-            <% if !@posts.empty? %>
-                <% @posts.each do |post| %>
+            <div class="part-story">
+                <% if !@posts.empty? %>
+                    <% @posts.each do |post| %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="story-head">
+                                    <% user=User.find(post.user_id) %>
+                                    <span class="topic"><% if !post.topic.blank? %>Topic: <b><%= post.topic %></b></span> | <% end %>
+                                        <span class="user">User: <b><%= user.username %></b></span> | <small> Date & Time: <b><%= post.created_at %></b></small>
+                                        </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="panel-body">
+                                <%= simple_format(post.value) %>
+                                <% if scrummaster? || admin? || (current_user.id == post.user_id)%>
+                                    <td> <%= button_to "Remove", post_path(post.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
+                                <% end %>
+                                <div class="clear"></div>
+                                <br />
+
+                                <% @comments.each do |comment| %>
+                                    <% if comment.post_id == post.id %>
+                                        <div class="panel panel-default">
+                                            <div class = "panel-heading">
+                                                <% user_com=User.find(comment.user_id) %>
+                                                <small><b><%= user_com.username %>: </b>
+                                                    <%= print_multiline(comment.value) %></small><br />
+                                                <small><i><%= comment.created_at %></i></small>
+                                                <% if scrummaster? || admin? || (current_user.id == comment.user_id)%>
+                                                    <%= button_to "Remove", comment_path(comment.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
+                                                <% end %>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                <% end %>
+                                <div id="form-add">
+                                    <%= form_for @comment do |f| %>
+
+                                        <div class="input-group pull-left">
+                                            <%= f.text_area :value, :placeholder=>"Write your comment here", :class => "comment-text-area" %>
+                                            <%= f.hidden_field :post_id, :value => post.id%>
+                                        </div>
+                                        <p class="buttons">
+                                            <%= f.submit "Add comment", :class => "btn btn-xs btn-primary pull-right" %>
+                                        </p><p>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                <% else %>
                     <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <div class="story-head">
-                          <% user=User.find(post.user_id) %>
-                          <span class="topic"><% if !post.topic.blank? %>Topic: <b><%= post.topic %></b></span> | <% end %>
-                            <span class="user">User: <b><%= user.username %></b></span> | <small> Date & Time: <b><%= post.created_at %></b></small>
+                        <div class="panel-body">
+                            - The wall is empty -
                         </div>
-                        <div class="clear"></div>
-                      </div>
-                      <div class="panel-body">
-                        <%= simple_format(post.value) %>
-                        <% if scrummaster? || admin? || (current_user.id == post.user_id)%>
-                        <td> <%= button_to "Remove", post_path(post.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %></td>
-                        <% end %>
-                          <div class="clear"></div>
-                          <br />
-
-                          <% @comments.each do |comment| %>
-                          <% if comment.post_id == post.id %>
-                            <div class="panel panel-default">
-                              <div class = "panel-heading">
-                                  <% user_com=User.find(comment.user_id) %>
-                                  <small><b><%= user_com.username %>: </b>
-                                    <%= print_multiline(comment.value) %></small><br />
-                                  <small><i><%= comment.created_at %></i></small>
-                                  <% if scrummaster? || admin? || (current_user.id == comment.user_id)%>
-                                  <%= button_to "Remove", comment_path(comment.id), :confirm => "Are you sure?", :class => "btn btn-xs btn-danger pull-right", :method => :delete %>
-                                  <% end %>
-                                  <div class="clear"></div>
-                              </div>
-                            </div>
-                           <% end %>
-                          <% end %>
-                          <div id="form-add">
-                          <%= form_for @comment do |f| %>
-
-                            <div class="input-group pull-left">
-                                <%= f.text_area :value, :placeholder=>"Write your comment here", :class => "comment-text-area" %>
-                                <%= f.hidden_field :post_id, :value => post.id%>
-                            </div>
-                             <p class="buttons">
-                                <%= f.submit "Add comment", :class => "btn btn-xs btn-primary pull-right" %>
-                            </p><p>
-                         <% end %>
-                        </div>
-                      </div>
                     </div>
+
                 <% end %>
-            <% else %>
-                <div class="panel panel-default">
-                  <div class="panel-body">
-                    - The wall is empty -
-                  </div>
-                </div>
-
-            <% end %>
-          </div>
-
-          <hr class="divider">
-
-          <div class="part-story">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h4>Project team</h4>
-              </div>
-              <div class="panel-body">
-                <ul class="acceptance-tests">
-                  <% @users.each do |user| %>
-                      <% user=User.find(user.user_id) %>
-                      <li><%= user.username %>: <%= user.name %> <%= user.surname %> (<%= user.email %>)</li>
-                  <% end %>
-                </ul>
-              </div>
             </div>
-          </div>
+
+            <hr class="divider">
+
+            <div class="part-story">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Project team</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="acceptance-tests">
+                            <% @users.each do |user| %>
+                                <% user=User.find(user.user_id) %>
+                                <li><%= user.username %>: <%= user.name %> <%= user.surname %> (<%= user.email %>)</li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="<%= if params[:tab] == 'documentation' then 'tab-pane active'  else 'tab-pane' end%>" id="documentation">
-        <!--<div class="tab-pane" id="documentation">-->
+            <!--<div class="tab-pane" id="documentation">-->
             <h2>Documentation</h2>
-              <% if @articles.empty? %>
+            <% if @articles.empty? %>
                 <%= link_to "New Documentation", new_article_path %>
-              <% end %>
-              <% @articles.each do |article| %>
-                  <% if article.project_id == current_user.activeproject_id %>
-                      <% if article.editing == false || article.user_id == current_user.id %>
-                          <% if !article.body.nil? %>
+            <% end %>
+            <% @articles.each do |article| %>
+                <% if article.project_id == current_user.activeproject_id %>
+                    <% if article.editing == false || article.user_id == current_user.id %>
+                        <% if !article.body.nil? %>
                             <p><%= raw(article.body.html_safe) %></p>
-                          <% end %>
-                          <%= link_to "Edit Documentation", edit_article_path(article) %>
-                          <br />
-                      <% else %>
-                          Editing locked!
-                          <br>
-                          <% user=User.find(article.user_id) %>
-                          <%= user.username %>
-                          is currently editing the documentation.
-                      <% end %>
-                  <% end %>
-              <% end %>
+                        <% end %>
+                        <%= link_to "Edit Documentation", edit_article_path(article) %>
+                        <br />
+                    <% else %>
+                        Editing locked!
+                        <br>
+                        <% user=User.find(article.user_id) %>
+                        <%= user.username %>
+                        is currently editing the documentation.
+                    <% end %>
+                <% end %>
+            <% end %>
         </div>
     </div>
 <% end %>

@@ -43,14 +43,14 @@ $(document).ready(function () {
 	if(window.location.pathname == '/pokers/new/' || window.location.pathname=='/pokers/new')
 		console.log("drek");
 		$.ajax({
-		  url: "/pokers/new",
-		  type: "GET",
-		  data: data,
-		  datatype: "application/json",
-		  contentType: "text/plain"
+	            url: "/pokers/new",
+	            type: "GET",
+	            datatype: "application/json",
+ 	       }).done(function(data) {
+	       	console.log(data),
+	       	console.log("BBB")
 		});
-
-
+		
 
 		setInterval(function(){
 			$.get("/pokers/new.js", function(data){

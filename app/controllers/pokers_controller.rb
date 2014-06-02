@@ -28,7 +28,8 @@ class PokersController < ApplicationController
        	else
        		@poker = Poker.where(active: true, :story_id=>@stories).first
        		if @poker.nil?
-    			 return render json: {redirect: true}
+    			   return redirect_to pokers_path
+           #return render json: {redirect: true}
 
        		end
 	       	@story_id = @poker.story_id

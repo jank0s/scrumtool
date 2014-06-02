@@ -25,6 +25,34 @@
 
 <b>Project status:</b>
 <%= @work_remaining %>h of work remaining / <%= @work_done %>h of work spent
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Day</th>
+    <th>Work done</th>
+    <th>Work remaining</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% i = 0 %>
+  <% @x_axis.each do |day| %>
+      <tr>
+        <% if day.is_a? String %>
+            <% i += 1 %>
+        <% else %>
+            <td><%= day %></td>
+            <td><%= @workload_axis[i]-@y_axis[i] %> h</td>
+            <td><%= @y_axis[i] %> h</td>
+            <% i += 1 %>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
 <h2>Sprint Velocity</h2>
 <table class="table table-striped">
     <thead>
